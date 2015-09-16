@@ -1,0 +1,107 @@
+\documentclass[fleqn]{MJDArticle}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\titleAT[Abstract Outline]{Matthew Denny}
+
+\section{Gender in Organizations}
+
+\begin{enumerate}
+	\item Gender equity is an important organizational goal.
+	\item Local governments have been pioneers in this area.
+	\item Despite efforts to improve gender equity, organizations still display gender bias across a number of dimensions (with a few cites). 
+	\item We need a cross organization study to understand the organizational level drivers of gender bias.
+	\item There have been many cross organization studies, but none have examined micro-level interactions.
+	\item Email lets us study micro-level interactions.
+	\item We make use of a new, large scale, cross organizational email corpus. 
+	\item We examine aggregate patterns communication by gender, and apply a new statistical model to understand how these patterns change with what is being communicated.
+	\item We actually have a great template -- the intro to our Cross County Paper -- which is provided in appendix \ref{sec:ccp intro}.
+\end{enumerate}
+
+\section{Data}
+
+\begin{enumerate}
+	\item The difficulty in observing verbal communication in organizations lead us to collect email data.
+	\item Description of our data.
+	\item Show map highlighting the locations of the counties that complied with our request. Note that data was collected as part of a field experiment. Note that this is a representative sample of counties in North Carolina.
+	\item Display a table with number of emails, total managers, female managers by county.
+	\item Display a table with some other aggregate level statistics by gender. 
+\end{enumerate}
+
+
+\section{Descriptive Analysis}
+\begin{enumerate}
+	\item Discuss aggregate email statistics by gender.
+	\begin{enumerate}
+		\item Aggregate patterns of communication between genders do not reveal differences by gender. 
+	\end{enumerate}
+	\item To dig deeper, we examine email sending patterns by department.
+	\begin{enumerate}
+		\item We see differences in sending and receiving by gender within specific departments. In particular we look at communication between the county manager and department managers by gender.
+		\item Male department managers receive a slightly higher proportion  of their emails from the department manager (an overwhelmingly male position) that their female counterparts in the same positions. However, male department managers send a much higher proportion of their emails to the department manager than their female counterparts in the same positions. 
+	\end{enumerate}
+	\item Set up the need to model topic specific communication patterns with the following question. We do not observe differences in aggregate patterns of communication, but we do observe differences when we look at the department level, why?
+	\begin{enumerate}
+		\item Either female department managers have a lower preference for communicating with the county manager over email than their male counterparts, or male department managers talk about more/different things with the county manager, explaining the increased volume. 
+		\item Since the gender and organizations literature shows that women use formal channels of communication at a higher rate than men \citep{Ragins1989}, the first explanation is unlikely. Thus we are left with a content based explanation.
+	\end{enumerate}
+\end{enumerate}
+
+\section{A Model of Email Content}
+\begin{enumerate}
+	\item Motivation for building a model for email data -- who you send an email to depends on what it is about. 
+	\item Our solution: a generative model for email topics and recipients. Then discuss the existing TPME model and why we build on it. 
+	\item Overview of the generative process in plain english.
+	\item Describe the generative process for LDA part of model.
+	\item Model based topic clustering.
+	\item Explain how draws of message recipients are conditioned on the email topics. 
+	\item Describe the generative process for the latent space portion of model.
+	\item Summarize the generative process and lead into inference. 
+\end{enumerate}
+
+\subsection{Inference}
+\begin{enumerate}
+	\item We have to invert the generative process to perform inference on the model parameters.
+	\item We use block Metropolis Hastings within Gibbs sampling.
+	\item A beta R package is available for those interested.
+	\item Discuss our model specification and justify our hyper-parameter choices.
+\end{enumerate}
+
+\section{Example Model Output}
+\begin{enumerate}
+	\item Overview of the output produced by our model: topics/top words, topic clusters, LSM parameters. 
+	\item Dare county as a particular example -- disaster response to Hurricane Sandy. 
+	\item Discuss the example output and the kinds of inferences we might draw about the network structure associated with a particular cluster of topics.
+\end{enumerate}
+
+\section{Organization Size, Gender, and Communication}
+\begin{enumerate}
+	\item Here, we test whether larger organizations exhibit less gender bias, which is something that \cite{Huffman2010} found using longitudinal data from the Employment Opportunity Commission on occupational status and pay. 
+	\item The key benefit of using our model in this context: we remove the confounding effect of what is being talked about on the relationship between gender mixing and organization size. For example, it could be that in aggregate, differences in gender mixing across counties are only be related to differences in how those organizations use email. Some might use email for more informal communication (\citep{Ibarra1992} found that informal communication is more homophilous) while others use it for more formal communication, leading to a difference in gender mixing that is unrelated to organization size.
+	\item Display plots.
+	\item Discuss our results, which indicate that cross-gender communication is most likely in mid-sized organizations. 
+\end{enumerate}
+
+\section{Discussion}
+\begin{enumerate}
+	\item Gender equity in organizations is important.
+	\item Patterns of communication provide micro-level information about gender bias, and therefore are important to study.
+	\item We introduce a new dataset that allows us to study the relationship between gender and communication in organizations.
+	\item Aggregate level patterns of communication may mask multiple underlying patterns that differ by what is being communicated.
+	\item We apply our model and it works, here is what we find.
+	\item There is so much more we can do!
+\end{enumerate}
+
+\appendix
+
+\section{Intro to Cross County Paper}
+\label{sec:ccp intro}
+Equity across gender lines is a key objective for organizations that aspire to a just, efficient and sustainable professional culture \citep{Ely2000}. A variety of employer initiatives and policies have been developed to address gender bias in organizations \citep{ Misra2007}. One common finding in the literature is that public sector employers have been the pioneers in developing equitable employment environments \citep{Buelens2007}. In the current study, we present findings on behavioral gender bias in public sector organizations, across several county governments in North Carolina.
+
+The study of local governments offers an excellent opportunity for understanding what drives gender equity in organizations. Local governments within the same state are comparable since they are subject to the same set of laws and regulations at the state level and serve comparable and proximate constituencies. However, local governments vary on relevant characteristics such as size, population density, income, racial diversity, and political context; which presents the opportunity to understand how these differences are related to gender equity in these organizations. The comparative analysis of gender parity in local governments has not yet been exploited to understand the structural and contextual features of government organization that correlate with gender bias.
+
+Another benefit of studying gender bias in the context of local government is that, through public records laws, voluminous and comparable data on internal organizational activity is available to researchers upon request. Most research to date on gender bias in organizations has drawn upon official salary data, occupational records, or survey-based secondary reports of organizational culture. These sources provide valuable insights, but they do not shed light on micro-level behavior and interactions within organizations. In the study that follows, we use corpora of internal e-mail communications to understand structural gender biases that characterize internal government communication networks.
+
+\bibliography{PINLab}
+\bibliographystyle{chicago}
+
+\end{document}

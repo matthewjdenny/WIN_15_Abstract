@@ -1,0 +1,229 @@
+%% PNAStwoS.tex
+%% Sample file to use for PNAS articles prepared in LaTeX
+%% For two column PNAS articles
+%% Version1: Apr 15, 2008
+%% Version2: Oct 04, 2013
+
+
+
+%% BASIC CLASS FILE
+\documentclass{pnastwo}
+
+\setlength{\footskip}{.5in}
+
+%% ADDITIONAL OPTIONAL STYLE FILES Font specification
+\usepackage{natbib}
+\usepackage{bm}% bold math
+%\newcommand{\bm}[1]{\boldsymbol{#1}} %makes bold math symbols easier
+\newcommand{\R}{\textsf{R}\space} %R in textsf font
+\newcommand{\X}{\bm{\mathcal{X}}} %shorthand for iid
+\renewcommand{\P}{\mathcal{P}}
+\newcommand{\bt}{\pmb{\theta}}
+\newcommand{\bl}{\pmb{\lambda}}
+\newcommand{\bL}{\pmb{\Lambda}}
+%\newcommand{\bG}{\pmb{\Gamma}}
+\newcommand{\bh}{\pmb{\text{h}}}
+\newcommand{\h}{\pmb{\text{h}}}
+\usepackage{amsmath,amssymb,amsthm}
+\def\citeapos#1{\citeauthor{#1}'s (\citeyear{#1})}
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+%\graphicspath{{/Users/matthewjdenny/Dropbox/PINLab/Projects/Denny_Working_Directory/2011_Analysis_Output}}
+
+%\usepackage{pnastwoF}
+
+
+
+%% OPTIONAL MACRO DEFINITIONS
+\def\s{\sigma}
+
+
+\begin{document}
+
+\title{Content-Conditioned Hierarchical Latent Space Models for Textual Communication Networks}
+
+\author{
+Matthew Denny\affil{1}{University of Massachusetts Amherst},
+James ben Aaron\affil{1}{},
+Hanna Wallach\affil{1}{}\affil{2}{Microsoft Research NYC},
+\and Bruce Desmarais\affil{1}{}
+}
+
+\contributor{\vspace{-.25cm}}
+
+
+\maketitle
+
+\begin{article}
+\begin{abstract}
+{Statistical topic models are widely used to represent content in textual corpora. When documents in a corpus are attributed with senders and recipients, the corpus constitutes text-valued relational or network data. We develop a class of models for the topical content and relational structure of communications in which the rate of communication between actors is governed by covariate-conditioned latent space embeddings of the actors, and each embedding is associated with a cluster of topics. We present Markov Chain Monte Carlo methods for inference within the Bayesian framework. This model holds the potential for extensive application to real-world social and organizational relational communication data. To illustrate the model and evaluate its performance, we present an application to internal e-mail communications among managers in 20 North Carolina county governments. 
+%We illustrate the use of covariates in the model with gender and find that patterns of gender mixing vary with the topical content of communication in a way that is consistent with the content-conditional gendered patterns that have been found to characterize social and organizational networks
+}
+\end{abstract} 
+
+%\keywords{weighted networks |  | x-ray reflectivity | molecular electronics}
+
+%\abbreviations{SAM, self-assembled monolayer; OTS, octadecyltrichlorosilane}
+
+\section{Introduction}
+
+
+
+% general overview of the solution we will develop and immediately related recent work
+\dropcap{A}dvances in statistical models for textual data %\citep{Papadimitriou1998,Blei2003} 
+have recently been built upon to integrate structural models of networks with models for textual content \citep{McCallum2007,Krafft2012}. In this paper we introduce a latent-class topic clustering extension to the topic partitioned multi-network embeddings (TPME) model introduced by Krafft et al. \cite{Krafft2012} and situate it as a full generalization of the latent space model (LSM) \citep{Hoff2002a} by incorporating covariate effects. This allows us to make inferences about the content-conditional structure of communication networks, providing an unprecedented model-based window into domain specific sub-structures. 
+
+
+
+We apply our new generalized content-partitioned multinetwork embeddings (CPME) model to the analysis of e-mail communications among department managers in 20 North Carolina county governments. Utilizing our model extension, we examine the variation in gender mixing patterns across content domains and across counties, buttressing the literature on gender in organizations. This provides a rare look at how gendered network structure varies systematically with the content of professional communication networks. This approach represents a major advance in our understanding of organization communication networks because it allows us to discover varying content-conditional substructures within these networks that a consideration of the aggregate network is likely to miss (an example is provided in Figure \ref{fig:splitting}). 
+
+
+
+
+
+
+
+\section{Cluster-Partitioned Multinetwork Embeddings}
+Here we provide an overview of our update to the TPME model \citep{Krafft2012} to include latent class topic clustering and edge covariate effects.  
+%A single message (typically an email), indexed by $d$, is represented by a set of tokens $\mathbf{w}^{(d)}$  in the message, an integer $a^{(d)} \in \{1, ...,A\}$ indicating the identity of the message's author, and a vector of binary variables $y^{(d)}$ indicating whether each of $A$ actors in the network is a recipient of the message.  
+As in LDA \cite{Blei2003}, each token is assigned to a ``topic'' $t$. Each topic $t$ is also associated with a cluster assignment $C_t$, where $C_t$ can take one of $C = \{1, ....,c\}$ values. Topics that share a cluster assignment are associated with an $A \times A$ matrix of probabilities $P^{(c)}$ (following the LSM) that a message author $a$ will include recipient $r$ on the message, given that it is about a topic in cluster $c$.
+ 
+ \begin{figure}
+\caption{\label{fig:splitting} Different patterns of communication across different domains.}	
+\centering
+\includegraphics[width = 0.48\textwidth]{images/Structure_Matters_Full.pdf}
+\end{figure}
+
+%Following the LSM, each communication pattern $P^{(c)}$ is represented implicitly via a set of $A$ points in $K-$dimensional Euclidean space $\mathbf{S}^{(c)} = \{s^{(c)}_a \}_{a=1}^A$, a scalar intercept term $b^{(c)}$ and a cluster specific set of edge covariates $\Gamma^{(c)} = \{\gamma^{(t)}\}_{\gamma=1}^\Gamma$ and $A \times A \times E$ indicator array of tie type $I$ such that $I_{i,j,\gamma}$ = 1 if a tie of type $\gamma$ is present between actors and zero otherwise. The probability of a tie between any two actors in cluster $C$ is then:
+%\begin{equation}
+%p_{ar}^{(c)} = 	p_{ra}^{(c)} = \sigma \left(b^{(c)} + I_{i,j,}'\gamma^{(c)} - ||s_a^{(c)} - s_r^{(c)} ||\right)	
+%\end{equation}
+%This extension of the TPME model we shall refer to as the Cluster-Partitioned Multinetwork Embellings model (CPME)  is situated as a full generalization of the Latent Space Model and allows us to model assortative mixing across communication content areas. 
+
+
+%Each email, indexed by $d$, has a discrete distribution over topics $\theta^{(d)}$. A symmetric Dirichlet prior with concentration parameter $\alpha$ is placed over $\Theta = \{ \theta^{(1)}, ...,\theta^{(D)}\}$. Each token $w^{(d)}_n$ is associated with a topic assignment $z^{(d)}_n$ , such that $z^{(d)}_n  \sim \theta^{(d)}$ and $w^{(d)}_n \sim  \phi^{(t)}$ for $z^{(d)}_n = t$. 
+To associate sender-receiver edges with topic assignments, for each document and each topic, we multiply the proportion of tokens in that document assigned to that topic by empirical edge weights. Thus all edges associated with a particular document are associated with a distribution over topics (describing their content). When we aggregate topics up to their shared latent space assignments, we see variation in the network structure by way of variations in email topical content and receivers.  The graphical model for the CPME generative process is shown in figure \ref{fig:CMPE_Graphical_model}
+%\footnote{Note that $\widehat{N}^{(d)}$ is equal to $\max(1,N^{(d)})$ so that messages still get an edge topic assignment even if they have no content. This is practically a rare occurrence but allows for the model to function with forwarded emails that may contain no original content, for example.}.
+
+% Present graphical model
+
+
+
+
+
+%discuss inference with metropolis hastings and gibbs sampling -- could point to appendix with model pseudocode
+\subsection{Inference}
+For real-world message data 
+%$\mathcal{D} = \{w^{(d)}, a^{(d)},y^{(d)},I_{i,j}\}_{d=1}^D$
+, we observe tokens $\mathcal{W}$, authors $\mathcal{A}$, recipients $\mathcal{Y}$ and edge types $\mathcal{I}$, while $\Phi$, $\Theta$, $C_t$ $\mathcal{S} = \{S^{(c)}\}_{c=1}^C$, $\mathcal{B} = \{b^{(c)}\}_{c=1}^C$, $\Gamma = \{\gamma^{(c)}\}_{c=1}^C$, $\mathcal{Z} = \{z^{(d)}\}_{d=1}^D$, and $\mathcal{X} = \{X^{(d)}\}_{d=1}^D$ are unobserved. Dirichlet–multinomial conjugacy allows us to marginalize out $\Phi$ and $\Theta$ \citep{Blei2003}, and sample the remaining unobserved variables from their joint posterior distribution using Markov chain Monte Carlo methods. Metropolis-within-Gibbs can then be used to perform inference. As $z^{(d)}_n$ is a discrete random variable, it can be sampled directly using:
+\begin{equation*}
+P(z^{(d)}_n= t | w^{(d)}_n = \nu, \mathcal{W}_{\backslash d,n}, \mathcal{A},\mathcal{Y},C_t, \mathcal{S},\Gamma, \mathcal{I}, \mathcal{Z}_{\backslash d,n}, \mathcal{X}, \alpha,\beta) \propto 
+\end{equation*}
+\begin{equation}
+\begin{cases}
+\left( N_{\backslash d,n}^{(t|d)} + \frac{\alpha}{T}\right) \frac{N_{\backslash d,n}^{(\nu|t)} + \frac{\beta}{V}}{N_{\backslash d,n}^{(t)}  + \beta}  \frac{1}{N^{(d)}}\prod_{r} \left( p_{a^{(d)}r}^{(c)} \right)^{y_r^{(d)}} \left( 1 -p_{a^{(d)}r}^{(c)} \right)^{1 - y_r^{(d)}}  \\
+\frac{1}{N^{(d)}}\prod_{r} \left( p_{a^{(d)}r}^{(c)} \right)^{y_r^{(d)}} \left( 1 -p_{a^{(d)}r}^{(c)} \right)^{1 - y_r^{(d)}} \hspace*{.15in} \text{ for } N^{(d)} = 0
+\end{cases}
+\end{equation}
+where $\backslash d,n$ indicates a quantity excluding the current token in the current message. New values for the discrete random variable $x^{(d)}_r$, the edge topic assignments may also be sampled directly by comparing their associated edge likelihoods under each cluster latent space.
+
+\begin{figure}
+\caption{\label{fig:CMPE_Graphical_model} Graphical model for CMPE generative process.}	
+\centering
+\includegraphics[width = 0.48\textwidth]{images/Graphical_Models.pdf}
+\end{figure}
+%\begin{equation*}
+%P(x^{(d)}_r= n |  \mathcal{A},\mathcal{Y}, \mathcal{S}, C_t,\Gamma, \mathcal{I}, z^{(d)}_n= t , \mathcal{Z}_{\backslash d,n}) \hspace*{.95in}
+%\end{equation*}
+%\begin{equation}
+% \propto \left( p_{a^{(d)}r}^{(c)} \right)^{y_r^{(d)}} \left( 1 -p_{a^{(d)}r}^{(c)} \right)^{1 - y_r^{(d)}} 
+%\end{equation}
+Topic-cluster assignments may also be updated using Gibbs sampling by constructing a distribution over cluster assignments for each topic by taking the product of edge likelihoods for edges associated with that topic in each cluster latent space.
+%\begin{equation*}
+%P(c_t = c | \mathcal{A},\mathcal{Y}, \mathcal{S}, C_t,\Gamma, \mathcal{I},\mathcal{X}) \hspace*{2in}
+%\end{equation*}
+%\begin{equation}
+% \propto  \prod_{r}    \left( p_{a^{(d)}r}^{(c_t)} \right)^{y_r^{(d)}} \left( 1 -p_{a^{(d)}r}^{(c_t)} \right)^{1 - y_r^{(d)}} 
+%\end{equation}
+%As the probabilities of topic assignments to clusters are independent, equation (7) simplifies to (8), facilitating efficient inference over topic cluster assignments.
+The values for the latent space intercepts $b^{(c)}$, positions $s_a^{(c)}$ and mixing parameter estimates $\gamma^{(c)}$ cannot be sampled directly from their conditional posteriors, but may be obtained using the Metropolis-Hastings algorithm. 
+%We take advantage of the independence of latent space model parameters between clusters to efficiently sample model parameters in parallel
+
+\subsection{Model and Algorithm Validation}
+Given that the model and inference algorithm for CPME are quite complex, we have taken additional steps to ensure there are no mathematical or coding errors in our model. We have implemented Geweke's ``Getting It Right" test \cite{Geweke2004} for posterior simulators which a model will fail if it contains either coding or mathematical errors. Both the LSM and LDA components of our model pass the test with flying colors which gives us confidence in the interpretation of our results. 
+
+
+
+\section{Results} 
+Figure 3 illustrates preliminary model results for the largest topic clusters in two North Carolina governments. Each model was run for 2,000 iterations with 1,000 iterations of Metropolis Hastings for each iteration of Gibbs sampling. Models were initialized with 50 topics and 10 clusters, but tend to select for 2-4 clusters with any topics assigned to them, indicating a lower dimensional space of communication patterns. To generate estimates of LSM positions, we run the last iteration of the LSM portion of the model until Geweke statistics demonstrate convergence on greater than 90\% of all parameters (5M iterations). Our results indicate that men tend to dominate the locus of control within these organizations, but that this pattern is uneven across counties, and dependent on organizational positions occupied by women.
+
+\begin{figure*}
+%\caption{\label{fig:results} 
+
+
+% }
+\centering
+\begin{tabular}{ccc}
+\textbf{(a)} & \textbf{(b)} & \textbf{(c)}\\
+\includegraphics[width = 0.39\textwidth]{images/SS_Columbus_11-30-14_Network1.pdf} &
+\includegraphics[width = 0.39\textwidth]{images/SS_New_Hannover_11-30-14_Network6.pdf} &
+\includegraphics[width = 0.209\textwidth]{images/create_fig.pdf}
+\end{tabular}
+\vspace*{-.1in}
+\begin{tabular}{cc}
+\begin{minipage}{0.49\textwidth}
+\textbf{Fig. 3.} Example model results for county department manager communication patterns associated with content related to the organizational locus of control (planning, strategy, oversight) in Columbus County (CC) \textbf{(a)}  and New Hannover County (NHC) \textbf{(b)}. Largest content clusters from each county are presented: with 50.5\%  of total edge weight and 439 of 518 emails represented for  CC and  86.1\%  of total edge weight and 1734 of 1738 emails represented for NHC. Sub-figure \textbf{(c)} displays gender mixing parameter estimates for CC (top) and NHC (bottom), where the Male-Male mixing parameter estimate is fixed at zero to aid in interpretation. These estimates can be interpreted as the likelihood of a particular gender combination of email sender-receivers given the network positions. Red dots represent men and blue dots represent women while darker edges represent a higher volume of communication. Point clouds represent individual observations of latent position estimates for the Markov Chain.  \textbf{(d)} and \textbf{(e)} show top-topic top-words for CC  and NHC respectively
+\end{minipage}&
+
+\begin{minipage}{0.49\textwidth}
+\centering
+\begin{tabular}{cc}
+\textbf{(d)} & \textbf{(e)}\\
+\includegraphics[width = 0.505\textwidth]{images/SS_Columbus_11-30-14_Topics_Cluster1.pdf} &
+\includegraphics[width = 0.5\textwidth]{images/SS_New_Hannover_11-30-14_Topics_Cluster6.pdf}
+\end{tabular}
+\end{minipage}
+
+\end{tabular}
+
+\end{figure*}
+
+
+%\includegraphics[width = 0.24\textwidth]{images/SS_New_Hannover_11-30-14_Beta_and_Trace6.pdf}
+
+
+
+%\begin{figure}[htp]
+%\centering
+%\includegraphics[width = 0.48\textwidth]{images/SS_Columbus_11-30-14_Network1.pdf}
+%\end{figure}
+%
+%\begin{figure}[htp]
+%\centering
+%\includegraphics[width = 0.48\textwidth]{images/SS_New_Hannover_11-30-14_Network6.pdf}
+%\end{figure}
+%
+%\begin{figure}[htp]
+%\centering
+%\includegraphics[width = 0.24\textwidth]{images/SS_Columbus_11-30-14_Beta_and_Trace1.pdf}
+%\includegraphics[width = 0.24\textwidth]{images/SS_New_Hannover_11-30-14_Beta_and_Trace6.pdf}
+%\end{figure}
+
+
+
+
+\begin{acknowledgments}
+This work was supported by US National Science Foundation Grant CISE-1320219 (Hanna Wallach and Bruce A. Desmarais, PIs)
+\end{acknowledgments}
+
+\bibliographystyle{plain}
+\bibliography{PINLab.bib}
+
+
+\end{article}
+
+
+
+\end{document}
+
+
