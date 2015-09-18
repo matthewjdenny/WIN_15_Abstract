@@ -98,11 +98,37 @@
 	%
 	
 	\item We can see that some departments are mostly men -- the county manager (the boss), the sheriff, and the emergency manager, for example. Others are mostly women -- the HR, finance, health, for example. 
+	\item So there is some evidence of gendering in positions, but what about men and women who perform the same position? Are they treated differently by the county manager? 
+	\item Lets look at an example of finance managers because every county has one. First off, there are only two female county managers and the finance managers in their counties are both women, so we focus instead on counties with male managers. Of these 15 counties, 10 have a female finance manager and 5 have a male finance manager. How do they communicate with the county manager?
 	
 	
+	\begin{table}[H]
+	\centering
+		\begin{tabular}{m{2in}cc}
+		\toprule
+		& \multicolumn{2}{c}{Finance Mgr. Gender} \\
+	& \textbf{Male} & \textbf{Female}  \\
+		 \midrule
+		 Emails Sent to County Manager & 48.4\%& 20.5\% \\
+		  & (151/312) & (334/1628)\\
+		 Percent of Emails Sent by County Manager to Finance Manager & 21.2\% & 24.2\% \\
+		  & (182/859) & (372/1535)\\
+		\bottomrule
+		\end{tabular}
+		\caption{\label{tab:finance stats}County manager -- finance manager communication for male county managers. Out of 15 counties with a male county manager, 10 had female finance managers and 5 had male finance managers. The (Fraction) displayed under each percentage is the raw number of emails sent to that manager divided by the total number of emails sent, aggregated over counties. }
+	\end{table}
+	
+	\item Male county managers do not communicate preferentially with finance managers of either gender, so no evidence for biased treatment by supervisor within positions in this case. 
+	\item Female finance managers are sending lots more emails on average than their male counterparts. Are they being assigned different tasks? 
+	\item More broadly, are female department managers performing different tasks than their male counterparts?
+	\item To understand this, we need to look at email content. 
+	\item A quick way to start is by searching for things like question marks, exclamation points, and "Thanks" to see if we observe differences by gender.
 	
 	
-	
+	% # female finance managers send male county managers 20.5% (334/1628) of emails
+	%   # male finance managers send male county managers 48.4% (151/312) of emails
+	%   # male county managers send female finance managers 24.2% (372/1535) of emails
+	%   # male county managers send male finance managers 21.2% (182/859) of emails
 	
 	\begin{table}[H]
 	\centering
@@ -110,33 +136,24 @@
 	\toprule
 	 \textbf{Email Content} & \textbf{Male} & \textbf{Female} & \textbf{t-test} \\
 	 \midrule
-	 Emails Sent to County Manager & 24.4\% & 17.9\% &   \\
-	 Average Number of Question Marks Per Email & 0.218 & 0.235 & 0.033\\
-	 Average Number of Exclamation Marks Per Email & 0.088 & 0.363 & 0.001\\
-	 Average Number of ``Thanks'' Per Email & 0.340 & 0.425 & 0.028 \\
+	 Question Marks per Email Sent & 0.218 & 0.235 & 0.033\\
+	 Exclamation Marks per Email Sent & 0.088 & 0.363 & 0.001\\
+	 ``Thanks'' per Email Sent & 0.340 & 0.425 & 0.028 \\
 	\bottomrule
 	\end{tabular}
 		\caption{\label{tab:Gender Aggregate Stats} Manager-to-manager email communication statistics by gender across all departments and all counties. The \textbf{t-test} column reports reports Welch 2-sample t-test $p$ values for difference in means where applicable. When calculating content statistics, only the body text was used so as to avoid double counting subject lines in responses.}
 	\end{table}
 	
-	\begin{enumerate}
-		\item Aggregate patterns of communication between genders do not reveal differences by gender. 
-	\end{enumerate}
-	\item To dig deeper, we examine email sending patterns by department.
-	\begin{enumerate}
-		\item We see differences in sending and receiving by gender within specific departments. In particular we look at communication between the county manager and department managers by gender.
-		\item Male department managers receive a slightly higher proportion  of their emails from the department manager (an overwhelmingly male position) that their female counterparts in the same positions. However, male department managers send a much higher proportion of their emails to the department manager than their female counterparts in the same positions. 
-	\end{enumerate}
-	\item Set up the need to model topic specific communication patterns with the following question. We do not observe differences in aggregate patterns of communication, but we do observe differences when we look at the department level, why?
-	\begin{enumerate}
-		\item Either female department managers have a lower preference for communicating with the county manager over email than their male counterparts, or male department managers talk about more/different things with the county manager, explaining the increased volume. 
-		\item Since the gender and organizations literature shows that women use formal channels of communication at a higher rate than men \citep{Ragins1989}, the first explanation is unlikely. Thus we are left with a content based explanation.
-	\end{enumerate}
+	\item We do see significant differences, but why?
+	
+	\item If we want to do this in a more principled way, and for all departments at once, we might want to use a topic model to categorize emails, then look at gender mixing using the LSM in each topic.
+	\item However, the gender mixing parameters we infer using this approach would be confounded by selection effects. As a toy example, either men prefer to talk to male coworkers over female coworkers about football, or women prefer not to talk about football at work, so do not participate in those conversations. 
+	\item To disentangle these effects, we need a joint model for email topical content, and the structure of communication.
 \end{enumerate}
 
 \section{A Model of Email Content}
 \begin{enumerate}
-	\item Motivation for building a model for email data -- who you send an email to depends on what it is about. 
+	\item Motivation for building a model for email data -- who you send an email to depends on what it is about. And what you say depends on who you are talking to. 
 	\item Our solution: a generative model for email topics and recipients. Then discuss the existing TPME model and why we build on it. 
 	\item Overview of the generative process in plain english.
 	\item Describe the generative process for LDA part of model.
@@ -154,14 +171,9 @@
 	\item Discuss our model specification and justify our hyper-parameter choices.
 \end{enumerate}
 
-\section{Example Model Output}
-\begin{enumerate}
-	\item Overview of the output produced by our model: topics/top words, topic clusters, LSM parameters. 
-	\item Dare county as a particular example -- disaster response to Hurricane Sandy. 
-	\item Discuss the example output and the kinds of inferences we might draw about the network structure associated with a particular cluster of topics.
-\end{enumerate}
+\section{County Manager Gender and Gender Mixing}
 
-\section{Organization Size, Gender, and Communication}
+
 \begin{enumerate}
 	\item Here, we test whether larger organizations exhibit less gender bias, which is something that \cite{Huffman2010} found using longitudinal data from the Employment Opportunity Commission on occupational status and pay. 
 	\item The key benefit of using our model in this context: we remove the confounding effect of what is being talked about on the relationship between gender mixing and organization size. For example, it could be that in aggregate, differences in gender mixing across counties are only be related to differences in how those organizations use email. Some might use email for more informal communication (\citep{Ibarra1992} found that informal communication is more homophilous) while others use it for more formal communication, leading to a difference in gender mixing that is unrelated to organization size.
