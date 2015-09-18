@@ -147,6 +147,7 @@
 	\item We do see significant differences, but why?
 	
 	\item If we want to do this in a more principled way, and for all departments at once, we might want to use a topic model to categorize emails, then look at gender mixing using the LSM in each topic.
+	
 	\item However, the gender mixing parameters we infer using this approach would be confounded by selection effects. As a toy example, either men prefer to talk to male coworkers over female coworkers about football, or women prefer not to talk about football at work, so do not participate in those conversations. 
 	\item To disentangle these effects, we need a joint model for email topical content, and the structure of communication.
 \end{enumerate}
@@ -171,15 +172,23 @@
 	\item Discuss our model specification and justify our hyper-parameter choices.
 \end{enumerate}
 
-\section{County Manager Gender and Gender Mixing}
+\section{Gender Mixing}
+
+\begin{figure}[H]
+	\begin{tabular}{ccc}
+		\includegraphics[width = 0.28\textwidth]{images/FF_FM.pdf} &
+		\includegraphics[width = 0.28\textwidth]{images/FF_MF.pdf}&
+		\includegraphics[width = 0.28\textwidth]{images/FM_MF.pdf}
+	\end{tabular}
+\end{figure}
 
 
-\begin{enumerate}
-	\item Here, we test whether larger organizations exhibit less gender bias, which is something that \cite{Huffman2010} found using longitudinal data from the Employment Opportunity Commission on occupational status and pay. 
-	\item The key benefit of using our model in this context: we remove the confounding effect of what is being talked about on the relationship between gender mixing and organization size. For example, it could be that in aggregate, differences in gender mixing across counties are only be related to differences in how those organizations use email. Some might use email for more informal communication (\citep{Ibarra1992} found that informal communication is more homophilous) while others use it for more formal communication, leading to a difference in gender mixing that is unrelated to organization size.
-	\item Display plots.
-	\item Discuss our results, which indicate that cross-gender communication is most likely in mid-sized organizations. 
-\end{enumerate}
+% \begin{enumerate}
+% 	\item Here, we test whether larger organizations exhibit less gender bias, which is something that \cite{Huffman2010} found using longitudinal data from the Employment Opportunity Commission on occupational status and pay.
+% 	\item The key benefit of using our model in this context: we remove the confounding effect of what is being talked about on the relationship between gender mixing and organization size. For example, it could be that in aggregate, differences in gender mixing across counties are only be related to differences in how those organizations use email. Some might use email for more informal communication (\citep{Ibarra1992} found that informal communication is more homophilous) while others use it for more formal communication, leading to a difference in gender mixing that is unrelated to organization size.
+% 	\item Display plots.
+% 	\item Discuss our results, which indicate that cross-gender communication is most likely in mid-sized organizations.
+% \end{enumerate}
 
 
 
