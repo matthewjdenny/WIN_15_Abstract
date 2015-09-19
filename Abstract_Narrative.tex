@@ -93,26 +93,28 @@
 	\end{table}
 	
 	
+	\item To test for independence, we construct a contingency table of email sender gender against email recipient gender. We then perform a $\chi^2$ test for independence between the rows and columns.
+	
 	% make this a contingency table and do a chi squared test
 	\begin{table}[H]
 	\centering
-		\begin{tabular}{lrrr}
+		\begin{tabular}{lrrrr}
 		\toprule
-	& \textbf{Male Recipient} & \textbf{Female Recipient}  \\
+	& \textbf{Male Recipient} & \textbf{Female Recipient} & \textbf{Total}  \\
 		 \midrule
-		 Female Sender & 62.2\% & 37.8\% \\
-		 Male Sender & 60.7\% & 39.3\%  \\
+		 \textbf{Male Sender} & 7,299 & 6,286 & 13,585 \\
+		 \textbf{Female Sender} & 5,325 & 3,510 & 8,835 \\
+		 \textbf{Total} & 12,624 & 9,796 & 22,420\\
 		\bottomrule
 		\end{tabular}
-		\caption{\label{tab:email agg stats}Manager gender contingency table \textbf{(still need to fix and add in Chi Sq test)}.}
+		\caption{\label{tab:email agg stats}Manager gender contingency table.}
 	\end{table}
 	
-	\item The gender split is 60\% men, 40\% women and they both send and receive a comparable number of emails on average, so no volume difference.
-	\item Male and female managers also do not communicate with their own gender at a higher rate. 
+	\item The test statistic is $\chi^2 = 92.9$ with a p-value $< 0.00001$, indicating that the gender of an email sender and its recipients is not independent. 
 	
-	\item We have replicated previous research, we don't see gender bias, we could stop here but because we have more information we are going to dig deeper.
-	
-	\item No gender bias? One place the literature tells us to look for gender bias is in the roles/positions in the organization.
+	\item We have replicated previous research, we do see gender bias, we could stop here but because we have more information we are going to dig deeper.
+
+	\item One place the literature tells us to look for gender bias is in the roles/positions in the organization.
 	
 	\item \textbf{Add in a gender vs. position table here}
 	
