@@ -8,18 +8,21 @@
 \begin{enumerate}
 	\item Gender bias in organizations is well documented in terms of pay, prestige, position, and social interaction. 
 	\item Gender equity is normatively important.
-	\item Scholars have sought to understand the roots of gender bias, but have not had access to much behavioral data.
-	\item With the increasing use of electronic communication, and the rise of e-government/ transparency, we are now able to use government email to study gender bias using behavioral data.
-	\item Therefore, we choose to explore the relationship between gender and communication patterns in government organizations.  
+	\item Scholars have sought to understand the roots, extent, and nature of gender bias, but have not had access to primary source data. This has traditionally been observational, ethnographic and self reports, which can be biased. Limited in scope. 
+	\item With the increasing use of electronic communication, and the rise of e-government/ transparency, we are now able to use government email to study gender bias using primary source data.
+	\item This also makes our analyses replicable. 
+	\item Therefore, we choose to explore the relationship between gender and communication patterns in government organizations. 
+	% gender in govt organizations has been studies before pulbic vs. private. 
 	\item To do this, we collect and analyze large scale email data from a sample of 17 local governments.  
+	\item What do we look for, how do we do it,  what do we find -- at a high level. 
 \end{enumerate}
 
 \section{Data}
 
 \begin{enumerate}
 	\item North Carolina has robust public records laws which let us collect data.
-	\item We did this as part of a transparency-by-conformity field experiment.
-	\item 17 counties participated, allowing us to compare across organizations.
+	% \item We did this as part of a transparency-by-conformity field experiment. Make sure to spell out what we do.
+	\item 22 complied with our request but only 17 counties did so in a way that  was  useful to our research, allowing us to compare across organizations.
 	\item Provide some descriptive statistics of the data.
 	\begin{figure}[H]
 		\centering
@@ -32,6 +35,7 @@
 	\centering
 		\begin{tabular}{lrrrrr}
 		  \hline
+		  % add an extra line
 		 \textbf{County} & \textbf{Mgrs.} & \textbf{Female} & \textbf{Internal} &\textbf{Total} \\
 		  \hline
 		Alexander & 21 & 9 & 907 & 11,924  \\
@@ -65,6 +69,8 @@
 
 \section{Descriptive Analysis}
 \begin{enumerate}
+	
+	\item We want to see if there is a relationship between sender gender and recipient gender.
 	\item If we want to know about gendered patterns of communication in organizations, we should start by looking at aggregate statistics by gender:
 	
 	
@@ -74,12 +80,27 @@
 		\toprule
 	& \textbf{Male} & \textbf{Female}  \\
 		 \midrule
-		 Proportion of Sample & 61.6\%& 38.4\% \\
-		 Average Emails Sent & 48.3 & 51 \\
-		 Average Emails Received & 70.8 & 71.6 \\
-		 Average Recipients Per Email Sent & 1.45 & 1.43 \\
-		 Recipients of Emails Sent By Female Managers & 62.2\% & 37.8\% \\
-		 Recipients of Emails Sent By Male Managers & 60.7\% & 39.3\%  \\
+		 Proportion of Managers & 61.6\%& 38.4\% \\
+		 \midrule
+		 Average \# Emails Sent & 48.3 & 51 \\
+		 Average \# Recipients Per Email Sent & 1.45 & 1.43 \\
+		 \midrule
+		 Average \# Emails Received & 70.8 & 71.6 \\
+		\bottomrule
+		\end{tabular}
+		\caption{\label{tab:email agg stats}Manager email statistics by gender.}
+	\end{table}
+	
+	
+	% make this a contingency table and do a chi squared test
+	\begin{table}[H]
+	\centering
+		\begin{tabular}{lrrr}
+		\toprule
+	& \textbf{Male Recipient} & \textbf{Female Recipient}  \\
+		 \midrule
+		 Female Sender & 62.2\% & 37.8\% \\
+		 Male Sender & 60.7\% & 39.3\%  \\
 		\bottomrule
 		\end{tabular}
 		\caption{\label{tab:email agg stats}Manager email statistics by gender.}
@@ -87,42 +108,45 @@
 	
 	\item The gender split is 60\% men, 40\% women and they both send and receive a comparable number of emails on average, so no volume difference.
 	\item Male and female managers also do not communicate with their own gender at a higher rate. 
+	
+	\item We have replicated previous research, we don't see gender bias, we could stop here but because we have more information we are going to dig deeper.
+	
 	\item No gender bias? One place the literature tells us to look for gender bias is in the roles/positions in the organization.
 	
+	%make a gender vs. positon table here
 	
 	\begin{figure}[H]
 	\centering
 	\includegraphics[width = 0.8\textwidth]{images/Aggregate_Email_Flows.pdf}
 	\caption{\label{fig:heatmaps}Heat map depicting the number of emails sent from the row department to the column department aggregated across counties. Departments were also hand coded into one of 25 different categories based on given titles, to group departments that perform a similar function. The right margin displays the number of counties that had a manager of type X, and the number of those managers who were women.}
 	\end{figure}
-	%
+	% use recipeint rather than receiver and flip the y axis. omit zeros. have the shading march along together
 	
 	\item We can see that some departments are mostly men -- the county manager (the boss), the sheriff, and the emergency manager, for example. Others are mostly women -- the HR, finance, health, for example. 
-	\item So there is some evidence of gendering in positions, but what about men and women who perform the same position? Are they treated differently by the county manager? 
-	\item Lets look at an example of finance managers because every county has one. First off, there are only two female county managers and the finance managers in their counties are both women, so we focus instead on counties with male managers. Of these 15 counties, 10 have a female finance manager and 5 have a male finance manager. How do they communicate with the county manager?
-	
-	
-	\begin{table}[H]
-	\centering
-		\begin{tabular}{m{2in}cc}
-		\toprule
-		& \multicolumn{2}{c}{Finance Mgr. Gender} \\
-	& \textbf{Male} & \textbf{Female}  \\
-		 \midrule
-		 Emails Sent to County Manager & 48.4\%& 20.5\% \\
-		  & (151/312) & (334/1628)\\
-		 Percent of Emails Sent by County Manager to Finance Manager & 21.2\% & 24.2\% \\
-		  & (182/859) & (372/1535)\\
-		\bottomrule
-		\end{tabular}
-		\caption{\label{tab:finance stats}County manager -- finance manager communication for male county managers. Out of 15 counties with a male county manager, 10 had female finance managers and 5 had male finance managers. The (Fraction) displayed under each percentage is the raw number of emails sent to that manager divided by the total number of emails sent, aggregated over counties. }
-	\end{table}
-	
-	\item Male county managers do not communicate preferentially with finance managers of either gender, so no evidence for biased treatment by supervisor within positions in this case. 
-	\item Female finance managers are sending lots more emails on average than their male counterparts. Are they being assigned different tasks? 
-	\item More broadly, are female department managers performing different tasks than their male counterparts?
-	\item To understand this, we need to look at email content. 
-	\item A quick way to start is by searching for things like question marks, exclamation points, and "Thanks" to see if we observe differences by gender.
+	\item So there is some evidence of gendering in positions, but what about men and women who perform the same position? We can form a contingency table that records the number of emails sent by each gender combination against every department communication dyad.
+	% \item Lets look at an example of finance managers because every county has one. First off, there are only two female county managers and the finance managers in their counties are both women, so we focus instead on counties with male managers. Of these 15 counties, 10 have a female finance manager and 5 have a male finance manager. How do they communicate with the county manager?
+%
+%
+% 	\begin{table}[H]
+% 	\centering
+% 		\begin{tabular}{m{2in}cc}
+% 		\toprule
+% 		& \multicolumn{2}{c}{Finance Mgr. Gender} \\
+% 	& \textbf{Male} & \textbf{Female}  \\
+% 		 \midrule
+% 		 Emails Sent to County Manager & 48.4\%& 20.5\% \\
+% 		  & (151/312) & (334/1628)\\
+% 		 Percent of Emails Sent by County Manager to Finance Manager & 21.2\% & 24.2\% \\
+% 		  & (182/859) & (372/1535)\\
+% 		\bottomrule
+% 		\end{tabular}
+% 		\caption{\label{tab:finance stats}County manager -- finance manager communication for male county managers. Out of 15 counties with a male county manager, 10 had female finance managers and 5 had male finance managers. The (Fraction) displayed under each percentage is the raw number of emails sent to that manager divided by the total number of emails sent, aggregated over counties. }
+% 	\end{table}
+%
+% 	\item Male county managers do not communicate preferentially with finance managers of either gender, so no evidence for biased treatment by supervisor within positions in this case.
+% 	\item However, female finance managers are sending lots more emails on average (168) than their male counterparts (62), even though they send the same number to the county manager. Remember that on average, men and women send the same number of emails, so it is not just that women use email more in general. So are their job responsibilities different?
+% 	\item To understand this, we need to look at email content -- what are male and female managers talking about?
+% 	\item A quick and dirty way to start is by searching for things like question marks, exclamation points, and "Thanks" to see if we observe differences by gender.
 	
 	
 	% # female finance managers send male county managers 20.5% (334/1628) of emails
@@ -130,25 +154,27 @@
 	%   # male county managers send female finance managers 24.2% (372/1535) of emails
 	%   # male county managers send male finance managers 21.2% (182/859) of emails
 	
-	\begin{table}[H]
-	\centering
-	\begin{tabular}{m{2in}rrr}
-	\toprule
-	 \textbf{Email Content} & \textbf{Male} & \textbf{Female} & \textbf{t-test} \\
-	 \midrule
-	 Question Marks per Email Sent & 0.218 & 0.235 & 0.033\\
-	 Exclamation Marks per Email Sent & 0.088 & 0.363 & 0.001\\
-	 ``Thanks'' per Email Sent & 0.340 & 0.425 & 0.028 \\
-	\bottomrule
-	\end{tabular}
-		\caption{\label{tab:Gender Aggregate Stats} Manager-to-manager email communication statistics by gender across all departments and all counties. The \textbf{t-test} column reports reports Welch 2-sample t-test $p$ values for difference in means where applicable. When calculating content statistics, only the body text was used so as to avoid double counting subject lines in responses.}
-	\end{table}
 	
-	\item We do see significant differences, but why?
+	% lets cut this
+	% \begin{table}[H]
+% 	\centering
+% 	\begin{tabular}{m{2in}rrr}
+% 	\toprule
+% 	 \textbf{Email Content} & \textbf{Male} & \textbf{Female} & \textbf{t-test} \\
+% 	 \midrule
+% 	 Question Marks per Email Sent & 0.218 & 0.235 & 0.033\\
+% 	 Exclamation Marks per Email Sent & 0.088 & 0.363 & 0.001\\
+% 	 ``Thanks'' per Email Sent & 0.340 & 0.425 & 0.028 \\
+% 	\bottomrule
+% 	\end{tabular}
+% 		\caption{\label{tab:Gender Aggregate Stats} Manager-to-manager email communication statistics by gender across all departments and all counties. The \textbf{t-test} column reports reports Welch 2-sample t-test $p$ values for difference in means where applicable. When calculating content statistics, only the body text was used so as to avoid double counting subject lines in responses.}
+% 	\end{table}
+%
+% 	\item We do see significant differences, but why? Is this because men and women use language differently to accomplish the same goals, or because gender plays a role in the tasks managers are asked to do?
 	
 	\item If we want to do this in a more principled way, and for all departments at once, we might want to use a topic model to categorize emails, then look at gender mixing using the LSM in each topic.
 	
-	\item However, the gender mixing parameters we infer using this approach would be confounded by selection effects. As a toy example, either men prefer to talk to male coworkers over female coworkers about football, or women prefer not to talk about football at work, so do not participate in those conversations. 
+	\item However, the gender mixing parameters we infer using this approach would be confounded by selection effects. As a toy example, we would not be able to tell whether men prefer to talk to male coworkers over female coworkers about football, or women prefer not to talk about football at work, and so they do not participate in those conversations. 
 	\item To disentangle these effects, we need a joint model for email topical content, and the structure of communication.
 \end{enumerate}
 
@@ -174,13 +200,30 @@
 
 \section{Gender Mixing}
 
-\begin{figure}[H]
-	\begin{tabular}{ccc}
-		\includegraphics[width = 0.28\textwidth]{images/FF_FM.pdf} &
-		\includegraphics[width = 0.28\textwidth]{images/FF_MF.pdf}&
-		\includegraphics[width = 0.28\textwidth]{images/FM_MF.pdf}
-	\end{tabular}
-\end{figure}
+\begin{enumerate}
+	\item Since we have modeled content and structure together, we have broken up the confounding we were concerned about, and we can now interpret the gender mixing parameters that come out of our model with more confidence.
+	
+	\item Lets return to the question we posed at the end of our descriptive analysis section: Are women being excluded from conversations by their male coworkers, or are they simply not discussing the same things via email?
+	
+	\item  Lets form some expectations about the relationship between gender mixing parameters we estimate. 
+	
+	\item If we observe a positive relationship between the female-female mixing parameters and the male-female or female-male mixing parameters we estimate, this is evidence that there are male and female topics, and if you want to talk about a female (male) topic, you send an email to a female (male) colleague. This is evidence for the gendering of communication content. As a toy example, if you want to email about football, you email a male colleague.
+	
+	\item If we observe a negative relationship, this is evidence that there are some things that men send or receive emails about, and some things women send or receive emails about. This is evidence for gender bias in organizational roles.
+	
+	\begin{figure}[H]
+		\begin{tabular}{ccc}
+			\includegraphics[width = 0.28\textwidth]{images/FF_FM.pdf} &
+			\includegraphics[width = 0.28\textwidth]{images/FF_MF.pdf}&
+			\includegraphics[width = 0.28\textwidth]{images/FM_MF.pdf}
+		\end{tabular}
+	\end{figure}
+	
+\item We observe a pattern that is consistent with a gendering of communication content.	
+	
+	
+\end{enumerate}
+
 
 
 % \begin{enumerate}
