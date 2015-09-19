@@ -36,25 +36,26 @@
 		\begin{tabular}{lrrrrr}
 		  \hline
 		  % add an extra line
-		 \textbf{County} & \textbf{Mgrs.} & \textbf{Female} & \textbf{Internal} &\textbf{Total} \\
+		  & \multicolumn{2}{c}{\textbf{Manager Gender}} & \multicolumn{2}{c}{\textbf{Email Sender}}\\
+		 \textbf{County} & \textbf{Male} & \textbf{Female} & \textbf{Manager} &\textbf{All} \\
 		  \hline
-		Alexander & 21 & 9 & 907 & 11,924  \\
-		Caldwell & 20 & 8 & 121 &    \\
-		Chowan & 23 & 11 & 2,027 & 11,737  \\
-		Columbus & 24 & 10 & 920 & 12,707  \\
-		Dare & 27 & 12 & 2,247 &   \\
-		Duplin & 27 & 14 & 1,914 &   \\
-		Hoke & 24 & 11 & 1,106 & 5,565  \\
-		Jackson & 24 & 6 & 1,499 &   \\
-		Lenoir & 20 & 5 & 560 & 10,499 \\
-		Lincoln & 22 & 7 & 573 & 8,727  \\
-		McDowell & 17 & 5 & 326 & 3,494  \\
-		Montgomery & 18 & 10 & 680 & 2,465  \\
-		Nash & 19 & 8 & 1,147 & 9,133 \\
-		Person & 21 & 9 & 1,491 & 14023  \\
-		Transylvania & 20 & 4 & 1,857 & 14,088 \\
-		Vance & 18 & 8 & 185 & 4,349  \\
-		Wilkes & 17 & 2 & 303 & 8,443  \\
+		Alexander & 12 & 9 & 907 & 11,924  \\
+		Caldwell & 12 & 8 & 121 &    \\
+		Chowan & 12 & 11 & 2,027 & 11,737  \\
+		Columbus & 14 & 10 & 920 & 12,707  \\
+		Dare & 15 & 12 & 2,247 &   \\
+		Duplin & 13 & 14 & 1,914 &   \\
+		Hoke & 13 & 11 & 1,106 & 5,565  \\
+		Jackson & 18 & 6 & 1,499 &   \\
+		Lenoir & 15 & 5 & 560 & 10,499 \\
+		Lincoln & 15 & 7 & 573 & 8,727  \\
+		McDowell & 12 & 5 & 326 & 3,494  \\
+		Montgomery & 8 & 10 & 680 & 2,465  \\
+		Nash & 11 & 8 & 1,147 & 9,133 \\
+		Person & 12 & 9 & 1,491 & 14023  \\
+		Transylvania & 16 & 4 & 1,857 & 14,088 \\
+		Vance & 10 & 8 & 185 & 4,349  \\
+		Wilkes & 15 & 2 & 303 & 8,443  \\
 		   \hline
 		   \textbf{Totals:} & 362 & 139 & 17,863 & 117,154  \\
 		   \hline
@@ -80,7 +81,7 @@
 		\toprule
 	& \textbf{Male} & \textbf{Female}  \\
 		 \midrule
-		 Proportion of Managers & 61.6\%& 38.4\% \\
+		 Proportion of Managers in Sample & 61.6\%& 38.4\% \\
 		 \midrule
 		 Average \# Emails Sent & 48.3 & 51 \\
 		 Average \# Recipients Per Email Sent & 1.45 & 1.43 \\
@@ -103,7 +104,7 @@
 		 Male Sender & 60.7\% & 39.3\%  \\
 		\bottomrule
 		\end{tabular}
-		\caption{\label{tab:email agg stats}Manager email statistics by gender.}
+		\caption{\label{tab:email agg stats}Manager gender contingency table \textbf{(still need to fix and add in Chi Sq test)}.}
 	\end{table}
 	
 	\item The gender split is 60\% men, 40\% women and they both send and receive a comparable number of emails on average, so no volume difference.
@@ -113,7 +114,7 @@
 	
 	\item No gender bias? One place the literature tells us to look for gender bias is in the roles/positions in the organization.
 	
-	%make a gender vs. positon table here
+	\item \textbf{Add in a gender vs. position table here}
 	
 	\begin{figure}[H]
 	\centering
@@ -123,7 +124,32 @@
 	% use recipeint rather than receiver and flip the y axis. omit zeros. have the shading march along together
 	
 	\item We can see that some departments are mostly men -- the county manager (the boss), the sheriff, and the emergency manager, for example. Others are mostly women -- the HR, finance, health, for example. 
-	\item So there is some evidence of gendering in positions, but what about men and women who perform the same position? We can form a contingency table that records the number of emails sent by each gender combination against every department communication dyad.
+	\item So there is some evidence of gendering in positions, but what about men and women who perform the same position? 
+	
+	\item What we want to know is whether the gender of an email sender and its recipients is independent of the their respective departments. 
+	
+	\item To test for independence, we construct a contingency table of department dyad types (eg. finance -- HR) against gender dyad types (eg. male - female). We then perform a $\chi^2$ test for independence between the rows and columns.
+	
+	\item The test statistic is $\chi^2 = 37,404$ with a simulated p-value\footnote{We use bootstrapped p values calculated using 50,000 resamples as they are more conservative.} $< 0.00002$, indicating that the gender of an email sender and its recipients is not independent of the their respective departments.
+	
+	\item This indicates that there is gender bias in communication when we disaggregate to the department dyad level, however, we are still stuck.
+	
+	\item This analysis does not allow us to disentangle the two potential sources of the pattern we find -- bias in the positions women hold within these organizations, and bias in the way that male and female managers communicate. 
+	
+	\item Furthermore, this analysis may be slicing our data too thin since not all counties have a department manager of every type, and any particular department dyad may only exchange a handful of emails. Moreover, the department attribute of each manager is likely caused by several factors other than the topics of communication that may relate to gender bias. 
+	
+	\item One solution to the problems raised above is to model the email content, as general topics such as balancing budgets are commonly represented across counties. Practically, this also allows us to focus on a smaller number of communication topics that are shared across counties.
+	
+	\item To do this, we might want to use a statistical topic model to categorize emails, then model  gender mixing using the LSM in each topic.
+	
+	\item However, the gender mixing parameters we infer using this approach would be confounded by selection effects. As a toy example, we would not be able to tell whether men prefer to talk to male coworkers over female coworkers about football, or women prefer not to talk about football at work, and so they do not participate in those conversations. 
+	
+	\item To disentangle these effects, we need a joint model for email topical content, and the structure of communication.
+	
+\end{enumerate}
+	
+	%Departments in which managers work may provide a useful proxy measure for "topics of communication", so its insightful to at least look at department-specific patterns. However, using an available proxy to measure a concept raises a number of problems (e.g., departments may not be comparable across counties, we may be slicing our data too thin since there is only 1 or 2 representatives of each department in each county, general topics such as balancing budgets are commonly represented across counties, the department attribute of each manager is caused by several factors other than the topics of communication that may relate to gender bias). The justification for using our model is that the latent variables we infer reflect topic domains that are relevant in differentiating patterns of social interaction. The only data informing the variables we infer are the content of communication and the patterns of interaction. And by tuning the number of topics and social spaces we infer, we can control how thinly we divide our data, which is not possible to do with the department proxy. Instead of using a proxy out of convenience, we're doing the best we possibly can to operationalize our concepts using our data.
+	
 	% \item Lets look at an example of finance managers because every county has one. First off, there are only two female county managers and the finance managers in their counties are both women, so we focus instead on counties with male managers. Of these 15 counties, 10 have a female finance manager and 5 have a male finance manager. How do they communicate with the county manager?
 %
 %
@@ -172,11 +198,7 @@
 %
 % 	\item We do see significant differences, but why? Is this because men and women use language differently to accomplish the same goals, or because gender plays a role in the tasks managers are asked to do?
 	
-	\item If we want to do this in a more principled way, and for all departments at once, we might want to use a topic model to categorize emails, then look at gender mixing using the LSM in each topic.
-	
-	\item However, the gender mixing parameters we infer using this approach would be confounded by selection effects. As a toy example, we would not be able to tell whether men prefer to talk to male coworkers over female coworkers about football, or women prefer not to talk about football at work, and so they do not participate in those conversations. 
-	\item To disentangle these effects, we need a joint model for email topical content, and the structure of communication.
-\end{enumerate}
+
 
 \section{A Model of Email Content}
 \begin{enumerate}
@@ -203,23 +225,31 @@
 \begin{enumerate}
 	\item Since we have modeled content and structure together, we have broken up the confounding we were concerned about, and we can now interpret the gender mixing parameters that come out of our model with more confidence.
 	
-	\item Lets return to the question we posed at the end of our descriptive analysis section: Are women being excluded from conversations by their male coworkers, or are they simply not discussing the same things via email?
+	\item Lets return to the question we posed at the end of our descriptive analysis section: is there gender bias in the patterns of communication in these county governments. 
 	
-	\item  Lets form some expectations about the relationship between gender mixing parameters we estimate. 
+	\item Add in Bruce's MV KS test results for each county here.
 	
-	\item If we observe a positive relationship between the female-female mixing parameters and the male-female or female-male mixing parameters we estimate, this is evidence that there are male and female topics, and if you want to talk about a female (male) topic, you send an email to a female (male) colleague. This is evidence for the gendering of communication content. As a toy example, if you want to email about football, you email a male colleague.
+	\item Interpret the results.
 	
-	\item If we observe a negative relationship, this is evidence that there are some things that men send or receive emails about, and some things women send or receive emails about. This is evidence for gender bias in organizational roles.
+	\item Take as a case study, a county with the highest degree of gender bias, as identified by this method.
 	
-	\begin{figure}[H]
-		\begin{tabular}{ccc}
-			\includegraphics[width = 0.28\textwidth]{images/FF_FM.pdf} &
-			\includegraphics[width = 0.28\textwidth]{images/FF_MF.pdf}&
-			\includegraphics[width = 0.28\textwidth]{images/FM_MF.pdf}
-		\end{tabular}
-	\end{figure}
+	\item interpret the topic model output from two different clusters and discuss.
 	
-\item We observe a pattern that is consistent with a gendering of communication content.	
+% 	\item  Lets form some expectations about the relationship between gender mixing parameters we estimate.
+%
+% 	\item If we observe a positive relationship between the female-female mixing parameters and the male-female or female-male mixing parameters we estimate, this is evidence that there are male and female topics, and if you want to talk about a female (male) topic, you send an email to a female (male) colleague. This is evidence for the gendering of communication content. As a toy example, if you want to email about football, you email a male colleague.
+%
+% 	\item If we observe a negative relationship, this is evidence that there are some things that men send or receive emails about, and some things women send or receive emails about. This is evidence for gender bias in organizational roles.
+%
+% 	\begin{figure}[H]
+% 		\begin{tabular}{ccc}
+% 			\includegraphics[width = 0.28\textwidth]{images/FF_FM.pdf} &
+% 			\includegraphics[width = 0.28\textwidth]{images/FF_MF.pdf}&
+% 			\includegraphics[width = 0.28\textwidth]{images/FM_MF.pdf}
+% 		\end{tabular}
+% 	\end{figure}
+%
+% \item We observe a pattern that is consistent with a gendering of communication content.
 	
 	
 \end{enumerate}
