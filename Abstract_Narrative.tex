@@ -1,4 +1,20 @@
 \documentclass[fleqn]{MJDArticle}
+
+\usepackage{adjustbox}
+\usepackage{array}
+
+% \newcolumntype{R}[2]{%
+%     >{\adjustbox{angle=#1,lap=\width-(#2)}\bgroup}%
+%     l%
+%     <{\egroup}%
+% }
+\newcolumntype{R}[2]{%
+    >{\adjustbox{angle=#1,lap=\width-(#2)}\bgroup}%
+    l%
+    <{\egroup}%
+}
+\newcommand*\rot{\multicolumn{1}{R{90}{0em}}}% no optional argument here, please!
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
 \titleAT[Abstract Outline]{Matthew Denny}
@@ -10,8 +26,7 @@
 	\item Gender equity is normatively important.
 	\item Scholars have sought to understand the roots, extent, and nature of gender bias, but have not had access to primary source data. This has traditionally been observational, ethnographic and self reports, which can be biased. Limited in scope. 
 	\item With the increasing use of electronic communication, and the rise of e-government/ transparency, we are now able to use government email to study gender bias using primary source data.
-	\item This also makes our analyses replicable. 
-	\item Therefore, we choose to explore the relationship between gender and communication patterns in government organizations. 
+	\item Therefore, we choose to explore the relationship between gender and communication patterns in government organizations. This also makes our analyses replicable. 
 	% gender in govt organizations has been studies before pulbic vs. private. 
 	\item To do this, we collect and analyze large scale email data from a sample of 17 local governments.  
 	\item What do we look for, how do we do it,  what do we find -- at a high level. 
@@ -60,7 +75,7 @@
 		   \textbf{Totals:} & 362 & 139 & 17,863 & 117,154  \\
 		   \hline
 		\end{tabular}
-		\caption{\label{tab:county aggregate stats}Participating county email statistics. \textbf{Mgrs.} is the total number of department managers in a county, \textbf{Female} is the number of female managers in that county, \textbf{Internal} is the number of emails sent between managers in a county, and \textbf{Total} is the total number of emails sent and received by department managers in each county in our sample. Note that in this study, we only make use of the internal email data. Some email \textbf{Total}'s are omitted due to challenges in determining which emails (not sent by managers) were valid in these counties.}
+		\caption{\label{tab:county aggregate stats}Participating county email statistics. Note that in this study, we only make use of the internal (manager to manager) email data. Some email \textbf{All}'s are omitted due to challenges in determining which emails (not sent by managers) were valid in these counties.}
 	\end{table}
 
 	\item These counties are a representative sample and we have tons of data so lets start analyzing it.
@@ -98,12 +113,13 @@
 	% make this a contingency table and do a chi squared test
 	\begin{table}[H]
 	\centering
-		\begin{tabular}{lrrrr}
+		\begin{tabular}{lrr|r}
 		\toprule
 	& \textbf{Male Recipient} & \textbf{Female Recipient} & \textbf{Total}  \\
 		 \midrule
 		 \textbf{Male Sender} & 7,299 & 6,286 & 13,585 \\
 		 \textbf{Female Sender} & 5,325 & 3,510 & 8,835 \\
+		 \midrule
 		 \textbf{Total} & 12,624 & 9,796 & 22,420\\
 		\bottomrule
 		\end{tabular}
@@ -114,21 +130,42 @@
 	
 	\item We have replicated previous research, we do see gender bias, we could stop here but because we have more information we are going to dig deeper.
 
-	\item One place the literature tells us to look for gender bias is in the roles/positions in the organization.
+	\item One place the literature tells us to look for gender bias is in the gender representation in different roles/positions in the organization.
 	
-	\item \textbf{Add in a gender vs. position table here}
+	% latex table generated in R 3.2.2 by xtable 1.7-4 package
+	% Sat Sep 19 21:03:09 2015
+	\setlength{\tabcolsep}{4pt}
+	\begin{table}[ht]
+	\centering
+	         
+	\begin{tabular}{rrrrrrrrrrrrrrrrrrrrrrrrrr}
+	  \hline
+	 & \rot{Emergency} & \rot{Health} & \rot{IT} & \rot{Manager} & \rot{HR} & \rot{Library} & \rot{Plan/Dev} & \rot{Deeds} & \rot{Parks/Rec} & \rot{Finance} & \rot{Soc\_Serv} & \rot{Veterans} & \rot{Util/Waste} & \rot{Elections} & \rot{Sheriff} & \rot{Info} & \rot{Tax} & \rot{Inspections} & \rot{Animal} & \rot{Maintenance} & \rot{Seniors} & \rot{Transport} & \rot{Environment} & \rot{Misc} & \rot{Extension} \\ 
+	  \hline
+	Female & 2 & 11 & 2 & 2 & 12 & 8 & 3 & 9 & 5 & 12 & 8 & 7 & 1 & 11 & 1 & 5 & 5 & 3 & 3 & 0 & 6 & 1 & 4 & 1 & 5 \\ 
+	  Male & 15 & 5 & 11 & 15 & 3 & 3 & 11 & 6 & 9 & 5 & 8 & 5 & 11 & 2 & 16 & 2 & 10 & 11 & 9 & 5 & 2 & 6 & 7 & 5 & 8 \\ 
+	   \hline
+	\end{tabular}
+	\caption{\label{tab:gender position} Gender composition of department managers aggregated across counties}
+	\end{table}
+	\setlength{\tabcolsep}{6pt}
+	
+	
+	\item We can see that some departments are mostly men -- the county manager (the boss), the sheriff, and the emergency manager, for example. Others are mostly women -- the HR, finance, health, for example. 
+	\item So there is some evidence of gendering in positions, but what about men and women who perform the same position?
+	
+	\item What we want to know is whether the gender of an email sender and its recipients is independent of the their respective departments. 
 	
 	\begin{figure}[H]
 	\centering
 	\includegraphics[width = 0.8\textwidth]{images/Aggregate_Email_Flows.pdf}
-	\caption{\label{fig:heatmaps}Heat map depicting the number of emails sent from the row department to the column department aggregated across counties. Departments were also hand coded into one of 25 different categories based on given titles, to group departments that perform a similar function. The right margin displays the number of counties that had a manager of type X, and the number of those managers who were women.}
+	\caption{\label{fig:heatmaps}Heat map depicting the number of emails sent from the row department to the column department aggregated across counties. Departments were hand coded into one of 25 different categories based on given titles, to group departments that perform a similar function. The right margin displays the number of counties that had a manager of type X, and the number of those managers who were women.}
 	\end{figure}
 	% use recipeint rather than receiver and flip the y axis. omit zeros. have the shading march along together
 	
-	\item We can see that some departments are mostly men -- the county manager (the boss), the sheriff, and the emergency manager, for example. Others are mostly women -- the HR, finance, health, for example. 
-	\item So there is some evidence of gendering in positions, but what about men and women who perform the same position? 
 	
-	\item What we want to know is whether the gender of an email sender and its recipients is independent of the their respective departments. 
+	
+	
 	
 	\item To test for independence, we construct a contingency table of department dyad types (eg. finance -- HR) against gender dyad types (eg. male - female). We then perform a $\chi^2$ test for independence between the rows and columns.
 	
