@@ -223,7 +223,7 @@ We begin by examining the aggregate patterns of email communication among depart
 
 \section{Data}
 
-The data used in this study were collected in 2013 via a series of public records requests made to all one hundred North Carolina county governments. We selected North Carolina for our data collection efforts because the state public records laws cover email data, and prevent counties from charging unreasonable fees for providing data. Twenty-three counties complied with our request, of which seventeen provided data was useable for our research\footnote{Some counties provided too little data (i.e. 30 emails for the entire county), or provided data in paper form, which was not amenable to our analyses.}. Our records request to each county included all emails sent and received by all department managers (e.g. Health, Finance, Elections) over overlapping three-month periods in 2013\footnote{Requests to each county specified a random starting month for the request, between January and October, 2103.}. 
+The data used in this study were collected in 2013 via a series of public records requests made to all one hundred North Carolina county governments. We selected North Carolina for our data collection efforts because the state public records laws cover email data, and prevent counties from charging unreasonable fees for providing data. Twenty-three counties complied with our request, of which seventeen provided data was useable for our research\footnote{Some counties provided too little data (i.e. 30 emails for the entire county), or provided data in paper form, which was not amenable to our analyses.}. Our records request to each county included all emails sent and received by all department managers (e.g. Health, Finance, Elections) over a three-month period in 2013\footnote{Requests to each county specified a random starting month for the request, between January and October, 2103.}. 
 
 We received approximately 500,000 emails from the seventeen county governments which provided useable data, of which approximately 17,000 were sent between county department managers, which we focus on in the analyses presented here. Figure \ref{fig:nc map} highlights the counties which responded to our requests for data. We also collected detailed metadata on the department and gender of the 362 department managers in our sample. We display some basic descriptive statistics for each county in table \ref{tab:county aggregate stats}. Approximately 40\% of department managers in our sample are women, although there is significant variation in the proportion of female department managers across counties. It is important to note that the counties in our sample are statistically indistinguishable from the rest of the counties in North Carolina on a number of demographic dimensions including population, per-capita income, and percent of the population that is white.
 
@@ -272,7 +272,7 @@ We received approximately 500,000 emails from the seventeen county governments w
 
 \section{Descriptive Analysis}
 
-We begin our analysis of the a department manager's gender, and the emails they send and receive, by looking for differences in the propensity for department managers to send emails to other managers of the same gender (\emph{gender-homophilous} communication), and managers of the opposite gender (\emph{gender-heterophilous} communication). Table \ref{tab:email agg stats} provides some basic descriptive statistics including the average number emails sent and received by male and female department managers in our sample. On average, male and female department managers send and receive a comparable number of emails, and that emails sent by male and female department managers have a similar number of recipients on average. Therefore, if we observe gender differences in email communication, they are unlikely to have been driven by some innate difference in the propensity for male and female department managers to send or receive emails. 
+We begin our analysis of the relationship between a department manager's gender and the emails they send and receive, by looking for differences in the propensity for department managers to send emails to other managers of the same gender (\emph{gender-homophilous} communication), and managers of the opposite gender (\emph{gender-heterophilous} communication). Table \ref{tab:email agg stats} provides some basic descriptive statistics including the average number emails sent and received by male and female department managers in our sample. On average, male and female department managers send and receive a comparable number of emails, and emails sent by male and female department managers have a similar number of recipients. Therefore, if we observe gender differences in email communication, they are unlikely to be driven by some innate difference in the propensity for male and female department managers to send or receive emails. 
 	
 	\setlength{\tabcolsep}{2pt}
 	\begin{table}
@@ -296,7 +296,7 @@ gender.\\}
 	\end{table}
 	\setlength{\tabcolsep}{6pt}
 
-To test whether the gender of an email sender is related to the gender of its recipients, in aggregate, we construct a contingency table of the gender of the sender of an email against the gender of the recipients of that email (see table \ref{tab:gender email agg stats}). We then perform a $\chi^2$ test for independence between the rows and columns. The $\chi^2$ test statistic we obtain indicates that the gender of an email sender and its recipients is not independent $(\chi^2 = 92.9, p < 0.001)$. While the differences in gender-heterophilous and gender-homophilious are small on a substantive scale, the $\chi^2$ test statistic is actually driven by statistically significant gender heterophily.
+To test whether the gender of an email sender is related to the gender of its recipients, in aggregate, we construct a contingency table of email sending and receiving by gender (see table \ref{tab:gender email agg stats}). We then perform a $\chi^2$ test for independence between the rows and columns. The $\chi^2$ test statistic we obtain indicates that the gender of an email sender and its recipients is not independent $(\chi^2 = 92.9, p < 0.001)$. However, inspection of the contingency table indicates that the test statistic is actually driven by mild gender heterophily in communication. Furthermore, the gender differences we observe are substantively quite small, as both male and female department managers send emails to recipients of each gender in rough proportion to their overall representation in the sample (60\% to men, 40\% to women).  
 	
 	% make this a contingency table and do a chi squared test
 	\begin{table}
@@ -316,16 +316,17 @@ To test whether the gender of an email sender is related to the gender of its re
 		\caption{\label{tab:gender email agg stats}Each cell records the number of times a department manager of gender X was included as a recipient of an email sent by a department manager of gender Y. Statistics provided are calculated for all counties combined. Note that each email may have more than one recipient.}
 	\end{table}
 	
-This result contradicts what we know about gender-driven interaction in the workplace, and is possibly a result of the vast majority of e-mails being substantively uninteresting (e.g. meeting reminders sent automatically from a manager's Microsoft Outlook account). Therefore, we need to partition e-mails according to content in order to observe substantively interesting patterns. Our data allow us to use the department managed by each manager as a rough proxy for the content of their email communication, so we begin by looking for aggregate differences in the gender breakdown department managers for each department (see table \ref{tab:gender position}). Departments were hand coded into one of twenty-five different categories based on the title given in the county directory, to group departments that perform a similar function. 
+This result contradicts what we know about gender-driven interaction in the workplace, and is possibly a result of the vast majority of e-mails being substantively uninteresting (e.g. meeting reminders sent automatically from a manager's Microsoft Outlook account). Therefore, we need to partition e-mails according to content in order to observe substantively interesting patterns. Our data allow us to use the department of each manager as a rough proxy for the content of their email communication. We begin by looking for aggregate differences in the gender breakdown of department managers for each department, across our sample (see table \ref{tab:gender position}). Departments were hand coded into one of twenty-five different categories based on the title given in the county directory, to group departments that perform a similar function. Note that not all departments are represented in each county.
 
 	% latex table generated in R 3.2.2 by xtable 1.7-4 package
 	% Sat Sep 19 21:03:09 2015
 	\setlength{\tabcolsep}{4pt}
 	\begin{table}
 	\centering
-	         
+	 \caption{\label{tab:gender position} Number of male and female managers for each department.\\ }        \bigskip
 	\begin{tabular}{rrrrrrrrrrrrrrr}
-	 & \rot{\textbf{Emergency}} & \rot{\textbf{Health}} & \rot{\textbf{IT}} & \rot{\textbf{Manager}} & \rot{\textbf{HR}} & \rot{\textbf{Library}} & \rot{\textbf{Plan/Dev}} & \rot{\textbf{Deeds}} & \rot{\textbf{Parks/Rec}} & \rot{\textbf{Finance}} & \rot{\textbf{Soc\_Serv}} & \rot{\textbf{Veterans}} & \rot{\textbf{Util/Waste}}  \\ 
+		\toprule
+	 & \rot{\textbf{Emergency}} & \rot{\textbf{Health}} & \rot{\textbf{IT}} & \rot{\textbf{Manager}} & \rot{\textbf{HR}} & \rot{\textbf{Library}} & \rot{\textbf{Plan/Dev}} & \rot{\textbf{Deeds}} & \rot{\textbf{Parks/Rec}} & \rot{\textbf{Finance}} & \rot{\textbf{Soc/Serv}} & \rot{\textbf{Veterans}} & \rot{\textbf{Util/Waste}}  \\ 
 	  \midrule
 	  \textbf{Male} & 15 & 5 & 11 & 15 & 3 & 3 & 11 & 6 & 9 & 5 & 8 & 5 & 11  \\ 
 	\textbf{Female} & 2 & 11 & 2 & 2 & 12 & 8 & 3 & 9 & 5 & 12 & 8 & 7 & 1  \\ 
@@ -337,32 +338,27 @@ This result contradicts what we know about gender-driven interaction in the work
 	   \textbf{Female} & 11 & 1 & 5 & 5 & 3 & 3 & 0 & 6 & 1 & 4 & 1 & 5 \\
 	   \bottomrule
 	\end{tabular}
-	\caption{\label{tab:gender position} Number of male and female managers for each department. Note that not all departments are represented in each county.\\}
+	
 	\end{table}
 	\setlength{\tabcolsep}{6pt}
 	
 	
-We can see that the managers of some department are mostly men: the county manager (the supervisor of all other department managers), the sheriff, and the emergency manager, for example. Other departments  are mostly managed by women -- the HR, finance, and health departments, for example. A a $\chi^2$ test for the independence of department and gender confirms our qualitative finding that there is a strong bias in which departments tend to be managed by women $(\chi^2 = 130.8, p < 0.00001)$. These results indicate a bias in the gender composition of different departments, but cannot tell us about differences in email communication by men and women who manage the same department. To answer this question, we want to know whether the gender of an email sender and the gender of its recipients is independent of the their respective departments. 
+We can see that some departments are mostly managed by men: the county manager (the supervisor of all other department managers), the sheriff, and the emergency manager, for example. Other departments  are mostly managed by women: the HR, finance, and health departments, for example. A a $\chi^2$ test for the independence of department and gender confirms our qualitative finding that there is a strong bias in which departments tend to be managed by women $(\chi^2 = 130.8, p < 0.001)$. This result indicates a bias in the gender breakdown of department managers for each department, across our sample, but cannot tell us about differences in email communication by men and women who manage the same department. To answer this question, we need to know whether the gender of an email sender and the gender of its recipients is independent of the their respective departments. 
 	
 	\begin{figure*}
 	\centering
 	\includegraphics[width = 0.8\textwidth]{images/Aggregate_Email_Flows.pdf}
-	\caption{\label{fig:heatmaps}Heat map depicting the total number of emails sent from the managers of each department to the managers of each other department, aggregated across counties. The right-hand x-axis displays the number of counties that had that department, and the number of those managers who were women. Departments are ordered by the total number emails their managers sent.}
+	\caption{\label{fig:heatmaps}Heat map depicting the total number of emails sent from the managers of each department to the managers of each other department, aggregated across counties. The right-hand y-axis displays the number of counties that had that department, and the number of those managers who were women. Departments are ordered by the total number emails their managers sent.}
 	\end{figure*}
 	% use recipeint rather than receiver and flip the y axis. omit zeros. have the shading march along together
 	
 	
-Table \ref{fig:heatmaps} displays the aggregate number of times each department manager was the recipient of an email from the manager of each other department. We see pronounced differences in email sending an receiving by department, but cannot graphically disentangle the role of gender. To test for the independence of the gender of an email sender and the gender of its recipients from which department they direct, we construct a contingency table of department dyad-types (where each ``dyad-type'' is a unique combination of sender and recipient department, eg. finance $\longrightarrow$ HR) against gender dyad-types (where each ``dyad-type'' is a unique combination of sender and recipient gender, eg. male $\longrightarrow$ female).  We then perform a $\chi^2$ test for independence between the rows and columns. The test statistic $\chi^2 = 37,404$ with a simulated p-value\footnote{We use bootstrapped p values calculated using 50,000 resamples as they are more conservative.} $< 0.00002$, indicates that the gender of an email sender and its recipients is not independent of the their respective departments.
+Table \ref{fig:heatmaps} displays the aggregate number of times each department manager was a recipient of an email sent by a manager of each other department. We see pronounced differences in email sending an receiving by department, but cannot graphically disentangle the role of gender. 
+%To test for the independence of the gender of an email sender and the gender of its recipients, from the departments they direct, 
+Next, we construct a contingency table of department dyad-types (where each ``dyad-type'' is a unique combination of sender and recipient department, eg. finance $\longrightarrow$ HR) against gender dyad-types (where each ``dyad-type'' is a unique combination of sender and recipient gender, eg. male $\longrightarrow$ female).  We then perform a $\chi^2$ test on this contingency table, which indicates that the gender of an email sender and its recipients is not independent of their respective departments ($\chi^2 = 37,404, p < 0.001$).
 	
-This result indicates that there is gender bias in communication when we disaggregate to the department-dyad level, however, we are still stuck. This analysis does not allow us to disentangle the two potential sources of the pattern we find -- bias in the positions women hold within these organizations, and bias in the way that male and female managers communicate. Furthermore, this analysis may be slicing our data too thin since not all counties have the same departments, and any particular department dyad may only exchange a handful of emails. Moreover, the department attribute of each manager is likely caused by several factors other than the topics of communication which may relate to gender bias. 
 	
-One solution to the problems raised above is to model the email content, as general topics such as balancing budgets are commonly represented across counties. Practically, this also allows us to focus on a smaller number of communication topics that are shared across counties.
-	
-To do this, we might want to use a statistical topic model to categorize emails, then model  gender mixing using the LSM in each topic.
-	
-However, the gender mixing parameters we infer using this approach would be confounded by selection effects. As a toy example, we would not be able to tell whether men prefer to talk to male coworkers over female coworkers about football, or women prefer not to talk about football at work, and so they do not participate in those conversations. 
-	
-To disentangle these effects, we need a joint model for email topical content, and the structure of communication.
+This dyadic $\chi^2$ test tells us that there is an association between gender mixing patterns and department mixing patterns. Indeed, when we construct similar contingency tables for each department, we find that email senders in utilities and waste management departments exhibit gender-homophilous behavior ($\chi^2 = 10.49, p < 0.001$), senders in the tax department exhibit gender-heterophilous behavior ($\chi^2 = 4.54, p < 0.034$), and senders in the IT department seem unbiased ($\chi^2 = 1.23, p > 0.27$). However, we can't say from these results that the form of gender bias depends upon the domain of interaction since factors other than content are likely to vary with department labels, including the county in which the manager is working, the experience of the manager, and the manager's status in the organizational hierarchy. To disentangle these effects, we need explicitly model the topical content of emails. To do this, we extend a recently introduced joint model for communication topical content and network structure \citep{Krafft2012}, and apply it to our email data.
 	
 
 
@@ -371,11 +367,11 @@ Here we provide a brief overview of our extension to the TPME model \citep{Kraff
 
 At a high level, our model assumes the following generative process for a message sent across the communication network. First, we sample the content of the message following the generative process for latent Dirichlet allocation. Then, for a given message sender, we sample whether each other actor in the network is a receiver of that message following the latent space network model. However, different topics (or clusters of topics in our extension) are associated with different latent spaces, so how likely each actor is to be a receiver of a particular message is dependent on the topical content of that message. We review this process in greater detail below.  
 
- \begin{figure}
-\caption{\label{fig:splitting} Different patterns of communication across different domains.}	
-\centering
-\includegraphics[width = 0.48\textwidth]{images/Structure_Matters_Full.pdf}
-\end{figure}
+%  \begin{figure}
+% \caption{\label{fig:splitting} Different patterns of communication across different domains.}
+% \centering
+% \includegraphics[width = 0.48\textwidth]{images/Structure_Matters_Full.pdf}
+% \end{figure}
 
 The message content is assumed to be generated via latent Dirichlet allocation. Under this model, we assume that all unique words in our vocabulary are associated to varying degrees with each of $T$ latent ``topics''. Each topic is then a distribution over unique words (or ``word types''), $\boldsymbol{\phi}^{(t)}$. For example ``doctor'', ``virus'', and ``medicine'' might all have high probability in a topic about hospitals, while ``cat'' and ``music'' might have low probability in that topic. We further assume that each topic distribution is drawn from a Dirichlet prior: 
 \begin{equation}
@@ -397,7 +393,6 @@ Here, the concentration parameter $\alpha$ controls how topically specific the d
  \end{equation}
 We proceed in this manner for all tokens in all documents. 
 
-% The content of each message sent across the network is assumed to be generated similarly to the generative process for latent Dirichlet allocation, where each message is a mixture of different ``topics'', but the mixture of topics, and thus words, is governed in part by the (intended) recipients of that message.  The sender then selects the recipients for that message probabilistically, based on the message content and the associated content-specific latent social structure of the network.
 
 In our extension of TPME, we further assume each topic is uniquely associated with one of $C$ clusters, sampled from a discrete uniform distribution.
 \begin{equation}
