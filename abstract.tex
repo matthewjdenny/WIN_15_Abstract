@@ -234,12 +234,12 @@ The data used in this study were collected in 2013 via a series of public record
 	\begin{table}
 	\centering
 		\begin{tabular}{lrrrr}
-		  \hline
+		  \toprule
 		  % add an extra line
 		  & \multicolumn{2}{c}{\textbf{Manager Gender}} & \\
 		  \cmidrule{2-3}
 		 \textbf{County} & \textbf{Male} & \textbf{Female} & \textbf{Emails Sent}  \\
-		  \hline
+		  \midrule
 		Alexander & 12 & 9 & 907   \\
 		Caldwell & 12 & 8 & 121     \\
 		Chowan & 12 & 11 & 2,027   \\
@@ -257,51 +257,13 @@ The data used in this study were collected in 2013 via a series of public record
 		Transylvania & 16 & 4 & 1,857  \\
 		Vance & 10 & 8 & 185   \\
 		Wilkes & 15 & 2 & 303   \\
-		   \hline
+		   \midrule
 		   \textbf{Totals:} & 362 & 139 & 17,863 \\
-		   \hline
+		   \bottomrule
 		\end{tabular}
 		\caption{\label{tab:county aggregate stats}Department manager gender breakdown and number of emails sent by department managers for each county in our sample. It is important to note that the counties in our sample are statistically indistinguishable from the rest of the counties in North Carolina on a number of demographic dimensions including population, per-capita income, and percent of the population that is white. \\}
 	\end{table}
-	
-	% \begin{figure}
-	% 	\centering
-	% \caption{\label{fig:nc map} North Carolina county map.}
-	% \centering
-	% \includegraphics[width = 0.48\textwidth]{images/County_Map.pdf}
-	% \end{figure}
-	%
-	% \begin{table}
-	% \centering
-	% 	\begin{tabular}{lrrrrr}
-	% 	  \hline
-	% 	  % add an extra line
-	% 	  & \multicolumn{2}{c}{\textbf{Manager Gender}} & \multicolumn{2}{c}{\textbf{Email Sender}}\\
-	% 	 \textbf{County} & \textbf{Male} & \textbf{Female} & \textbf{Manager} &\textbf{All} \\
-	% 	  \hline
-	% 	Alexander & 12 & 9 & 907 & 11,924  \\
-	% 	Caldwell & 12 & 8 & 121 &    \\
-	% 	Chowan & 12 & 11 & 2,027 & 11,737  \\
-	% 	Columbus & 14 & 10 & 920 & 12,707  \\
-	% 	Dare & 15 & 12 & 2,247 &   \\
-	% 	Duplin & 13 & 14 & 1,914 &   \\
-	% 	Hoke & 13 & 11 & 1,106 & 5,565  \\
-	% 	Jackson & 18 & 6 & 1,499 &   \\
-	% 	Lenoir & 15 & 5 & 560 & 10,499 \\
-	% 	Lincoln & 15 & 7 & 573 & 8,727  \\
-	% 	McDowell & 12 & 5 & 326 & 3,494  \\
-	% 	Montgomery & 8 & 10 & 680 & 2,465  \\
-	% 	Nash & 11 & 8 & 1,147 & 9,133 \\
-	% 	Person & 12 & 9 & 1,491 & 14023  \\
-	% 	Transylvania & 16 & 4 & 1,857 & 14,088 \\
-	% 	Vance & 10 & 8 & 185 & 4,349  \\
-	% 	Wilkes & 15 & 2 & 303 & 8,443  \\
-	% 	   \hline
-	% 	   \textbf{Totals:} & 362 & 139 & 17,863 & 117,154  \\
-	% 	   \hline
-	% 	\end{tabular}
-	% 	\caption{\label{tab:county aggregate stats}Participating county email statistics. Note that in this study, we only make use of the internal (manager to manager) email data. Some email \textbf{All}'s are omitted due to challenges in determining which emails (not sent by managers) were valid in these counties.\\}
-	% \end{table}
+
 
 
 \section{Descriptive Analysis}
@@ -350,8 +312,7 @@ We can now disaggregate email sending and receiving by gender to see if there is
 	\end{table}
 	
 We conduct a $\chi^2$ test on this contingency table and the test statistic is $\chi^2 = 92.9$ with a p-value $< 0.00001$, indicating that the gender of an email sender and its recipients is not independent. While this result provides evidence for gender bias in communication in these county governments, our findings could potentially be confounded by gender differences in the departments men and women manage. Fortunately, our data includes the department managed by each manager, allowing us to disaggregate our analysis by department. We begin by looking for aggregate differences in the gender composition of departments (see table \ref{tab:gender position}). Departments were hand coded into one of 25 different categories based on the title given the county directory, to group departments that perform a similar function. For example the  
-	
-	
+
 	% latex table generated in R 3.2.2 by xtable 1.7-4 package
 	% Sat Sep 19 21:03:09 2015
 	\setlength{\tabcolsep}{4pt}
@@ -360,16 +321,16 @@ We conduct a $\chi^2$ test on this contingency table and the test statistic is $
 	         
 	\begin{tabular}{rrrrrrrrrrrrrr}
 	 & \rot{\textbf{Emergency}} & \rot{\textbf{Health}} & \rot{\textbf{IT}} & \rot{\textbf{Manager}} & \rot{\textbf{HR}} & \rot{\textbf{Library}} & \rot{\textbf{Plan/Dev}} & \rot{\textbf{Deeds}} & \rot{\textbf{Parks/Rec}} & \rot{\textbf{Finance}} & \rot{\textbf{Soc\_Serv}} & \rot{\textbf{Veterans}} & \rot{\textbf{Util/Waste}}  \\ 
-	  \hline
+	  \midrule
 	  \textbf{Male} & 15 & 5 & 11 & 15 & 3 & 3 & 11 & 6 & 9 & 5 & 8 & 5 & 11  \\ 
 	\textbf{Female} & 2 & 11 & 2 & 2 & 12 & 8 & 3 & 9 & 5 & 12 & 8 & 7 & 1  \\ 
 	  
-	   \hline
+	   \bottomrule
 	   & \rot{\textbf{Elections}} & \rot{\textbf{Sheriff}} & \rot{\textbf{Info}} & \rot{\textbf{Tax}} & \rot{\textbf{Inspections}} & \rot{\textbf{Animal}} & \rot{\textbf{Maintenance}} & \rot{\textbf{Seniors}} & \rot{\textbf{Transport}} & \rot{\textbf{Environment}} & \rot{\textbf{Misc}} & \rot{\textbf{Extension}} \\
-	   \hline
+	   \midrule
 	   \textbf{Male} &  2 & 16 & 2 & 10 & 11 & 9 & 5 & 2 & 6 & 7 & 5 & 8 \\
 	   \textbf{Female} & 11 & 1 & 5 & 5 & 3 & 3 & 0 & 6 & 1 & 4 & 1 & 5 \\
-	   \hline
+	   \bottomrule
 	\end{tabular}
 	\caption{\label{tab:gender position} Number of male and female managers for each department. Note that not all departments are represented in each county.\\}
 	\end{table}
@@ -475,11 +436,6 @@ Discuss our model specification and justify our hyper-parameter choices.
 \section{Gender Mixing}
 
 
- \begin{figure}
-\caption{\label{fig:Mixing parameters} Mixing Parameters}	
-\centering
-\includegraphics[width = 0.48\textwidth]{images/Mixing_Parameter_Plot.pdf}
-\end{figure}
 
 Since we have modeled content and structure together, we have broken up the confounding we were concerned about, and we can now interpret the gender mixing parameters that come out of our model with more confidence.
 	
