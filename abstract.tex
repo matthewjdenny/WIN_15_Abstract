@@ -466,30 +466,36 @@ where $*$ is the proportion of tokens in document $d$ assigned to topics associa
 Given that we do not directly observe the generative process, the object of inference becomes the posterior distribution of our model parameters given the data. This problem is analytically intractable, so we must approximate the posterior distribution via Markov chain Monte Carlo methods. We perform inference for this model via block Metropolis within Gibbs sampling\footnote{The inference algorithm is currently implemented in a beta version as an R package, and is available here: \href{https://github.com/matthewjdenny/ContentStructure}{github.com/matthewjdenny/ContentStructure}}. A further discussion of this model will be provided in a related paper, but this model provides a powerful and flexible framework to investigate the content-conditional gendered patterns of communication in an organization. 
 
 \subsection{Inference}
-\begin{enumerate}
-	\item We have to invert the generative process to perform inference on the model parameters.
-	\item We use block Metropolis Hastings within Gibbs sampling.
-	\item A beta R package is available for those interested.
-	\item Discuss our model specification and justify our hyper-parameter choices.
-\end{enumerate}
+ We have to invert the generative process to perform inference on the model parameters.
+We use block Metropolis Hastings within Gibbs sampling.
+A beta R package is available for those interested.
+Discuss our model specification and justify our hyper-parameter choices.
+
 
 \section{Gender Mixing}
 
-\begin{enumerate}
-	\item Since we have modeled content and structure together, we have broken up the confounding we were concerned about, and we can now interpret the gender mixing parameters that come out of our model with more confidence.
+
+ \begin{figure}
+\caption{\label{fig:Mixing parameters} Mixing Parameters}	
+\centering
+\includegraphics[width = 0.48\textwidth]{images/Mixing_Parameter_Plot.pdf}
+\end{figure}
+
+Since we have modeled content and structure together, we have broken up the confounding we were concerned about, and we can now interpret the gender mixing parameters that come out of our model with more confidence.
 	
-	\item Lets return to the question we posed at the end of our descriptive analysis section: is there gender bias in the patterns of communication in these county governments. 
+Lets return to the question we posed at the end of our descriptive analysis section: is there gender bias in the patterns of communication in these county governments. 
 	
-	\item Add in Bruce's MV KS test results for each county here.
+ Add in Bruce's MV KS test results for each county here.
 	
-	\item Interpret the results.
-	
-	\item Take as a case study, a county with the highest degree of gender bias, as identified by this method.
-	
-	\item interpret the topic model output from two different clusters and discuss
+Interpret the results.
 	
 	
-\end{enumerate}
+Take as a case study, a county with the highest degree of gender bias, as identified by this method.
+	
+interpret the topic model output from two different clusters and discuss
+	
+	
+
 
 
 
