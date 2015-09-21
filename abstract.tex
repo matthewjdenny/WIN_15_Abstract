@@ -12,6 +12,8 @@
 
 
 
+
+
 % And another fix.  PNAS class loses the label of floats unless they       
 % were defined with the [h] option (so not really floats at all).  It      
 % all comes down to wrong scope in the following routine which pushes      
@@ -138,6 +140,23 @@
 }
 \makeatother
 
+
+\usepackage{adjustbox}
+\usepackage{array}
+
+% \newcolumntype{R}[2]{%
+%     >{\adjustbox{angle=#1,lap=\width-(#2)}\bgroup}%
+%     l%
+%     <{\egroup}%
+% }
+\newcolumntype{R}[2]{%
+    >{\adjustbox{angle=#1,lap=\width-(#2)}\bgroup}%
+    l%
+    <{\egroup}%
+}
+\newcommand*\rot{\multicolumn{1}{R{75}{0em}}}% no optional argument here, please!
+
+
 \setlength{\footskip}{.5in}
 \usepackage{algorithm2e}
 %% ADDITIONAL OPTIONAL STYLE FILES Font specification
@@ -194,30 +213,203 @@ Hanna Wallach\affil{2}{}\affil{3}{Microsoft Research NYC},
 
 %\abbreviations{SAM, self-assembled monolayer; OTS, octadecyltrichlorosilane}
 
-\section{Introduction}
+\section{Gender in Organizations}
+Gender bias against female members of firms and government organizations is well documented in terms of pay, prestige, opportunity for advancement, and social interaction \citep{Brass1985, Bielby1986a, Ibarra1992, Albrecht2003, Duncan2004}. At the same time, providing equal treatment to male and female colleagues is a key objective for organizations that aspire to a just, efficient, and sustainable professional culture \citep{Ely2000}. Scholars have sought to understand the roots, extent, and nature of gender bias, but have only had limited access to primary-source data in previous studies. The data used in these studies \citep[e.g.,][]{Castilla2005, Adams2007, Elsesser2011} has traditionally been observational, ethnographic or consists of self reports, which can be biased and are often limited in scope. 
+	
+However, with the increasing use of electronic communication, and the rise of \emph{e-government} and transparency initiatives within government, scholars are now able to use public records requests to gather primary source email communication data. Using public records requests as a method for data collection also carries a major benefit of making the data collection process replicable. Therefore, we choose to study the relationship between gender and communication patterns in a sample of local governments. To do this, we collect and analyze a large scale email data set from a sample of seventeen county governments in North Carolina. We look for gendered patterns of communication at multiple overlapping scales within and across these organizations, which we find evidence for, using both descriptive statistics and a new statistical model for email data. Our results indicate that the relationship between gender and the patterns of communication in these organizations is complex, multi-scale, and strongly related to the positions men and women hold within these organizations.
 
 
+\section{Data}
 
-% general overview of the solution we will develop and immediately related recent work
-% Advances in statistical models for textual data \citep{Papadimitriou1998,Blei2003}
-% have recently been built upon to
+The data used in this study were collected in 2013 via a series of public records requests made to all 100 North Carolina county governments. We selected North Carolina for our data collection efforts because the state public records laws cover email data, and prevent counties from charging unreasonable fees for providing data. 23 counties complied with our request, of which 17 provided data was useful to our research\footnote{Some counties provided too little data, or provided data in paper form, which was not amenable to our analyses.}. Our records request to each county included all emails sent and received by all department managers (e.g. Health, Finance, etc.) over overlapping 3 month periods in 2013. We received approximately 500,000 total emails from the 17 participating county governments, of which approximately 17,000 were sent between county department managers. Figure \ref{fig:nc map} highlights the counties which responded to our requests for data. We also collected detailed metadata on the department and gender of the 362 department managers in our sample. We display some basic descriptive statistics for each county in table \ref{tab:county aggregate stats}. We can see from table \ref{tab:county aggregate stats} that approximately 40\% of department managers in our sample are women, although there is significant variation in the proportion of female department managers across counties. There is also significant variation in the number of emails provided by these counties. 
 
-Researchers have recently begun to integrate structural models of networks with models for textual content \citep{McCallum2007,Krafft2012}. In this paper we introduce two extensions to the topic partitioned multi-network embeddings (TPME) model introduced by Krafft et al. \cite{Krafft2012}, and apply this model to the analysis of a large cross-organizational email corpus. Specifically, we extend the work of Krafft et al. to include actor-level covariates such as gender or organizational position, and latent-class topic clustering. These extensions situate our new model as a full generalization of the latent space network model \citep{Hoff2002a} to text-valued networks. Our approach allows us to discover varying content-conditional sub-structures within the email networks we study, that we are likely to miss when only examining the aggregate network structure (an example is provided in Figure \ref{fig:splitting}). 
 
-We use our new model to understand how gender is related to the patterns of communication between department managers in 17 North Carolina county governments, and how these patterns vary with message content. This new dataset comprises almost 18,000 emails sent between 362 county department managers (e.g. health, budget, HR) during overlapping 3-month periods in 2013. Importantly, we were also able to gather covariate data for each manager, such as their gender and formal position in the organization, allowing us to make inferences about the relationship between these covariates and the observed network structure. Utilizing our model, we examine the variation in the propensity for men and women to send, and be included as recipients of emails, across content domains and counties. We find that while aggregate patterns of communication among department managers do not display significant gender bias, the content of communication and positions held by men and women differ significantly.
+	\begin{figure}
+		\centering
+	\caption{\label{fig:nc map} North Carolina county map with counties that provided data highlighted.}	
+	\centering
+	\includegraphics[width = 0.48\textwidth]{images/County_Map.pdf}
+	\end{figure}
+	
+	\begin{table}
+	\centering
+		\begin{tabular}{lrrrr}
+		  \hline
+		  % add an extra line
+		  & \multicolumn{2}{c}{\textbf{Manager Gender}} & \\
+		  \cmidrule{2-3}
+		 \textbf{County} & \textbf{Male} & \textbf{Female} & \textbf{Emails Sent}  \\
+		  \hline
+		Alexander & 12 & 9 & 907   \\
+		Caldwell & 12 & 8 & 121     \\
+		Chowan & 12 & 11 & 2,027   \\
+		Columbus & 14 & 10 & 920   \\
+		Dare & 15 & 12 & 2,247    \\
+		Duplin & 13 & 14 & 1,914    \\
+		Hoke & 13 & 11 & 1,106  \\
+		Jackson & 18 & 6 & 1,499    \\
+		Lenoir & 15 & 5 & 560  \\
+		Lincoln & 15 & 7 & 573   \\
+		McDowell & 12 & 5 & 326   \\
+		Montgomery & 8 & 10 & 680   \\
+		Nash & 11 & 8 & 1,147  \\
+		Person & 12 & 9 & 1,491   \\
+		Transylvania & 16 & 4 & 1,857  \\
+		Vance & 10 & 8 & 185   \\
+		Wilkes & 15 & 2 & 303   \\
+		   \hline
+		   \textbf{Totals:} & 362 & 139 & 17,863 \\
+		   \hline
+		\end{tabular}
+		\caption{\label{tab:county aggregate stats}Department manager gender breakdown and number of emails sent by department managers for each county in our sample. It is important to note that the counties in our sample are statistically indistinguishable from the rest of the counties in North Carolina on a number of demographic dimensions including population, per-capita income, and percent of the population that is white. \\}
+	\end{table}
+	
+	% \begin{figure}
+	% 	\centering
+	% \caption{\label{fig:nc map} North Carolina county map.}
+	% \centering
+	% \includegraphics[width = 0.48\textwidth]{images/County_Map.pdf}
+	% \end{figure}
+	%
+	% \begin{table}
+	% \centering
+	% 	\begin{tabular}{lrrrrr}
+	% 	  \hline
+	% 	  % add an extra line
+	% 	  & \multicolumn{2}{c}{\textbf{Manager Gender}} & \multicolumn{2}{c}{\textbf{Email Sender}}\\
+	% 	 \textbf{County} & \textbf{Male} & \textbf{Female} & \textbf{Manager} &\textbf{All} \\
+	% 	  \hline
+	% 	Alexander & 12 & 9 & 907 & 11,924  \\
+	% 	Caldwell & 12 & 8 & 121 &    \\
+	% 	Chowan & 12 & 11 & 2,027 & 11,737  \\
+	% 	Columbus & 14 & 10 & 920 & 12,707  \\
+	% 	Dare & 15 & 12 & 2,247 &   \\
+	% 	Duplin & 13 & 14 & 1,914 &   \\
+	% 	Hoke & 13 & 11 & 1,106 & 5,565  \\
+	% 	Jackson & 18 & 6 & 1,499 &   \\
+	% 	Lenoir & 15 & 5 & 560 & 10,499 \\
+	% 	Lincoln & 15 & 7 & 573 & 8,727  \\
+	% 	McDowell & 12 & 5 & 326 & 3,494  \\
+	% 	Montgomery & 8 & 10 & 680 & 2,465  \\
+	% 	Nash & 11 & 8 & 1,147 & 9,133 \\
+	% 	Person & 12 & 9 & 1,491 & 14023  \\
+	% 	Transylvania & 16 & 4 & 1,857 & 14,088 \\
+	% 	Vance & 10 & 8 & 185 & 4,349  \\
+	% 	Wilkes & 15 & 2 & 303 & 8,443  \\
+	% 	   \hline
+	% 	   \textbf{Totals:} & 362 & 139 & 17,863 & 117,154  \\
+	% 	   \hline
+	% 	\end{tabular}
+	% 	\caption{\label{tab:county aggregate stats}Participating county email statistics. Note that in this study, we only make use of the internal (manager to manager) email data. Some email \textbf{All}'s are omitted due to challenges in determining which emails (not sent by managers) were valid in these counties.\\}
+	% \end{table}
 
+
+\section{Descriptive Analysis}
+
+We begin our analysis of the relationship between gender and communication patterns in these county governments by looking for differences in aggregate email sending and receiving behavior, by gender, across our entire sample. Table \ref{tab:email agg stats} provides some basic descriptive statistics of the average number emails sent and received by male and female department managers in our sample. We can see that on average, male and female department managers send and receive a comparable number of emails, and that each email sent by male and female department managers has a similar number of recipients on average. These statistics tell us that if we observe gender differences in email communication, they are unlikely driven by some innate difference in the propensity for male and female department managers to send or receive emails. 
+	
+	
+	\begin{table}
+	\centering
+		\begin{tabular}{m{2in}rrr}
+		\toprule
+		& \multicolumn{2}{c}{\textbf{Manager Gender}} \\
+		\cmidrule{2-3}
+	& \textbf{Male} & \textbf{Female}  \\
+		 \midrule
+		 % Proportion of Managers in Sample & 61.6\%& 38.4\% \\
+		 % \midrule
+		 Average number of emails sent & 48.3 & 51 \\
+		 Average number of recipients per email sent & 1.45 & 1.43 \\
+		 \midrule
+		 Average number of emails received & 70.8 & 71.6 \\
+		\bottomrule
+		\end{tabular}
+		\caption{\label{tab:email agg stats}Email statistics by manager
+gender.\\}
+	\end{table}
+	
+We can now disaggregate email sending and receiving by gender to see if there is a relationship between the gender of the sender of an email and the gender of the recipients of that email. If we do see a relationship, this would indicate that there is gender bias in communication within these organizations. To test whether the gender of an email sender is related to the gender of its recipients, in aggregate, we construct a contingency table of the gender of the sender of an email against the gender of the recipients of that email (see table \ref{tab:gender email agg stats}). We then perform a $\chi^2$ test for independence between the rows and columns.
+	
+	% make this a contingency table and do a chi squared test
+	\begin{table}
+	\centering
+		\begin{tabular}{rlrr|r}
+		\toprule
+		 && \multicolumn{3}{c}{\textbf{Recipient}} \\
+		\cmidrule{3-5}
+	& & \textbf{Male} & \textbf{Female} & \textbf{Total}  \\
+		 \midrule
+		$|$& \textbf{Male} & 7,299 & 6,286 & 13,585 \\
+	\textbf{Sender}	$|$& \textbf{Female} & 5,325 & 3,510 & 8,835 \\
+	\cmidrule{2-5}
+		 $|$& \textbf{Total} & 12,624 & 9,796 & \\
+		\bottomrule
+		\end{tabular}
+		\caption{\label{tab:gender email agg stats}Each cell records the number of times a department manager of gender X was included as a recipient of an email sent by a department manager of gender Y. Statistics provided are calculated for all counties combined. Note that each email may have more than one recipient.}
+	\end{table}
+	
+We conduct a $\chi^2$ test on this contingency table and the test statistic is $\chi^2 = 92.9$ with a p-value $< 0.00001$, indicating that the gender of an email sender and its recipients is not independent. While this result provides evidence for gender bias in communication in these county governments, our findings could potentially be confounded by gender differences in the departments men and women manage. Fortunately, our data includes the department managed by each manager, allowing us to disaggregate our analysis by department. We begin by looking for aggregate differences in the gender composition of departments (see table \ref{tab:gender position}). 
+	
+	
+	% latex table generated in R 3.2.2 by xtable 1.7-4 package
+	% Sat Sep 19 21:03:09 2015
+	\setlength{\tabcolsep}{4pt}
+	\begin{table}
+	\centering
+	         
+	\begin{tabular}{rrrrrrrrrrrrrr}
+	 & \rot{\textbf{Emergency}} & \rot{\textbf{Health}} & \rot{\textbf{IT}} & \rot{\textbf{Manager}} & \rot{\textbf{HR}} & \rot{\textbf{Library}} & \rot{\textbf{Plan/Dev}} & \rot{\textbf{Deeds}} & \rot{\textbf{Parks/Rec}} & \rot{\textbf{Finance}} & \rot{\textbf{Soc\_Serv}} & \rot{\textbf{Veterans}} & \rot{\textbf{Util/Waste}}  \\ 
+	  \hline
+	  \textbf{Male} & 15 & 5 & 11 & 15 & 3 & 3 & 11 & 6 & 9 & 5 & 8 & 5 & 11  \\ 
+	\textbf{Female} & 2 & 11 & 2 & 2 & 12 & 8 & 3 & 9 & 5 & 12 & 8 & 7 & 1  \\ 
+	  
+	   \hline
+	   & \rot{\textbf{Elections}} & \rot{\textbf{Sheriff}} & \rot{\textbf{Info}} & \rot{\textbf{Tax}} & \rot{\textbf{Inspections}} & \rot{\textbf{Animal}} & \rot{\textbf{Maintenance}} & \rot{\textbf{Seniors}} & \rot{\textbf{Transport}} & \rot{\textbf{Environment}} & \rot{\textbf{Misc}} & \rot{\textbf{Extension}} \\
+	   \hline
+	   \textbf{Male} &  2 & 16 & 2 & 10 & 11 & 9 & 5 & 2 & 6 & 7 & 5 & 8 \\
+	   \textbf{Female} & 11 & 1 & 5 & 5 & 3 & 3 & 0 & 6 & 1 & 4 & 1 & 5 \\
+	   \hline
+	\end{tabular}
+	\caption{\label{tab:gender position} Number of male and female managers for each department. Note that not all departments are represented in each county.\\}
+	\end{table}
+	\setlength{\tabcolsep}{6pt}
+	
+	
+We can see that the managers of some department are mostly men: the county manager (the supervisor of all other department managers), the sheriff, and the emergency manager, for example. Other departments  are mostly managed by women -- the HR, finance, and health departments, for example. A a $\chi^2$ test for the independence of department and gender confirms our qualitative finding that there is a strong bias in which departments tend to be managed by women $(\chi^2 = 130.8, p < 0.00001)$. These results indicate a bias in the gender composition of different departments, but cannot tell us about differences in email communication by men and women who manage the same department. To answer this question, we want to know whether the gender of an email sender and the gender of its recipients is independent of the their respective departments. 
+	
+	\begin{figure*}
+	\centering
+	\includegraphics[width = 0.8\textwidth]{images/Aggregate_Email_Flows-Ordered.pdf}
+	\caption{\label{fig:heatmaps}Heat map depicting the number of emails sent from the row department to the column department aggregated across counties. Departments were hand coded into one of 25 different categories based on given titles, to group departments that perform a similar function. The right margin displays the number of counties that had a manager of type X, and the number of those managers who were women. Departments are ordered by the total number emails their managers send.}
+	\end{figure*}
+	% use recipeint rather than receiver and flip the y axis. omit zeros. have the shading march along together
+	
+	
+Table \ref{fig:heatmaps} displays the aggregate number of times each department manager was the recipient of an email from the manager of each other department. We see pronounced differences in email sending an receiving by department, but cannot graphically disentangle the role of gender. To test for the independence of the gender of an email sender and the gender of its recipients from which department they direct, we construct a contingency table of department dyad types (eg. finance $\longrightarrow$ HR) against gender dyad types (eg. male $\longrightarrow$ female).  We then perform a $\chi^2$ test for independence between the rows and columns. The test statistic $\chi^2 = 37,404$ with a simulated p-value\footnote{We use bootstrapped p values calculated using 50,000 resamples as they are more conservative.} $< 0.00002$, indicates that the gender of an email sender and its recipients is not independent of the their respective departments.
+	
+This result indicates that there is gender bias in communication when we disaggregate to the department dyad level, however, we are still stuck. This analysis does not allow us to disentangle the two potential sources of the pattern we find -- bias in the positions women hold within these organizations, and bias in the way that male and female managers communicate. Furthermore, this analysis may be slicing our data too thin since not all counties have the same departments, and any particular department dyad may only exchange a handful of emails. Moreover, the department attribute of each manager is likely caused by several factors other than the topics of communication which may relate to gender bias. 
+	
+One solution to the problems raised above is to model the email content, as general topics such as balancing budgets are commonly represented across counties. Practically, this also allows us to focus on a smaller number of communication topics that are shared across counties.
+	
+To do this, we might want to use a statistical topic model to categorize emails, then model  gender mixing using the LSM in each topic.
+	
+However, the gender mixing parameters we infer using this approach would be confounded by selection effects. As a toy example, we would not be able to tell whether men prefer to talk to male coworkers over female coworkers about football, or women prefer not to talk about football at work, and so they do not participate in those conversations. 
+	
+To disentangle these effects, we need a joint model for email topical content, and the structure of communication.
+	
+
+
+\section{A Model of Email Content}
+Here we provide a brief overview of our extension to the TPME model \citep{Krafft2012}. We focus on the ways in which our new model allows us to make inferences about the gender-specific patterns of communication in organizations, and how these patterns vary with the content of communication. Our model follows \citep{Krafft2012} by integrating the latent space network model \citep{Hoff2002a} with a statistical topic model (latent Dirichlet allocation \cite{Blei2003}) to jointly model the content and structure of a communication network. 
+
+At a high level, our model assumes the following generative process for a message sent across the communication network. First, we sample the content of the message following the generative process for latent Dirichlet allocation. Then, for a given message sender, we sample whether each other actor in the network is a receiver of that message following the latent space network model. However, different topics (or clusters of topics in our extension) are associated with different latent spaces, so how likely each actor is to be a receiver of a particular message is dependent on the topical content of that message. We review this process in greater detail below.  
 
  \begin{figure}
 \caption{\label{fig:splitting} Different patterns of communication across different domains.}	
 \centering
 \includegraphics[width = 0.48\textwidth]{images/Structure_Matters_Full.pdf}
 \end{figure}
-
-
-\section{A Model for Communication Networks}
-Here we provide a brief overview of our extension to the TPME model \citep{Krafft2012}. We focus on the ways in which our new model allows us to make inferences about the gender-specific patterns of communication in organizations, and how these patterns vary with the content of communication. Our model follows \citep{Krafft2012} by integrating the latent space network model \citep{Hoff2002a} with a statistical topic model (latent Dirichlet allocation \cite{Blei2003}) to jointly model the content and structure of a communication network. 
-
-At a high level, our model assumes the following generative process for a message sent across the communication network. First, we sample the content of the message following the generative process for latent Dirichlet allocation. Then, for a given message sender, we sample whether each other actor in the network is a receiver of that message following the latent space network model. However, different topics (or clusters of topics in our extension) are associated with different latent spaces, so how likely each actor is to be a receiver of a particular message is dependent on the topical content of that message. We review this process in greater detail below.  
 
 The message content is assumed to be generated via latent Dirichlet allocation. Under this model, we assume that all unique words in our vocabulary are associated to varying degrees with each of $T$ latent ``topics''. Each topic is then a distribution over unique words (or ``word types''), $\boldsymbol{\phi}^{(t)}$. For example ``doctor'', ``virus'', and ``medicine'' might all have high probability in a topic about hospitals, while ``cat'' and ``music'' might have low probability in that topic. We further assume that each topic distribution is drawn from a Dirichlet prior: 
 \begin{equation}
@@ -273,158 +465,34 @@ where $*$ is the proportion of tokens in document $d$ assigned to topics associa
 
 Given that we do not directly observe the generative process, the object of inference becomes the posterior distribution of our model parameters given the data. This problem is analytically intractable, so we must approximate the posterior distribution via Markov chain Monte Carlo methods. We perform inference for this model via block Metropolis within Gibbs sampling\footnote{The inference algorithm is currently implemented in a beta version as an R package, and is available here: \href{https://github.com/matthewjdenny/ContentStructure}{github.com/matthewjdenny/ContentStructure}}. A further discussion of this model will be provided in a related paper, but this model provides a powerful and flexible framework to investigate the content-conditional gendered patterns of communication in an organization. 
 
-\section{Data}
-To better understand how gender is related to patterns of communication within government bureaucratic organizations, we examine overlapping three-month samples of email messages sent between department managers in 17 North Carolina county governments. The data used in this study were collected in 2013 via a series of FOIA requests, as part of a transparency-by-conformity field experiment involving all 100 North Carolina county governments. We received approximately 500,000 total emails from the 17 participating county governments, of which approximately 120,000 were classified as not spam after an intensive data cleaning and validation process\footnote{A technical report detailing the email cleaning  and preprocessing procedure is available upon request.}. Figure \ref{fig:nc map} highlights those counties which did respond to our requests for data\footnote{These counties are statistically indistinguishable from the general population of counties in North Carolina on a number of demographic dimensions.}.
+\subsection{Inference}
+\begin{enumerate}
+	\item We have to invert the generative process to perform inference on the model parameters.
+	\item We use block Metropolis Hastings within Gibbs sampling.
+	\item A beta R package is available for those interested.
+	\item Discuss our model specification and justify our hyper-parameter choices.
+\end{enumerate}
 
-We also collected detailed metadata on the position and gender of the 362 department managers in our sample. We display some basic descriptive statistics for each county in Table \ref{tab:county aggregate stats}. Table \ref{tab:email agg stats} reports some additional manager-to-manager email communication statistics by gender. These statistics are aggregated across all departments in all counties. Note that emails may have multiple recipients and thus we distinguish between the number of unique emails sent and the number or proportion of recipients. 
+\section{Gender Mixing}
 
-\begin{figure}
-\caption{\label{fig:nc map} North Carolina county map.}	
-\centering
-\includegraphics[width = 0.48\textwidth]{images/County_Map.pdf}
-\end{figure}
-
-
-
-\begin{table}
+\begin{enumerate}
+	\item Since we have modeled content and structure together, we have broken up the confounding we were concerned about, and we can now interpret the gender mixing parameters that come out of our model with more confidence.
 	
-	\begin{tabular}{lrrrrr}
-	  \hline
-	 \textbf{County} & \textbf{Mgrs.} & \textbf{Female} & \textbf{Internal} &\textbf{Total} \\
-	  \hline
-	Alexander & 21 & 9 & 907 & 11,924  \\
-	Caldwell & 20 & 8 & 121 &    \\
-	Chowan & 23 & 11 & 2,027 & 11,737  \\
-	Columbus & 24 & 10 & 920 & 12,707  \\
-	Dare & 27 & 12 & 2,247 &   \\
-	Duplin & 27 & 14 & 1,914 &   \\
-	Hoke & 24 & 11 & 1,106 & 5,565  \\
-	Jackson & 24 & 6 & 1,499 &   \\
-	Lenoir & 20 & 5 & 560 & 10,499 \\
-	Lincoln & 22 & 7 & 573 & 8,727  \\
-	McDowell & 17 & 5 & 326 & 3,494  \\
-	Montgomery & 18 & 10 & 680 & 2,465  \\
-	Nash & 19 & 8 & 1,147 & 9,133 \\
-	Person & 21 & 9 & 1,491 & 14023  \\
-	Transylvania & 20 & 4 & 1,857 & 14,088 \\
-	Vance & 18 & 8 & 185 & 4,349  \\
-	Wilkes & 17 & 2 & 303 & 8,443  \\
-	   \hline
-	   \textbf{Totals:} & 362 & 139 & 17,863 & 117,154  \\
-	   \hline
-	\end{tabular}
-	\caption{\label{tab:county aggregate stats}Participating county email statistics. \textbf{Mgrs.} is the total number of department managers in a county, \textbf{Female} is the number of female managers in that county, \textbf{Internal} is the number of emails sent between managers in a county, and \textbf{Total} is the total number of emails sent and received by department managers in each county in our sample. Note that in this study, we only make use of the internal email data. Some email \textbf{Total}'s are omitted due to challenges in determining which emails (not sent by managers) were valid in these counties.}
-\end{table}	
+	\item Lets return to the question we posed at the end of our descriptive analysis section: is there gender bias in the patterns of communication in these county governments. 
 	
-
-\begin{table}
+	\item Add in Bruce's MV KS test results for each county here.
 	
-	\begin{tabular}{m{2in}rrr}
-	\toprule
-& \textbf{Male} & \textbf{Female}  \\
-	 \midrule
-	 Proportion of All Managers in Sample & 61.6\%& 38.4\% \\
-
-	 Total Emails Sent & 10,771 & 7,092 \\
-	 Average Emails Received Per Manager & 70.8 & 71.6 \\
-	 Average Number of Recipients Per Email Sent & 1.45 & 1.43 \\
-
-	 Proportion of Emails Recipients of Same Gender & 60.7\% & 37.8\%  \\
-
-	 Proportion of Emails Sent to County Manager & 24.4\% & 17.9\%  \\
-	\bottomrule
-	\end{tabular}
-	\caption{\label{tab:email agg stats}Email statistics by gender.}
-\end{table}
-
-
-\section{Analysis} 
-% The large figure above illustrates preliminary model results for the largest topic clusters in two North Carolina governments. Each model was run for 2,000 iterations with 1,000 iterations of Metropolis Hastings for each iteration of Gibbs sampling. Models were initialized with 50 topics and 10 clusters, but tend to select for 2-4 clusters with any topics assigned to them, indicating a lower dimensional space of communication patterns. To generate estimates of LSM positions, we run the last iteration of the LSM portion of the model until Geweke statistics demonstrate convergence on greater than 90\% of all parameters (5M iterations). Our results indicate that men tend to dominate the locus of control within these organizations, but that this pattern is uneven across counties, and dependent on organizational positions occupied by women.
-
-% \begin{figure}
-% \includegraphics[width = 0.42\textwidth]{images/Female_Received_Flows.pdf}
-% \caption{\label{fig:female heat}Prop. Emails Received by Female Dept. Managers}
-% \end{figure}k
-
-
-To begin understanding the relationship between gender and the patterns of communication within these county governments, we can look at the descriptive statistics in Table \ref{tab:email agg stats}. We see that women make up 38\% of managers in our sample and they send and receive 39-40\% of emails. Importantly, in aggregate, neither men nor women show a strong preference for within gender communication. Therefore, if a preference for same-gender communication exists within these organizations, aggregate level statistics do not capture it. However, these basic descriptive statistics ignore both the formal positions of email senders and recipients, and the email content. 
-
-To delve deeper into these patterns of communication, we present four heat maps in Figure \ref{fig:heatmaps}. These heat maps record the number of emails sent to, and received by department managers given that they were male (female). As we can see, there are significant differences in the number of emails received by male and female managers working in the same department. Most striking is the almost complete absence of emails sent by the county manager to female department managers, whereas male department managers receive the largest proportion of their incoming emails from the county manager. For example, while male finance managers received approximately 40\% of their emails (485) from the county manager across all counties in our sample, female finance managers only received 6 emails from the county manager across our entire sample. This differential could reflect gender homophily in communication, given that 15 out of the 17 county managers in our sample are male. However, it may also be linked to the consistent finding in the gender-in-organizations literature that women are excluded from the ``locus of control'' in organizations. 
-
-
-
-\begin{figure*}
-\centering
-\begin{tabular}{cc}
-\textbf{Messages sent by male department managers} & \textbf{Messages received by male department managers}\\
-\includegraphics[width = 0.49\textwidth]{images/Male_Sent_Prop.pdf} &
-\includegraphics[width = 0.49\textwidth]{images/Male_Received_Prop.pdf} \\
-\textbf{Messages sent by female department managers} & \textbf{Messages received by female department managers}\\
-\includegraphics[width = 0.49\textwidth]{images/Female_Sent_Prop.pdf} &
-\includegraphics[width = 0.49\textwidth]{images/Female_Received_Prop.pdf}
-\end{tabular}
-\caption{\label{fig:heatmaps}Heat maps depicting the number of emails sent from the row department to the column department aggregated across counties and by gender. Departments were also hand coded into one of 25 different categories based on given titles to group departments that perform a similar function. The smallest 11 departments by email volume are omitted from these tables for readability but they display a similar pattern of communication.}
-\end{figure*}
+	\item Interpret the results.
 	
-\subsection{Model-Based Inference}
-Our initial analysis of the aggregate patterns of interaction in these organizations indicates that there are likely differences in the way department managers in the same organizational position communicate, by gender. It is therefore likely that different content areas will also exhibit different patterns of communication by gender, making this a good application for our model. In the preliminary analysis presented below, we relate the gender-mixing parameters estimated by our model for each county, to the number of department managers in that county (a proxy for organization size). Before we present the results of this analysis, we first briefly discuss our model specification and provide an example of the output it produces. 
-
-Our model requires that a number of hyper-parameters be selected by the researcher, prior to performing inference. In particular, we must select the number topics, number of clusters, and topic model hyper-parameters\footnote{We used uniform base measures $\mathbf{m}$ and $\mathbf{n}$, and set $\alpha = 1$ and $\beta$ equal to 0.01 times the length of the vocabulary for each county. This is standard practice in the literature using latent Dirichlet allocation and provides good performance.}, which we hold constant across counties. In addition, we fixed the male-male mixing parameter at zero for our analysis, to aid in directly interpreting the other gender mixing parameters. We selected 40 topics and 4 clusters, to provide reasonable granularity in capturing the content of communication, while improving the interpretability of the latent space model results by constraining the number of possible patterns of communication. This choice has a practical advantage of ensuring that enough data will be available to fit each cluster's latent space with reasonably low uncertainty in the parameter estimates. 
-
-The model also requires us to select the number of iterations for our MCMC sampler. In the first step of inference, we alternate between one iteration of Gibbs sampling for the topic model parameters, and 1,000 iterations of Metropolis Hastings sampling for the latent space parameters, as the Metropolis Hastings algorithm explores the parameter space much more slowly than Gibbs sampling. We did this for a total of 4,000 iterations of Gibbs sampling, until Geweke statistics indicated convergence in the un-normalized topic model log likelihood for all counties. We then ran the latent space component of our model for an additional 10,000,000 iterations, holding the topic model parameters fixed, to ensure that all latent space parameter estimates had converged. 
-
-Figure \ref{fig:dare results} depicts example output from one topic cluster estimated using data from Dare county, North Carolina. Our data collection window happened to overlap with Hurricane Sandy, and this cluster of topics clearly reflects storm related email communication. The mixing parameter estimates for this topic cluster indicate that women tend to send emails about these topics to both men and other women at a significantly higher rate than men send emails to men, given their latent positions. The residual content-conditional social structure captured by the latent positions indicates that we have likely omitted some salient covariates (whether a person was the emergency manager or the county manager) as both of these managers sent and received a large number of emails in preparation and response to the storm, and are thus placed close to the center of the latent space.
-
-% \begin{center}
-% 	\textbf{TODO:}
-% \end{center}
-% \begin{enumerate}
-% 	\item Provide an example of our model output -- Dare county disaster response.
-% 	\item Add in and discuss the mixing parameter by department size, and gender composition plots.
-% 	\item Conclude the paper with some discussion of where we intend to take this, and the contributions we make.
-% \end{enumerate}
-
-
-% \end{tabular}
-
-Having illustrated the essential functionality of our model, we now examine the relationship between gender homophily and organization size across our sample of communication networks. In this preliminary analysis, we aggregate together the mixing parameters estimated for all clusters in all counties. We then examine how each individual mixing parameter (male-female, for example) varies in sign and magnitude with the number of department managers in the county it is associated with. This approach allows that what might be driving differences in mixing parameter estimates between clusters and counties is simply differences in what is being communicated, reducing some of the potential for content to confound the effect of department size on gender mixing. 
-
-\begin{figure*}
-	\centering
-	 \vspace*{-.16in}
-	\begin{tabular}{ccc}
-		\textbf{Topic Top Words} & \textbf{Latent Position Estimates} & \textbf{Gender Mixing-Parameter Estimates} \\
-	\includegraphics[width = 0.27\textwidth]{images/Output_Dare_internal_clust_topics2.pdf} &
-	\includegraphics[width = 0.35\textwidth]{images/Output_Dare_internal_Network2.pdf} &
-	\includegraphics[width = 0.35\textwidth]{images/Dare_Betas_2.png}
-	\end{tabular}
+	\item Take as a case study, a county with the highest degree of gender bias, as identified by this method.
 	
-	\caption{\label{fig:dare results} Model output for selected topic cluster from Dare county. The left-most figure represents the 10 most likely words in the 5 most likely topics (with the most likely topic at the bottom). The middle plot provides latent position estimates for all managers in this county, with female managers represented by blue triangles, and male managers represented by red squares. Point clouds represent 100\% credible intervals for latent position estimates, and the darkness of the edge represents its weight. The box plot on the right depicts mixing parameter estimates.}
+	\item interpret the topic model output from two different clusters and discuss
 	
-\end{figure*}
-
-
-Figure \ref{fig:mixing parameters size} plots the number of managers in a county government (x-axis) against a particular mixing parameter estimate (male-female and female-male) for each of the 4 clusters associated with each of the 17 counties in our sample. Each parameter estimate (dot) is sized by the amount of edge weight assigned to it, to highlight the contribution of more frequent communication patterns. Plots also include LOWESS curves with 95\% confidence bounds. We find that heterophilous communication (male-female and female-male) among department managers tends to be most pronounced in mid-sized county governments in our sample. One potential explanation for this finding is that in small organizations, there may not be a great deal of cross-gender communication because the low number of female managers (in absolute terms) encourages group-cohesion among the minority female managers. Additionally, when the organization is large, the increased access (in absolute terms) to communication partners of the same gender could support a gender-homophily explanation for both male and female managers communication patterns.
-
-\begin{figure}[h]
-	\begin{tabular}{cc}
-	\textbf{M-F Mixing Parameter} & \textbf{F-M Mixing Parameter}  \\
-	\includegraphics[width = 0.22\textwidth]{images/MF_Size.pdf} &
-	\includegraphics[width = 0.22\textwidth]{images/FM_Size.pdf} \\
-	\caption{\label{fig:mixing parameters size} Gender Mixing parameters plotted against the number of department managers, for each of four topic clusters associated with each county.}
-	\end{tabular}
 	
-\end{figure}
+\end{enumerate}
 
 
 
-%
-%
-
-% 	\bigskip
-%
-% While the analyses presented here are still preliminary, we believe they are beginning to yield insights into the gendering of communication within local governments. These analyses are made possible by the large scale, cross-organization data collection efforts we have undertaken, and we plan to make these data available for other researchers to examine in the future.
-\section{Discussion}
 
 
 
