@@ -286,55 +286,53 @@ latent variable model to identify topic-specific communication
 subnetworks for each county. We find differing degrees of gender
 homophily and heterophily for different topics of communication.
 
+
 \section{Data}
+
+\begin{figure}
+  \centering
+  \caption{\label{fig:nc map}The seventeen North Carolina counties
+    used in our analysis (shaded).} \centering
+  \includegraphics[width=0.48\textwidth]{images/County_Map.pdf}
+\end{figure}
 
 The data used in this study were collected in 2013 via a series of public records requests made to all one hundred North Carolina county governments. We selected North Carolina for our data collection efforts because the state public records laws cover email data, and prevent counties from charging unreasonable fees for providing data. Twenty-three counties complied with our request, of which seventeen provided data was useable for our research\footnote{Some counties provided too little data (i.e. 30 emails for the entire county), or provided data in paper form, which was not amenable to our analyses.}. Our records request to each county included all emails sent and received by all department managers (e.g. Health, Finance, Elections) over a three-month period in 2013\footnote{Requests to each county specified a random starting month for the request, between January and October, 2103.}. 
 
 We received approximately 500,000 emails from the seventeen county governments which provided useable data, of which approximately 17,000 were sent between county department managers, which we focus on in the analyses presented here. Figure \ref{fig:nc map} highlights the counties which responded to our requests for data. We also collected detailed metadata on the department and gender of the 362 department managers in our sample. We display some basic descriptive statistics for each county in table \ref{tab:county aggregate stats}. Approximately 40\% of department managers in our sample are women, although there is significant variation in the proportion of female department managers across counties. It is important to note that the counties in our sample are statistically indistinguishable from the rest of the counties in North Carolina on a number of demographic dimensions including population, per-capita income, and percent of the population that is white.
 
-
-	\begin{figure}
-		\centering
-	\caption{\label{fig:nc map} The seventeen North Carolina
-          counties in our analysis (shaded).}  \centering
-        \includegraphics[width =
-          0.48\textwidth]{images/County_Map.pdf}
-	\end{figure}
-	
-	\begin{table}
-	\centering
-		\begin{tabular}{lrrrr}
-		  \toprule
-		  & \multicolumn{2}{c}{Manager Gender} & \\
-		  \cmidrule{2-3}
-		 County & Male & Female & \# Emails  \\
-		  \midrule
-		Alexander & 12 & 9 & 907   \\
-		Caldwell & 12 & 8 & 121     \\
-		Chowan & 12 & 11 & 2,027   \\
-		Columbus & 14 & 10 & 920   \\
-		Dare & 15 & 12 & 2,247    \\
-		Duplin & 13 & 14 & 1,914    \\
-		Hoke & 13 & 11 & 1,106  \\
-		Jackson & 18 & 6 & 1,499    \\
-		Lenoir & 15 & 5 & 560  \\
-		Lincoln & 15 & 7 & 573   \\
-		McDowell & 12 & 5 & 326   \\
-		Montgomery & 8 & 10 & 680   \\
-		Nash & 11 & 8 & 1,147  \\
-		Person & 12 & 9 & 1,491   \\
-		Transylvania & 16 & 4 & 1,857  \\
-		Vance & 10 & 8 & 185   \\
-		Wilkes & 15 & 2 & 303   \\
-		   \midrule
-		   Total & 362 & 139 & 17,863 \\
-		   \bottomrule
-		\end{tabular}
-		\caption{\label{tab:county aggregate stats} The
-                  numbers of male and female department managers for
-                  each county, along with the number of
-                  manager-to-manager emails sent.}
-	\end{table}
+\begin{table}
+  \centering
+  \begin{tabular}{lrrrr}
+    \toprule
+    & \multicolumn{2}{c}{Manager Gender} & \\
+    \cmidrule{2-3}
+    County & Male & Female & \# Emails  \\
+    \midrule
+    Alexander & 12 & 9 & 907   \\
+    Caldwell & 12 & 8 & 121     \\
+    Chowan & 12 & 11 & 2,027   \\
+    Columbus & 14 & 10 & 920   \\
+    Dare & 15 & 12 & 2,247    \\
+    Duplin & 13 & 14 & 1,914    \\
+    Hoke & 13 & 11 & 1,106  \\
+    Jackson & 18 & 6 & 1,499    \\
+    Lenoir & 15 & 5 & 560  \\
+    Lincoln & 15 & 7 & 573   \\
+    McDowell & 12 & 5 & 326   \\
+    Montgomery & 8 & 10 & 680   \\
+    Nash & 11 & 8 & 1,147  \\
+    Person & 12 & 9 & 1,491   \\
+    Transylvania & 16 & 4 & 1,857  \\
+    Vance & 10 & 8 & 185   \\
+    Wilkes & 15 & 2 & 303   \\
+    \midrule
+    Total & 362 & 139 & 17,863 \\
+    \bottomrule
+  \end{tabular}
+  \caption{\label{tab:county aggregate stats} The numbers of male and
+    female department managers for each county, along with the number
+    of manager-to-manager emails sent.}
+\end{table}
 
 
 
