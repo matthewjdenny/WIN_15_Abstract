@@ -261,7 +261,7 @@ of electronic communication in the workplace, and the rise of
 transparency initiatives within government, scholars can now use
 public records requests to gather primary-source data about government
 organizations. Moreover, for many government organizations, such
-requests even extend to emails. We drew upon this resource to
+requests even extend to emails. We draw upon this resource to
 construct an email data set spanning seventeen county governments in
 North Carolina. By relying on public records requests, our data
 collection process is replicable. The resultant data set provides a
@@ -270,8 +270,21 @@ governments, and a unique opportunity to study the relationship
 between a department manager's gender and the emails they send and
 receive.
 
-We begin by examining the aggregate patterns of email communication among department managers in these counties by gender, and the gender breakdown of managers for each department. Then we analyze interdepartmental email flows by gender of the email sender and its recipients. Finally, we apply a statistical model for communication network data to infer the topic-conditional structure of manager-to-manager email communication in these county governments. Our results indicate that while aggregate patterns of communication among department managers do not display significant gender bias, the topics of communication, and positions held by men and women differ significantly.
-
+We start by analyzing aggregate communication patterns from the
+numbers of emails sent and received by all department managers. In
+contrast to previous research, we find no strong evidence of the kinds
+of gender-homophilous or gender-heterophilous patterns that suggest
+gender bias. To unpack this finding, we investigate whether different
+discussion domains exhibit different communication patterns, using the
+sender's department as a proxy for discussion domain. By analyzing
+department-to-department communication patterns, we do find evidence
+of gender bias, with some departments exhibiting homophily and others
+exhibiting heterophily. Finally, to determine whether these patterns
+are driven by communication content rather than other factors
+correlated with managers' departments, we use a recently developed
+latent variable model to identify topic-specific communication
+subnetworks for each county. We find differing degrees of gender
+homophily and heterophily for different topics of communication.
 
 \section{Data}
 
@@ -282,19 +295,19 @@ We received approximately 500,000 emails from the seventeen county governments w
 
 	\begin{figure}
 		\centering
-	\caption{\label{fig:nc map} North Carolina map with counties who provided useable data highlighted.}	
-	\centering
-	\includegraphics[width = 0.48\textwidth]{images/County_Map.pdf}
+	\caption{\label{fig:nc map} The seventeen North Carolina
+          counties in our analysis (shaded).}  \centering
+        \includegraphics[width =
+          0.48\textwidth]{images/County_Map.pdf}
 	\end{figure}
 	
 	\begin{table}
 	\centering
 		\begin{tabular}{lrrrr}
 		  \toprule
-		  % add an extra line
-		  & \multicolumn{2}{c}{\textbf{Manager Gender}} & \\
+		  & \multicolumn{2}{c}{Manager Gender} & \\
 		  \cmidrule{2-3}
-		 \textbf{County} & \textbf{Male} & \textbf{Female} & \textbf{Emails Sent}  \\
+		 County & Male & Female & \# Emails  \\
 		  \midrule
 		Alexander & 12 & 9 & 907   \\
 		Caldwell & 12 & 8 & 121     \\
@@ -314,10 +327,13 @@ We received approximately 500,000 emails from the seventeen county governments w
 		Vance & 10 & 8 & 185   \\
 		Wilkes & 15 & 2 & 303   \\
 		   \midrule
-		   \textbf{Totals:} & 362 & 139 & 17,863 \\
+		   Total & 362 & 139 & 17,863 \\
 		   \bottomrule
 		\end{tabular}
-		\caption{\label{tab:county aggregate stats}Breakdown of department managers by gender, and the total number of emails sent by department managers, for each county in our sample.}
+		\caption{\label{tab:county aggregate stats} The
+                  numbers of male and female department managers for
+                  each county, along with the number of
+                  manager-to-manager emails sent.}
 	\end{table}
 
 
