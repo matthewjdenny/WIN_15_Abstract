@@ -205,11 +205,10 @@ Hanna Wallach\affil{2}{}\affil{3}{Microsoft Research NYC},
 \begin{article}
 \begin{abstract}
 {We conduct an analysis of the relationship between a department manager's gender, and the emails they send and receive, in a sample of seventeen North Carolina county governments. First, we examine the aggregate patterns of email communication among department managers in these counties, the gender breakdown of managers for each department, and interdepartmental email flows by gender. Then, we apply a statistical model for communication network data to infer the topic-conditional structure of manager-to-manager email communication in these county governments. Our results indicate that while aggregate patterns of communication among department managers do not display significant gender bias, the topics of communication, and positions held by men and women differ significantly. From a policy perspective, our findings suggest that reaching parity in the gender composition of positions in an organization may not be enough to create a gender-equitable working environment by itself, as there is significant variation in email communication by gender, beyond department-level effects. 
-%We illustrate the use of covariates in the model with gender and find that patterns of gender mixing vary with the topical content of communication in a way that is consistent with the content-conditional gendered patterns that have been found to characterize social and organizational networks
 }
 \end{abstract} 
 
-%\keywords{weighted networks |  | x-ray reflectivity | molecular electronics}
+%\keywords{gender | public records | email | network}
 
 %\abbreviations{SAM, self-assembled monolayer; OTS, octadecyltrichlorosilane}
 
@@ -350,7 +349,7 @@ We can see that some departments are mostly managed by men: the county manager (
 	\includegraphics[width = 0.8\textwidth]{images/Aggregate_Email_Flows.pdf}
 	\caption{\label{fig:heatmaps}Heat map depicting the total number of emails sent from the managers of each department to the managers of each other department, aggregated across counties. The right-hand y-axis displays the number of counties that had that department, and the number of those managers who were women. Departments are ordered by the total number emails their managers sent.}
 	\end{figure*}
-	% use recipeint rather than receiver and flip the y axis. omit zeros. have the shading march along together
+
 	
 	
 Table \ref{fig:heatmaps} displays the aggregate number of times each department manager was a recipient of an email sent by a manager of each other department. We see pronounced differences in email sending an receiving by department, but cannot graphically disentangle the role of gender. 
@@ -363,9 +362,10 @@ This dyadic $\chi^2$ test tells us that there is an association between gender m
 
 
 \section{A Model of Email Content}
-Here we provide a brief overview of our extension to the TPME model \citep{Krafft2012}. We focus on the ways in which our new model allows us to make inferences about the gender-specific patterns of communication in organizations, and how these patterns vary with the content of communication. Our model follows \citep{Krafft2012} by integrating the latent space network model \citep{Hoff2002a} with a statistical topic model (latent Dirichlet allocation \cite{Blei2003}) to jointly model the content and structure of a communication network. 
+Here we provide a brief overview of our extension to the topic-partitioned
+multinetwork embedding (TPME) model \citep{Krafft2012}. In particular, we illustrate how this model lets us make inferences about the gender-specific patterns of communication in organizations, and how these patterns change with the topics of communication. Our model follows Krafft et al. \citep{Krafft2012} by integrating the latent space network model (LSM) \citep{Hoff2002a} with latent Dirichlet allocation (LDA) \cite{Blei2003} to jointly model the content and structure of an email network. This model is designed to be applied to email data where we observe each message sender and its recipients, as well as the email content (the words). 
 
-At a high level, our model assumes the following generative process for a message sent across the communication network. First, we sample the content of the message following the generative process for latent Dirichlet allocation. Then, for a given message sender, we sample whether each other actor in the network is a receiver of that message following the latent space network model. However, different topics (or clusters of topics in our extension) are associated with different latent spaces, so how likely each actor is to be a receiver of a particular message is dependent on the topical content of that message. We review this process in greater detail below.  
+At a high level, our model assumes the following generative process for a message sent across the email network. First, we sample the content of the message following the generative process for LDA. Then, for a given message sender, we draw whether each other actor in the network is a recipient of that message following the LSM. However, different topics are associated with different latent spaces, so how likely each actor is to be a recipient of a particular message is dependent on the topical content of that message. We review this process in greater detail below.  
 
 %  \begin{figure}
 % \caption{\label{fig:splitting} Different patterns of communication across different domains.}
@@ -373,17 +373,19 @@ At a high level, our model assumes the following generative process for a messag
 % \includegraphics[width = 0.48\textwidth]{images/Structure_Matters_Full.pdf}
 % \end{figure}
 
-The message content is assumed to be generated via latent Dirichlet allocation. Under this model, we assume that all unique words in our vocabulary are associated to varying degrees with each of $T$ latent ``topics''. Each topic is then a distribution over unique words (or ``word types''), $\boldsymbol{\phi}^{(t)}$. For example ``doctor'', ``virus'', and ``medicine'' might all have high probability in a topic about hospitals, while ``cat'' and ``music'' might have low probability in that topic. We further assume that each topic distribution is drawn from a Dirichlet prior: 
+The message content is assumed to be generated via LDA. Under this model, we assume that all unique words in our vocabulary are associated to varying degrees with each of $T$ latent \emph{topics}. Each topic is then a distribution over unique words (or \emph{word types}), $\boldsymbol{\phi}^{(t)}$. For example \emph{doctor}, \emph{virus}, and \emph{medicine} might all have high probability in a topic about hospitals, while \emph{cat} and \emph{music} might have low probability in that topic. We further assume that each topic distribution is drawn from a Dirichlet prior: 
 \begin{equation}
 	\boldsymbol{\phi}^{(t)} \sim \text{Dirichlet}(\beta,\boldsymbol{n}) \text{ for } t = \{1, ..., T\}
 \end{equation}
-The concentration parameter $\beta$ controls how peaky this distribution is (how few word types will have high probability in a given topic), and the base measure $\boldsymbol{n}$ controls the bias in the degree to which word types will be assigned high probability in topics generally. For example, ``patient'' might generally have a higher probability than most word types in a corpus of documents about healthcare.   
+where the base measure $\boldsymbol{n}$ is the mean of the distribution, and the concentration parameter $\beta$ controls how concentrated typical draws are around that mean. 
+%For example, \emph{patient} might generally have a higher probability than most word types in a corpus of documents about healthcare, and this could be represe.   
 
-To generate each of the $D$ documents (messages) in our corpus, we first draw a document-specific distribution over topics
+To generate each of the $D$ documents (messages) in our corpus, we first draw a document-specific distribution over topics:
 \begin{equation}
 	\boldsymbol{\theta}^{(d)} \sim \text{Dirichlet}(\alpha,\boldsymbol{m}) \text{ for } d = \{1,...,D\}
 \end{equation}
-Here, the concentration parameter $\alpha$ controls how topically specific the documents generated are, and $\boldsymbol{m}$ controls the bias in how likely certain topics are to appear. Once we have sampled our document-specific distribution over topics we can then generate each of $N$ tokens (words) in the document via a two step process. First we draw the latent topic assignment for that token from the document specific distribution over topics.
+%Here, the concentration parameter $\alpha$ controls how specific the distributions over topics in the documents generated are, and $\boldsymbol{m}$ controls the bias in how likely certain topics are to appear. 
+Once we have drawn our document-specific distribution over topics we can then generate each of $N$ tokens (words) in the document via a two step process. First we draw the latent topic assignment for that token from the document specific distribution over topics.
 \begin{equation}
 	z_n^{(d)} \sim \boldsymbol{\theta}^{(d)} \text{ for } n = \{1,...,N\}
 \end{equation}
@@ -394,43 +396,44 @@ Here, the concentration parameter $\alpha$ controls how topically specific the d
 We proceed in this manner for all tokens in all documents. 
 
 
-In our extension of TPME, we further assume each topic is uniquely associated with one of $C$ clusters, sampled from a discrete uniform distribution.
+In our extension of TPME, we further assume each topic is uniquely associated with one of $C$ clusters, drawn from a discrete uniform distribution.
 \begin{equation}
-	C_t \sim \text{Discrete Uniform}(1,C) \text{ for } t = \{1, ..., T\}
+	C_t \sim \text{U}(1,...,C) \text{ for } t = \{1, ..., T\}
 \end{equation}
-The intuition is that different broad content areas of communication (e.g. ``planning'', ``sports'',``meeting planning'') -- each of which is a collection of more specific topics -- will imply a different pattern of communication. Importantly, under this model, a message can be about a number of topics, and these topics can be associated with different clusters. Each cluster is associated with a different pattern of communication, so the receivers for any particular message must be sampled following an add-mixture of several underlying communication patterns. For example, if a department manager in an organization sent an email message to schedule a budget meeting, they would likely include both staff whose job includes setting up meetings, and staff who needed to provide input on the budget as recipients. 
+The intuition is that different broad content areas of communication (e.g. \emph{planning}, \emph{sports},\emph{meeting planning}) - each of which is a collection of more specific topics - will imply a different pattern of communication. Importantly, under this model, a message can be about a number of topics, and these topics can be associated with different clusters. Since each cluster is associated with a different pattern of communication, the probability that any actor is a recipient of that particular message depends on an admixture of their probabilities of being a recipient under those different communication patterns. For example, if a department manager in an organization sent an email message to schedule a budget meeting, they would likely include both staff whose job includes setting up meetings, and staff who needed to provide input on the budget as recipients. 
 
-Finally, for a given cluster $c$, the probability that an actor is selected as a recipient of a particular message is specified by the latent space network model \citep{Hoff2002a}. Under this model, we assume there is some baseline propensity to include message recipients on any email, which is governed by an intercept parameter.
+Finally, for a given cluster $c$, the probability that an actor is selected as a recipient of a particular message is specified by the LSM \citep{Hoff2002a}. Under this model, we assume there is some baseline propensity to include message recipients on any email, which is governed by a scalar intercept parameter.
 \begin{equation}
-	b^{c} \sim \text{Normal}(\mu, \tau^2)
+	b^{(c)} \sim \text{Normal}(\mu, \tau^2)
 \end{equation} 
-For example, messages about sensitive HR matters will probably include fewer recipients than messages announcing a department party. Second, some attributes of the sender and potential receiver (which we assume are observed) may also affect the probability of that actor being a recipient. The effect that each of these $L$ different attributes have on the probability of an actor being included as a message recipient can then be parameterized by a vector: 
+For example, messages about sensitive HR matters will probably include fewer recipients than messages announcing a department party. Second, some attributes $X$, of the sender and potential recipient (which we assume are observed) may also affect the probability of that actor being a recipient. The effects that each of these $L$ different attributes have on the probability of an actor being included as a message recipient can then be parameterized by a vectors: 
 \begin{equation}
-	\mathbf{\gamma}_l^{c} \sim \text{M. V. Normal}(\mathbf{\lambda}, \mathbf{\eta}^2) \text{ for } l = \{1, ..., L\}
+	\mathbf{\gamma}_l^{(c)} \sim \text{M. V. Normal}(\mathbf{\lambda}, \mathbf{\eta}^2) \text{ for } l = \{1, ..., L\}
 \end{equation}
-For example, there is a great deal of social science literature showing that people tend to preferentially communicate with others of the same gender. Our model could generate this propensity by sampling positive parameters for Male-Male and Female-Female communication, and negative parameters for Female-Male and Male-Female communication. 
+These covariate effect parameter vectors may vary in size depending on whether the effect is only associated with the attribute of the email sender (only requiring a single parameter), or with the combination of covariate values for the sender and recipient. For example, there is a great deal of social science literature demonstrating gender homophily in communication. Our model could generate a gender-homophilous email communication pattern by drawing positive parameters for male--male and female--female sender--recipient dyads, and negative parameters for female--male and male--female sender--recipient dyads. 
 
-The additional variation (not captured by covariate effects) in the probability that a message is sent between two actors is governed by how close they are in a $k$ dimensional ``latent social space''. This latent space captures all un-modeled factors associated with the propensity for two actors to form a tie. In a typical social network this might include difficult or impossible to measure quantities like how nice a person is, or whether two people have ``chemistry''. Additionally, it may capture observable traits that the researcher was unable to collect data on (e.g. sexual orientation, or ethnicity). This makes the latent positions difficult to interpret when including covariates in the model, so great care should be taken when doing so. To capture these latent positions, each actor $a$ is assumed to have some position in the $k$-dimensional latent space
+The additional variation in the probability that a message is sent between two actors is governed by how close they are in a $k$ dimensional \emph{latent social space}. To generate these latent positions, each actor $a$ is assumed to have some position in the $k$-dimensional latent space
 \begin{equation}
-	\mathbf{s}_a^{c} \sim \text{M. V. Normal}(0, \sigma^2) \text{ for } a = \{1, ...,A\}
+	\mathbf{s}_a^{(c)} \sim \text{M. V. Normal}(0, \sigma^2) \text{ for } a = \{1, ...,A\}
 \end{equation}
-and the probability that they send a message to an actor $r \neq a$ is decreasing in their latent distance from $r$. Thus the probability of actor $r$ being a recipient of a message from actor $a$ under this model is:
+and the probability that they send a message to a recipient $r \neq a$ is decreasing in their latent distance from $r$. Thus the probability of actor $r$ being a recipient of a message from actor $a$ under this model is:
 \begin{equation}
-	P(y_{a,r}^{c} = 1) = \text{logit}^{-1}\left( b^c + \sum_L \left[\mathbf{X}_{a,r}^{l} \mathbf{\gamma}_l^{c}\right] - |\mathbf{s}_a^{c} - \mathbf{s}_r^{c}| \right)
+	P(y_{a,r}^{c} = 1) = \text{logisitic sigmoid}\left( b^c + \sum_L \left[\mathbf{X}_{a,r} \mathbf{\gamma}_l^{c}\right] - |\mathbf{s}_a^{c} - \mathbf{s}_r^{c}| \right)
 \end{equation}
-where $\mathbf{X}^{l}$ is a matrix recording the type of an edge for attribute $l$ that would be sent between $a$ and $r$ (e.g. Male to Female or employee to supervisor). Edge values for an individual message are then sampled via Bernoulli trials. However, the probability that $y_{a,r} = 1$ for a given message $d$ may be dependent on multiple latent spaces (because documents can be about multiple topics). The weight given to $P(y_{a,r}^{(c)})$ for each cluster is determined by the proportion of tokens in the message that are assigned to topics associated with cluster $c$.  
+Edge values for an individual message are then drawn from a Bernoulli distribution. However, the probability that $y_{a,r} = 1$ for a given message $d$ may be dependent on multiple latent spaces (because documents can be about multiple topics). The weight given to $P(y_{a,r}^{(c)})$ for each cluster is determined by the proportion of tokens in the message that are assigned to topics associated with cluster $c$.  
 \begin{equation}
 	P(y_{a,r}^{(d)} = 1) = \sum_C P(y_{a,r}^{c} = 1) \times *
 \end{equation}
-where $*$ is the proportion of tokens in document $d$ assigned to topics associated with cluster $c$.
-
-Given that we do not directly observe the generative process, the object of inference becomes the posterior distribution of our model parameters given the data. This problem is analytically intractable, so we must approximate the posterior distribution via Markov chain Monte Carlo methods. We perform inference for this model via block Metropolis within Gibbs sampling\footnote{The inference algorithm is currently implemented in a beta version as an R package, and is available here: \href{https://github.com/matthewjdenny/ContentStructure}{github.com/matthewjdenny/ContentStructure}}. A further discussion of this model will be provided in a related paper, but this model provides a powerful and flexible framework to investigate the content-conditional gendered patterns of communication in an organization. 
+where $*$ is the proportion of tokens in document $d$ assigned to topics associated with cluster $c$. In this way, we condition the probability that any given actor $r$ is a recipient of an email (document) from actor $a$ on the content of that email, thus linking LDA and the LSM in the generative process.
 
 \subsection{Inference}
- We have to invert the generative process to perform inference on the model parameters.
-We use block Metropolis Hastings within Gibbs sampling.
-A beta R package is available for those interested.
-Discuss our model specification and justify our hyper-parameter choices.
+Given that we do not directly observe the generative process, we have to perform inference for the posterior distribution of our model parameters given the data. We do this by \emph{inverting} the generative process. This problem is analytically intractable, so we must approximate the posterior distribution via Markov chain Monte Carlo (MCMC) methods. We perform inference for this model via block Metropolis within Gibbs sampling\footnote{The inference algorithm is currently implemented in a beta version as an R package, and is available here: \href{https://github.com/matthewjdenny/ContentStructure}{github.com/matthewjdenny/ContentStructure}}. A further discussion of this model is beyond the scope of this paper, but it provides a powerful and flexible framework to investigate the gender-specific patterns of communication in organizations.
+
+However, it is important to briefly discuss the interpretation of the LSM parameters inferred using our model, as their meaning is somewhat counter-intuitive. Durring inference, the latent positions of actors capture all un-modeled factors associated with the propensity for any two actors to form a tie. In a typical social network this might include difficult or impossible to measure quantities like how nice a person is, or whether two people have \emph{chemistry}. Additionally, it may capture observable traits that the researcher was unable to collect data on (e.g. sexual orientation, or ethnicity). This makes the latent positions difficult to interpret when including covariates in the model (because some characteristics that would otherwise be considered latent are fixed by the covariate data), so great care should be taken when doing so. In the analysis that follows, we refrain from interpreting the inferred latent positions of actors. 
+
+We apply our model separately to the email data from each county and then pool our model results. To perform inference on real data, we must first select a number of model hyper-parameters. In particular, we must select the number topics, number of clusters, and topic model hyper-parameters\footnote{We use uniform base measures $\mathbf{m}$ and $\mathbf{n}$, and set $\alpha = 1$ and $\beta$ equal to 0.01 times the length of the vocabulary for each county. This is standard practice in the literature using LDA, and provides good performance.} to be used by our model, which we hold constant across counties. We choose to include manager gender as the only covariate in our specification, and include the full complment of gender mixing parameters in our model\footnote{male--male, male--female, female--male, and female--female}. In addition, we fix the male-male mixing parameter at zero for our analysis, to aid in directly interpreting the other gender mixing parameters. We select 40 topics and 4 clusters, to provide reasonable granularity in capturing variation in the content of communication, while improving the interpretability of the latent space model results by constraining the number of possible patterns of communication. This choice has a practical advantage of ensuring that enough data will be available to fit each cluster’s latent space with reasonably low uncertainty in the parameter estimates.
+
+To perform inference, we must also select a number of iterations for our MCMC sampler. In the first step of inference, we alternate between one iteration of Gibbs sampling for the LDA parameters, and 1,000 iterations of Metropolis Hastings sampling for the LSM parameters, as the Metropolis Hastings algorithm explores the parameter space much more slowly than Gibbs sampling. We did this for a total of 4,000 iterations of Gibbs sampling, until Geweke statistics indicated convergence in the un-normalized LDA model log likelihood for all counties. We then ran the LSM component of our model for an additional 10,000,000 iterations, holding the LDA parameters fixed, to ensure that all latent space parameter estimates had converged.
 
 
 \section{Gender Mixing}
