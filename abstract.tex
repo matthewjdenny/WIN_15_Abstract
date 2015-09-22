@@ -529,7 +529,7 @@ Finally, for a given cluster $c$, the probability that an actor is selected as a
 \begin{equation}
 	b^{(c)} \sim \text{Normal}(\mu, \tau^2)
 \end{equation} 
-For example, messages about sensitive HR matters will probably include fewer recipients than messages announcing a department party. Second, some attributes $X$, of the sender and potential recipient (which we assume are observed) may also affect the probability of that actor being a recipient. The effects that each of these $L$ different attributes have on the probability of an actor being included as a message recipient can then be parameterized by a vectors: 
+For example, messages about sensitive HR matters will probably include fewer recipients than messages announcing a department party. Second, some attributes $X$, of the sender and potential recipient (which we assume are observed) may also affect the probability of that actor being a recipient. The effects that each of these $L$ different attributes have on the probability of an actor being included as a message recipient can then be parameterized by a vector: 
 \begin{equation}
 	\mathbf{\gamma}_l^{(c)} \sim \text{M. V. Normal}(\mathbf{\lambda}, \mathbf{\eta}^2) \text{ for } l = \{1, ..., L\}
 \end{equation}
@@ -541,11 +541,11 @@ The additional variation in the probability that a message is sent between two a
 \end{equation}
 and the probability that they send a message to a recipient $r \neq a$ is decreasing in their latent distance from $r$. Thus the probability of actor $r$ being a recipient of a message from actor $a$ under this model is:
 \begin{equation}
-	P(y_{a,r}^{c} = 1) = \text{logisitic sigmoid}\left( b^c + \sum_L \left[\mathbf{X}_{a,r} \mathbf{\gamma}_l^{c}\right] - |\mathbf{s}_a^{c} - \mathbf{s}_r^{c}| \right)
+	P(y_{a,r}^{(c)} = 1) = \text{logisitic sigmoid}\left( b^{(c)} + \sum_L \left[\mathbf{X}_{a,r} \mathbf{\gamma}_l^{(c)}\right] - |\mathbf{s}_a^{(c)} - \mathbf{s}_r^{(c)}| \right)
 \end{equation}
 Edge values for an individual message are then drawn from a Bernoulli distribution. However, the probability that $y_{a,r} = 1$ for a given message $d$ may be dependent on multiple latent spaces (because documents can be about multiple topics). The weight given to $P(y_{a,r}^{(c)})$ for each cluster is determined by the proportion of tokens in the message that are assigned to topics associated with cluster $c$.  
 \begin{equation}
-	P(y_{a,r}^{(d)} = 1) = \sum_C P(y_{a,r}^{c} = 1) \times *
+	P(y_{a,r}^{(d)} = 1) = \sum_C P(y_{a,r}^{(c)} = 1) \times *
 \end{equation}
 where $*$ is the proportion of tokens in document $d$ assigned to topics associated with cluster $c$. In this way, we condition the probability that any given actor $r$ is a recipient of an email (document) from actor $a$ on the content of that email, thus linking LDA and the LSM in the generative process.
 
