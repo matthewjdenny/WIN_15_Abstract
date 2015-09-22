@@ -1,0 +1,242 @@
+\documentclass[xcolor={table}]{beamer}
+%\usetheme{singapore}
+\usepackage{bm}
+\usepackage{listings,verbatim}
+\usepackage{fancyvrb,tikz,color,xcolor,colortbl}
+\usepackage{hyperref,booktabs,tabularx,float}
+\usepackage{multirow}
+%\usepackage[table]{xcolor}
+%\usepackage{verbatim}
+% \usepackage{array}
+%\lstloadlanguages{R}
+%\lstset{ language=R, basicstyle=\scriptsize\ttfamily, commentstyle=\ttfamily\color{gray}, numbers=left, numberstyle=\ttfamily\color{gray}\footnotesize, stepnumber=1, numbersep=5pt, backgroundcolor=\color{white}, showspaces=false, showstringspaces=false, showtabs=false, frame=single, tabsize=2, captionpos=b, breaklines=true, breakatwhitespace=false, escapeinside={}, keywordstyle={}, morekeywords={} }\renewcommand{\P}{\mathcal{P}}
+%\newcommand{\bt}{\pmb{\theta}}
+%\newcommand{\bG}{\pmb{\Gamma}}
+\newcommand{\p}{\pause}
+\definecolor{Grey}{rgb}{0.95,0.95,0.95}
+\newcommand{\pitem}{\pause \item}
+\newenvironment{graytext}{\color{gray}}{\ignorespacesafterend}
+
+\newcommand\independent{\protect\mathpalette{\protect\independenT}{\perp}}
+\def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern2mu{#1#2}}}
+
+\definecolor{umassblue}{RGB}{51,51,153}
+\definecolor{umassgreen}{RGB}{0,102,102}
+%\definecolor{blue}{RGB}{51,51,153}
+\definecolor{bblue}{RGB}{0,0,255}
+\definecolor{red}{RGB}{153,0,51}
+
+\newcommand\verbbf[1]{\textcolor[RGB]{51,51,153}{\textbf{$\blacksquare$ #1}}}
+\newcommand\verbrf[1]{\textcolor[RGB]{153,0,51}{\textbf{$\blacksquare$ #1}}}
+
+\newcommand{\N}{\mathcal{N}}
+\newcommand{\Y}{\bm{\mathcal{Y}}} 
+
+\usefonttheme{serif}
+
+\newenvironment{changemargin}[2]{%
+  \begin{list}{}{%
+    \setlength{\topsep}{0pt}%
+    \setlength{\leftmargin}{#1}%
+    \setlength{\rightmargin}{#2}%
+    \setlength{\listparindent}{\parindent}%
+    \setlength{\itemindent}{\parindent}%
+    \setlength{\parsep}{\parskip}%
+  }%
+  \item[]}{\end{list}} 
+
+%
+\title{Reading between the Emails: Gendered Patterns of Communication in Local Government}
+%
+\definecolor{umassred}{HTML}{8C2633}
+\setbeamercolor{structure}{fg=umassblue} 
+\author{\Large\textbf{Matthew J. Denny}}
+
+%\affil[1]{University of Massachusetts Amherst}
+%\affil[2]{University of Connecticut}
+
+\institute{\large Penn State University --- 
+ \texttt{mzd5530@psu.edu}\\
+ \color{blue}\texttt{www.mjdenny.com}\\ 
+ \texttt{@MatthewJDenny}
+}
+
+\date{Colaborators: James ben Aaron, Hanna Wallach, Bruce A. Desmarais}
+\begin{document}
+
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+
+\begin{frame}\frametitle{Gender in Organizations}
+	\begin{itemize}
+		\item Gender bias in organizations is well documented.
+		\item Correcting it is important.
+		\item open question about communication.
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}\frametitle{Challenges and Opportunities}
+	\begin{itemize}
+		\item Observational data not so good.
+		\item open governemnt + electronic communication = goldmine.
+		\item Can study micro level behavior.
+		\item look for bias in communication patterns
+	\end{itemize}
+	
+\end{frame}
+
+\begin{frame}\frametitle{}
+	\begin{center}
+		\Huge\textbf{Public Domain Email Data}
+	\end{center}
+\end{frame}
+
+\begin{frame}\frametitle{County Government Email Data}
+	\large
+	\begin{itemize}
+		\item Public records requests.
+		\vspace*{.1in}
+		\item Department manager email data from 17 North Carolina Counties.
+		\vspace*{.1in}
+		\item 500,000 emails, 17,000 between managers.
+		\vspace*{.1in}
+	\end{itemize}
+	\centering
+	\includegraphics[width=0.95\textwidth]{images/County_Map.pdf}
+\end{frame}
+
+
+\begin{frame}\frametitle{The Data}
+	\small
+\begin{changemargin}{-1cm}{ -1cm}	
+	  \centering
+	  \vspace*{-.3in}
+	  \begin{tabular}{lrrrr}
+	    \toprule
+	    & \multicolumn{2}{c}{Manager Gender} & \\
+	    \cmidrule{2-3}
+	    County & Male & Female & \# Emails  \\
+	    \midrule
+	    Alexander & 12 & 9 & 907   \\
+	    Caldwell & 12 & 8 & 121     \\
+	    Chowan & 12 & 11 & 2,027   \\
+	    Columbus & 14 & 10 & 920   \\
+	    Dare & 15 & 12 & 2,247    \\
+	    Duplin & 13 & 14 & 1,914    \\
+	    Hoke & 13 & 11 & 1,106  \\
+	    Jackson & 18 & 6 & 1,499    \\
+	    Lenoir & 15 & 5 & 560  \\
+	    Lincoln & 15 & 7 & 573   \\
+	    McDowell & 12 & 5 & 326   \\
+	    Montgomery & 8 & 10 & 680   \\
+	    Nash & 11 & 8 & 1,147  \\
+	    Person & 12 & 9 & 1,491   \\
+	    Transylvania & 16 & 4 & 1,857  \\
+	    Vance & 10 & 8 & 185   \\
+	    Wilkes & 15 & 2 & 303   \\
+	    \midrule
+	    Total & 362 & 139 & 17,863 \\
+	    \bottomrule
+	  \end{tabular}
+
+\end{changemargin}
+
+\end{frame}
+
+\begin{frame}\frametitle{}
+	\begin{center}
+		\Huge\textbf{Descriptive Analysis}
+	\end{center}
+\end{frame}
+
+\begin{frame}\frametitle{Aggregate Patterns}
+	\centering
+    \begin{tabular}{m{2.1in}rrr}
+      \toprule
+      & \multicolumn{2}{c}{Manager Gender} \\
+      \cmidrule{2-3}
+      & Male & Female  \\
+      \midrule
+      Average \# emails sent & 48.3 & 51 \\
+      Average \# recipients per email sent & 1.45 & 1.43 \\
+      \midrule
+      Average \# emails received & 70.8 & 71.6 \\
+      \bottomrule
+    \end{tabular}
+	\bigskip
+	\bigskip
+	
+	\begin{tabular}{rlrrr}
+	  \toprule
+		 && \multicolumn{2}{c}{Recipient} \\
+		\cmidrule{3-4}
+	& & Male & Female & Total  \\
+		 \midrule
+		\multirow{2}{*}{Sender} & Male & 7,299 & 6,286 & 13,585 \\
+	& Female & 5,325 & 3,510 & 8,835 \\
+	\midrule
+		 & Total & 12,624 & 9,796 & \\
+		\bottomrule
+		\end{tabular}
+		
+\end{frame}
+
+
+\begin{frame}\frametitle{Individual Departments}
+	\small
+    \centering
+    \begin{tabular}{rrrrrrrrrrrrrrrrrrrrrrrrrrrrr}
+      \toprule
+  	 & \rotatebox{90}{Emergency} & \rotatebox{90}{Health} &
+      \rotatebox{90}{IT} & \rotatebox{90}{Manager} & \rotatebox{90}{HR}
+      & \rotatebox{90}{Library} & \rotatebox{90}{Plan/Dev} &
+      \rotatebox{90}{Deeds} & \rotatebox{90}{Parks/Rec} &
+      \rotatebox{90}{Finance} & \rotatebox{90}{Soc/Serv} &
+      \rotatebox{90}{Veterans} & \rotatebox{90}{Util/Waste} & \rotatebox{90}{Elections} & \rotatebox{90}{Sheriff} & \rotatebox{90}{Info} & \rotatebox{90}{Tax} & \rotatebox{90}{Inspections} & \rotatebox{90}{Animal} & \rotatebox{90}{Maintenance} & \rotatebox{90}{Seniors} & \rotatebox{90}{Transport} & \rotatebox{90}{Environment} & \rotatebox{90}{Misc} & \rotatebox{90}{Extension} \\
+  	  \midrule
+  	  Male & 15 & 5 & 11 & 15 & 3 & 3 & 11 & 6 & 9 & 5 & 8 & 5 &
+            11 &  2 & 16 & 2 & 10 & 11 & 9 & 5 & 2 & 6 & 7 & 5 & 8 \\
+  	Female & 2 & 11 & 2 & 2 & 12 & 8 & 3 & 9 & 5 & 12 & 8 & 7 & 1
+          & 11 & 1 & 5 & 5 & 3 & 3 & 0 & 6 & 1 & 4 & 1 & 5 \\
+          \midrule
+          Total & & & & & & & & & & & & & & & & & & & & & & & & & \\
+      \bottomrule
+      \end{tabular}
+	  
+\end{frame}
+
+
+\begin{frame}\frametitle{Cross-Department Communication}
+	\centering
+	\includegraphics[width = 0.85\textwidth]{images/Aggregate_Email_Flows.pdf}
+\end{frame}
+
+\begin{frame}\frametitle{}
+	\begin{center}
+		\Huge\textbf{Modeling Email Content}
+	\end{center}
+\end{frame}
+
+
+\begin{frame}\frametitle{A Model for Email Data}
+	
+\end{frame}
+
+\begin{frame}\frametitle{Inference}
+	
+\end{frame}
+
+\begin{frame}\frametitle{Gender Differences in Communication}
+	
+\end{frame}
+
+
+\begin{frame}\frametitle{Future Directions and Policy Recommendations}
+	
+\end{frame}
+
+\end{document}
