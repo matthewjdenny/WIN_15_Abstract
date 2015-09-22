@@ -204,7 +204,29 @@ Hanna Wallach\affil{2}{}\affil{3}{Microsoft Research NYC},
 
 \begin{article}
 \begin{abstract}
-{We conduct an analysis of the relationship between a department manager's gender, and the emails they send and receive, in a sample of seventeen North Carolina county governments. First, we examine the aggregate patterns of email communication among department managers in these counties, the gender breakdown of managers for each department, and interdepartmental email flows by gender. Then, we apply a statistical model for communication network data to infer the topic-conditional structure of manager-to-manager email communication in these county governments. Our results indicate that while aggregate patterns of communication among department managers do not display significant gender bias, the topics of communication, and positions held by men and women differ significantly. From a policy perspective, our findings suggest that reaching parity in the gender composition of positions in an organization may not be enough to create a gender-equitable working environment by itself, as there is significant variation in email communication by gender, beyond department-level effects. 
+	
+{In this paper, we study the role of gender in local government
+organizations. We analyze email data from seventeen county
+governments in North Carolina to understand the relationship
+between a department manager's gender and the emails they send
+and receive. First, we use descriptive statistics to identify
+aggregate gender-homophilous and gender-heterophilous patterns
+from the numbers of emails sent and received by all department
+managers. In contrast to previous research, we find no strong
+evidence of either gender homophily or heterophily. To
+investigate this finding, we therefore analyze
+department-to-department communication patterns. Here, we do find
+evidence of gender bias, with some departments exhibiting gender
+homophily and others exhibiting heterophily. Finally, to
+determine the extent to which these patterns are driven by
+communication content, we use a recently developed latent
+variable model to identify topic-specific communication
+subnetworks for each county. We find differing degrees of gender
+homophily and heterophily for different topics of
+communication. From a policy perspective, these findings suggest
+that a gender-equitable working environment cannot be created by
+hiring decisions alone, as gender bias in communication still
+exists independent of the positions held by men and women.
 }
 \end{abstract} 
 
@@ -213,7 +235,7 @@ Hanna Wallach\affil{2}{}\affil{3}{Microsoft Research NYC},
 %\abbreviations{SAM, self-assembled monolayer; OTS, octadecyltrichlorosilane}
 
 \section{Gender in Organizations}
-Gender bias against female members of firms and government organizations is well documented in terms of lower pay and prestige, reduced opportunity for advancement, and gender-specific social interaction \citep{Brass1985, Bielby1986a, Ibarra1992, Albrecht2003, Duncan2004}. At the same time, providing equal treatment to male and female coworkers is a key objective for organizations that aspire to a just, efficient, and sustainable professional culture \citep{Ely2000}. Scholars have sought to understand the roots, extent, and nature of gender bias in organizations, but have only had limited access to primary-source data in previous studies. The data used in these studies \citep[e.g.,][]{Castilla2005, Adams2007, Elsesser2011} has traditionally been observational, ethnographic, or self-reported, which can be biased and is often limited in scope. 
+Researchers have documented gender bias in both the public and private sectors. Women receive lower pay, hold less prestigious positions in these organizations, have reduced opportunity for advancement, and are excluded from the organizational locus of control \citep{Brass1985, Bielby1986a, Ibarra1992, Albrecht2003, Duncan2004}. As a result, organizations that aspire to a just, efficient, and sustainable professional culture strive to provide men and women with equal treatment in the workplace \citep{Ely2000}. In practice, however, these organizations have historically found it difficult to understand the micro-level causes of gender bias due to the limited availability of primary source data. The data used in these studies \citep[e.g.,][]{Castilla2005, Adams2007, Elsesser2011} has traditionally been observational, ethnographic, or self-reported.  which can be biased and is often limited in scope. 
 	
 However, with the increasing use of electronic communication, and the rise of transparency initiatives within government, scholars are now increasingly able to use public records requests to gather primary source email communication data. Using public records requests as a method for data collection also provides a major benefit of making the data collection process replicable. Therefore, we choose to study the relationship between a department manager's gender, and the emails they send and receive, in a sample of local governments. To do this, we collect and analyze a large scale email data set from a sample of seventeen county governments in North Carolina. 
 
@@ -400,7 +422,7 @@ In our extension of TPME, we further assume each topic is uniquely associated wi
 \begin{equation}
 	C_t \sim \text{U}(1,...,C) \text{ for } t = \{1, ..., T\}
 \end{equation}
-The intuition is that different broad content areas of communication (e.g. \emph{planning}, \emph{sports},\emph{meeting planning}) - each of which is a collection of more specific topics - will imply a different pattern of communication. Importantly, under this model, a message can be about a number of topics, and these topics can be associated with different clusters. Since each cluster is associated with a different pattern of communication, the probability that any actor is a recipient of that particular message depends on an admixture of their probabilities of being a recipient under those different communication patterns. For example, if a department manager in an organization sent an email message to schedule a budget meeting, they would likely include both staff whose job includes setting up meetings, and staff who needed to provide input on the budget as recipients. 
+The intuition is that different broad content areas of communication (e.g. \emph{planning}, \emph{sports}, \emph{meeting planning}) -each of which is a collection of more specific topics- will imply a different pattern of communication. Importantly, under this model, a message can be about a number of topics, and these topics can be associated with different clusters. Since each cluster is associated with a different pattern of communication, the probability that any actor is a recipient of that particular message depends on an admixture of their probabilities of being a recipient under those different communication patterns. For example, if a department manager in an organization sent an email message to schedule a budget meeting, they would likely include both staff whose job includes setting up meetings, and staff who needed to provide input on the budget as recipients. 
 
 Finally, for a given cluster $c$, the probability that an actor is selected as a recipient of a particular message is specified by the LSM \citep{Hoff2002a}. Under this model, we assume there is some baseline propensity to include message recipients on any email, which is governed by a scalar intercept parameter.
 \begin{equation}
