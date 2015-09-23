@@ -391,7 +391,7 @@ To test whether the gender of an email sender is related to the gender of its re
 		\cmidrule{3-4}
 	& & Male & Female & Total  \\
 		 \midrule
-		\multirow{2}{*}{Sender} & Male & 9,458 & 6,120 & 15,578 \\
+		\multirow{2}{*}{Sender} & Male &  9458 & 6120  & 15,578 \\
 	& Female & 6,330 & 3,833 & 10,163 \\
 	\midrule
 		 & Total & 15,788 & 9,953 & \\
@@ -420,15 +420,13 @@ represented in each county.
   \centering
   \begin{tabular}{rrrrrrrrrrrrrrrrrrrrrrrrrrrrr}
     \toprule
-	 & \rotatebox{90}{Emergency} & \rotatebox{90}{Manager} & \rotatebox{90}{HR} &
-    \rotatebox{90}{Finance}  & \rotatebox{90}{IT}  & \rotatebox{90}{Plan/Dev} & \rotatebox{90}{Util/Waste} & \rotatebox{90}{Health} & \rotatebox{90}{Tax} & \rotatebox{90}{Maintenance} & \rotatebox{90}{Parks/Rec} & \rotatebox{90}{Soc/Serv} & \rotatebox{90}{Transport}  & \rotatebox{90}{Info} & \rotatebox{90}{Misc}& \rotatebox{90}{Inspections} & \rotatebox{90}{Library}  &
-    \rotatebox{90}{Veterans}  & \rotatebox{90}{Seniors}  & \rotatebox{90}{Animal}  & \rotatebox{90}{Elections} & \rotatebox{90}{Sheriff}     & \rotatebox{90}{Environment} 
-     & \rotatebox{90}{Deeds}  & \rotatebox{90}{Extension} \\
-	  \midrule
-	 Male & 29 & 15 & 3 & 5 & 11 & 17 & 15 & 6 & 11 & 5 & 9 & 8 & 8 & 2 & 5 & 13 & 3 & 5 & 2 & 9 & 2 & 16 & 9 & 6 & 8 \\ 
-	   Female & 3 & 2 & 12 & 12 & 2 & 6 & 2 & 11 & 7 & 1 & 5 & 10 & 1 & 6 & 2 & 3 & 8 & 7 & 6 & 3 & 11 & 1 & 4 & 9 & 5 \\ 
-	   \midrule
-	   Total & 32 & 17 & 15 & 17 & 13 & 23 & 17 & 17 & 18 & 6 & 14 & 18 & 9 & 8 & 7 & 16 & 11 & 12 & 8 & 12 & 13 & 17 & 13 & 15 & 13 \\
+	
+	   & \rotatebox{90}{Emergency} & \rotatebox{90}{Manager} & \rotatebox{90}{HR} & \rotatebox{90}{Finance} & \rotatebox{90}{IT} & \rotatebox{90}{Health} & \rotatebox{90}{Plan/Dev} & \rotatebox{90}{Util/Waste} & \rotatebox{90}{Tax} & \rotatebox{90}{Parks/Rec} & \rotatebox{90}{Soc\_Serv} & \rotatebox{90}{Transport} & \rotatebox{90}{Info} & \rotatebox{90}{Misc} & \rotatebox{90}{Inspections} & \rotatebox{90}{Maintenance} & \rotatebox{90}{Library} & \rotatebox{90}{Veterans} & \rotatebox{90}{Seniors} & \rotatebox{90}{Animal} & \rotatebox{90}{Elections} & \rotatebox{90}{Sheriff} & \rotatebox{90}{Environment} & \rotatebox{90}{Deeds} & \rotatebox{90}{Extension} \\ 
+	     \midrule
+	   Male & 29 & 15 & 3 & 5 & 11 & 6 & 17 & 15 & 11 & 9 & 8 & 8 & 2 & 5 & 13 & 5 & 3 & 5 & 2 & 9 & 2 & 16 & 9 & 6 & 8 \\ 
+	     Female & 3 & 2 & 12 & 12 & 2 & 11 & 6 & 2 & 7 & 5 & 10 & 1 & 6 & 2 & 3 & 1 & 8 & 7 & 6 & 3 & 11 & 1 & 4 & 9 & 5 \\ 
+		 \midrule
+	     Total & 32 & 17 & 15 & 17 & 13 & 17 & 23 & 17 & 18 & 14 & 18 & 9 & 8 & 7 & 16 & 6 & 11 & 12 & 8 & 12 & 13 & 17 & 13 & 15 & 13 \\
     \bottomrule
     \end{tabular}
   \caption{\label{tab:gender position} Number of male and female
@@ -441,17 +439,17 @@ We can see that some departments are mostly managed by men: the county manager (
 	\begin{figure*}
 	\centering
 	\includegraphics[width = 0.8\textwidth]{images/Aggregate_Email_Flows.pdf}
-	\caption{\label{fig:heatmaps}Heat map depicting the total number of emails sent from the managers of each department to the managers of each other department, aggregated across counties. The right-hand y-axis displays the number of counties that had that department, and the number of those managers who were women. Departments are ordered by the total number emails their managers sent.}
+	\caption{\label{fig:heatmaps}Heat map depicting the total number of emails sent from the managers of each department to the managers of each other department, aggregated across counties. Departments are ordered by the total number emails their managers sent.}
 	\end{figure*}
 
 	
 	
 Table \ref{fig:heatmaps} displays the aggregate number of times each department manager was a recipient of an email sent by a manager of each other department. We see pronounced differences in email sending an receiving by department, but cannot graphically disentangle the role of gender. 
 %To test for the independence of the gender of an email sender and the gender of its recipients, from the departments they direct, 
-Next, we construct a contingency table of department dyad-types (where each ``dyad-type'' is a unique combination of sender and recipient department, eg. finance $\longrightarrow$ HR) against gender dyad-types (where each ``dyad-type'' is a unique combination of sender and recipient gender, eg. male $\longrightarrow$ female).  We then perform a $\chi^2$ test on this contingency table, which indicates that the gender of an email sender and its recipients is not independent of their respective departments ($\chi^2 = 37,404, p < 0.001$).
+Next, we construct a contingency table of department dyad-types (where each ``dyad-type'' is a unique combination of sender and recipient department, eg. finance $\longrightarrow$ HR) against gender dyad-types (where each ``dyad-type'' is a unique combination of sender and recipient gender, eg. male $\longrightarrow$ female).  We then perform a $\chi^2$ test on this contingency table, which indicates that the gender of an email sender and its recipients is not independent of their respective departments ($\chi^2 = 40,805, p < 0.001$).
 	
 	
-This dyadic $\chi^2$ test tells us that there is an association between gender mixing patterns and department mixing patterns. Indeed, when we construct similar contingency tables for each department, we find that email senders in utilities and waste management departments exhibit gender-homophilous behavior ($\chi^2 = 10.49, p < 0.001$), senders in the tax department exhibit gender-heterophilous behavior ($\chi^2 = 4.54, p < 0.034$), and senders in the IT department seem unbiased ($\chi^2 = 1.23, p > 0.27$). However, we can't say from these results that the form of gender bias depends upon the domain of interaction since factors other than content are likely to vary with department labels, including the county in which the manager is working, the experience of the manager, and the manager's status in the organizational hierarchy. To disentangle these effects, we need explicitly model the topical content of emails. To do this, we extend a recently introduced joint model for communication topical content and network structure \citep{Krafft2012}, and apply it to our email data.
+This dyadic $\chi^2$ test tells us that there is an association between gender mixing patterns and department mixing patterns. Indeed, when we construct similar contingency tables for each department, we find that email senders in utilities and waste management departments exhibit gender-homophilous behavior ($\chi^2 = 11.61, p < 0.001$), senders in the parks and recreation departments exhibit gender-heterophilous behavior ($\chi^2 = 7.06, p < 0.007$), and senders in the tax departments seem unbiased ($\chi^2 = 0.1, p = 0.75$). However, we can't say from these results that the form of gender bias depends upon the domain of interaction since factors other than content are likely to vary with department labels, including the county in which the manager is working, the experience of the manager, and the manager's status in the organizational hierarchy. To disentangle these effects, we need explicitly model the topical content of emails. To do this, we extend a recently introduced joint model for communication topical content and network structure \citep{Krafft2012}, and apply it to our email data.
 	
 
 
