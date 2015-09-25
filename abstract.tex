@@ -512,6 +512,9 @@ and the probability that they send a message to a recipient $r \neq a$ is decrea
 \begin{equation}
 	P(y_{a,r}^{(c)} = 1) = \text{logisitic sigmoid}\left( b^{(c)} + \sum_L \left[\mathbf{X}_{a,r} \mathbf{\gamma}_l^{(c)}\right] - |\mathbf{s}_a^{(c)} - \mathbf{s}_r^{(c)}| \right)
 \end{equation}
+% \begin{equation}
+% \text{Accptance Ratio} = \frac{	\prod_a \prod_{a \neq r} \sigma\left(b^{(c)'} - \mathbf{\gamma}^{(c)'} \cdot x^{(ar)}  - ||\mathbf{s}_a^{(c)'} - \mathbf{s}_r^{(c)'}|| \right)}{\prod_a \prod_{a \neq r} \sigma\left(b^{(c)} - \mathbf{\gamma}^{(c)} \cdot x^{(ar)}  - ||\mathbf{s}_a^{(c)} - \mathbf{s}_r^{(c)}|| \right)}
+% \end{equation}
 Edge values for an individual message are then drawn from a Bernoulli distribution. However, the probability that $y_{a,r} = 1$ for a given message $d$ may be dependent on multiple latent spaces (because documents can be about multiple topics). The weight given to $P(y_{a,r}^{(c)})$ for each cluster is determined by the proportion of tokens in the message that are assigned to topics associated with cluster $c$.  
 \begin{equation}
 	P(y_{a,r}^{(d)} = 1) = \sum_C P(y_{a,r}^{(c)} = 1) \times *
