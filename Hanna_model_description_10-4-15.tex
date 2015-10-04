@@ -1,0 +1,834 @@
+\documentclass[10pt,english,oneside]{article}
+\usepackage[pdftex]{graphics}
+\usepackage{amsmath,amssymb,rotating,multirow}
+\usepackage{palatino}
+\usepackage{url}
+
+\usepackage{subfigure}
+
+\usepackage{natbib}
+
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+
+\usepackage{parskip}
+\usepackage{setspace}
+\onehalfspacing
+
+\usepackage{geometry}
+\geometry{verbose,letterpaper}
+
+\setlength{\parskip}{10pt}
+
+\title{Our Model}
+\author{}
+\date{\today}
+
+\bibliographystyle{apalike}
+
+\input{macros}
+
+\begin{document}
+
+First we generate the global (corpus-wide) variables. There are two
+main sets of global variables: those that describe the topics people
+talk about and those that describe how people interact (interaction
+patterns). These variables are linked by a third set of variables that
+associate each topic with the pattern that best describes how people
+interact when talking about that topic.
+
+There are $T$ topics. Each topic $\bphi^{(t)}$ is a discrete
+distribution over $V$ word types.
+
+\begin{algorithm}[h]
+  \begin{algorithmic}[1]
+    \For{$t = 1$ to $T$}
+    \State draw $\bphi^{(t)} \sim \Dir(\beta, \bm)$
+    \EndFor
+  \end{algorithmic}
+\end{algorithm}
+
+There are $C$ interaction patterns. Each interaction pattern consists
+of an intercept $b^{(c)} \in \mathbb{R}$, a coefficient vector
+$\bgamma^{(c)} \in \mathbb{R}^P$, and a set of $A$ positions $\{
+\bs^{(c)}_a \in \mathbb{R}^K \}_{a=1}^A$---one for each person.  We
+also associate each sender--recipient pair with an observed
+$P$-dimensional vector of covariates $\bx^{(ar)}$; however, we assume
+that our generative process is conditioned on these covariates.
+
+\begin{algorithm}[h]
+  \begin{algorithmic}[1]
+    \For{$c = 1$ to $C$}
+    \State draw $b^{(c)} \sim \Norm(\mu, \sigma_1^2)$
+    \State draw $\bgamma^{(c)} \sim \Norm(\bzero, \sigma_2^2 \, \I_P)$
+    \For{$a = 1$ to $A$}
+    \State draw $\bs^{(c)}_a \sim \Norm(\bzero, \sigma_2^2\, \I_K)$
+    \EndFor
+    \For{$a=1$ to $A$}
+    \For{$r=1$ to $A$}
+    \If{$r \neq a$}
+    \State set $p^{(c)}_{ar} = \sigma(b^{(c)} + {\bgamma^{(c)}}^{\top}
+    \bx^{(ar)} - ||\bs_{a}^{(c)} - \bs_{r}^{(c)}||)$
+    \Else
+    \State set $p^{(c)}_{ar} = 0$
+    \EndIf
+    \EndFor
+    \EndFor
+    \EndFor
+  \end{algorithmic}
+\end{algorithm}
+
+The topics and interaction patterns are tied together via a set of $T$
+categorical variables (one per topic). These variables associate each
+topic with a single interaction pattern.
+
+\begin{algorithm}[h]
+  \begin{algorithmic}[1]
+    \For{$t = 1$ to $T$}
+    \State draw $l_t \sim \Unif(1, C)$
+    \EndFor
+  \end{algorithmic}
+\end{algorithm}
+
+\pagebreak
+
+Then, we generate the local variables. There are $D$ emails. We assume
+that each email's sender $a^{(d)} \in [A]$ and length $N^{(d)} \in
+\mathbb{N}_0$ are observed; we do not generate these variables.
+
+\begin{algorithm}[h]
+  \begin{algorithmic}[1]
+    \For{$d=1$ to $D$}
+    \State draw $\btheta^{(d)} \sim \Dir(\alpha, \bm)$
+    \State set $\bar{N}^{(d)} = \textrm{max}(1, N^{(d)})$
+    \For{$n=1$ to $\bar{N}^{(d)}$}    
+    \State draw $z_n^{(d)} \sim \btheta^{(d)}$
+    \If{$N^{(d)} \neq 0$}
+    \State draw $w_n^{(d)} \sim \bphi^{(z_n^{(d)})}$
+    \EndIf
+    \EndFor
+    \For{$t=1$ to $T$}
+    \State set $\bar{N}^{(t|d)} = \sum_{n=1}^{\bar{N}^{(d)}}
+    \delta(z_n^{(d)} \teq t)$
+    \EndFor
+    \For{$r=1$ to $A$}
+    \State draw $y_r^{(d)} \sim \Bern(    \sum_{t=1}^T \frac{\bar{N}^{(t|d)}}{\bar{N}^{(d)}}
+    p^{(l_t)}_{a^{(d)}r})$
+    \EndFor
+    \EndFor
+  \end{algorithmic}
+\end{algorithm}
+
+This generative process implies a particular factorization of the
+joint distribution over $\Phi = \{ \bphi^{(t)} \}_{t=1}^T$,
+$\mathcal{B} = \{ b^{(c)} \}_{c=1}^C$, $\Gamma = \{ \bgamma^{(c)}
+\}_{c=1}^C$, $\mathcal{S} = \{ \{ \bs^{(c)}_a \} \}_{c=1}^C$,
+$\mathcal{L} = \{ l_t\}_{t=1}^T$, $\Theta = \{ \btheta^{(d)}
+\}_{d=1}^D$, $\mathcal{Z} = \{ \bz^{(d)} \}_{d=1}^D$, $\mathcal{W} =
+\{ \bw^{(d)} \}_{d=1}^D$, and $\mathcal{Y} = \{ \by^{(d)} \}_{d=1}^D$
+given $\mathcal{X} = \{ \{
+\bx^{(ar)} \}_{r=1}^A \}_{a=1}^A$ and 
+$\mathcal{A} = \{ a^{(d)} \}_{d=1}^D$:
+\begin{align}
+  &P(\Phi, \mathcal{B}, \Gamma, \mathcal{S}, \mathcal{L}, \Theta,
+  \mathcal{Z}, \mathcal{W}, \mathcal{Y} \g \mathcal{X}, \mathcal{A})
+  \notag \\
+  &\qquad = P(\Phi) P(\mathcal{B}) P(\Gamma) P(\mathcal{S}) P(\mathcal{L})
+  P(\Theta) P(\mathcal{Z} \g \Theta) P(\mathcal{W} \g \mathcal{Z},
+  \Phi) P(\mathcal{Y} \g \mathcal{B}, \Gamma, \mathcal{S},
+  \mathcal{L}, \mathcal{Z}, \mathcal{X}, \mathcal{A}).
+  \end{align}
+We can simplify this further by integrating out $\Phi$ and $\Theta$
+using Dirichlet--multinomial conjugacy:
+\begin{equation}
+  P(\mathcal{B}, \Gamma, \mathcal{S}, \mathcal{L},
+  \mathcal{Z}, \mathcal{W}, \mathcal{Y} \g \mathcal{X}, \mathcal{A}) =
+  P(\mathcal{B}) P(\Gamma) P(\mathcal{S}) P(\mathcal{L})
+  P(\mathcal{Z})
+  P(\mathcal{W} \g \mathcal{Z}) P(\mathcal{Y} \g \mathcal{B}, \Gamma,
+  \mathcal{S},
+    \mathcal{L}, \mathcal{Z}, \mathcal{X}, \mathcal{A}).
+  \end{equation}
+
+Our inference goal is to draw samples from the posterior distribution
+\begin{equation}
+  P(\mathcal{B}, \Gamma, \mathcal{S}, \mathcal{L},
+  \mathcal{Z} \g \mathcal{W}, \mathcal{Y}, \mathcal{X}, \mathcal{A})
+  \propto P(\mathcal{B}, \Gamma, \mathcal{S}, \mathcal{L},
+    \mathcal{Z}, \mathcal{W}, \mathcal{Y} \g \mathcal{X}, \mathcal{A}).
+  \end{equation}
+In practice, we can achieve this inference goal by sequentially
+resampling the value of each latent variable (i.e., $b^{(c)}$,
+$\bgamma^{(c)}$, $\bs^{(c)}_a$, $l_t$, or $z^{(d)}_n$) from its
+conditional posterior distribution.
+
+Let's first consider $z_n^{(d)}$, whose conditional posterior probability of being
+topic $t$ is
+\begin{align}
+  &P(z_n^{(d)} \teq t \g \mathcal{B}, \Gamma, \mathcal{S}, \mathcal{L},
+    \mathcal{Z}_{\setminus d, n}, \mathcal{W}, \mathcal{Y},
+    \mathcal{X}, \mathcal{A}) \notag \\
+    &\qquad \propto P(z_n^{(d)} \teq t, w_n^{(d)}, \by^{(d)} \g
+    \mathcal{B}, \Gamma, \mathcal{S},
+    \mathcal{L},\mathcal{Z}_{\setminus d, n}, \mathcal{W}_{\setminus
+      d, n},
+    \mathcal{Y}_{\setminus d},
+        \mathcal{X}, \mathcal{A}) \\
+        &\qquad = P(z_n^{(d)} \teq t \g \mathcal{Z}_{\setminus d, n})
+        P(w_n^{(d)} \g z_n^{(d)} \teq t, \mathcal{W}_{\setminus d, n},
+        \mathcal{Z}_{\setminus d, n})
+        P(\by^{(d)} \g \mathcal{B},
+        \Gamma, \mathcal{S}, \mathcal{L}, z_n^{(d)} \teq t,
+        \mathcal{Z}_{\setminus d, n}, \mathcal{X}, \mathcal{A}).
+\end{align}
+We have dropped the conditional dependence on
+$\mathcal{Y}_{\setminus d}$ because $\by^{(d)} \perp
+\mathcal{Y}_{\setminus d}$. We know that
+\begin{equation}
+  P(z_n^{(d)} \teq t \g \mathcal{Z}_{\setminus d, n}) = \frac{P(z_n^{(d)} \teq t, \mathcal{Z}_{\setminus d,
+      n})}{P(\mathcal{Z}_{\setminus d, n})} = \frac{\bar{N}^{(t|d)}_{\setminus d, n} +
+    \frac{\alpha}{T}}{\bar{N}^{(d)} - 1 + \alpha}.
+\end{equation}
+(The
+derivation is the same as for LDA.) We
+also know that 
+\begin{equation}
+  P(w_n^{(d)} \g z_n^{(d)} \teq t, \mathcal{W}_{\setminus d, n},
+  \mathcal{Z}_{\setminus d, n}) = \frac{P(w^{(d)}_n,
+    \mathcal{W}_{\setminus d, n} \g z_n^{(d)} \teq t,
+    \mathcal{Z}_{\setminus d, n})}{P(\mathcal{W}_{\setminus d, n} \g
+    \mathcal{Z}_{\setminus d, n})} =
+  \frac{N^{(w_n^{(d)}|t)}_{\setminus d, n} +
+    \frac{\beta}{V}}{N^{(t)}_{\setminus d, n} + \beta},
+\end{equation}
+where $N^{(w_n^{(d)}|t)}_{\setminus d, n}$ is the number of tokens
+assigned to topic $t$ whose type is the same as that of $w_n^{(d)}$,
+excluding $w_n^{(d)}$ itself, and $N^{(t)}_{\setminus d, n} =
+\sum_{v=1}^V N^{(v|t)}_{\setminus d, n}$. Finally, we know that
+\begin{align}
+  &P(\by^{(d)} \g \mathcal{B}, \Gamma, \mathcal{S}, \mathcal{L},
+  z_n^{(d)} \teq t, \mathcal{Z}_{\setminus d, n}, \mathcal{X},
+  \mathcal{A}) \notag \\
+  &\qquad  =
+  \prod_{r=1}^A 
+  \left(   \sum_{t'=1}^T \frac{\bar{N}^{(t'|d)}_{\setminus d, n} +
+    \delta(t' \teq t)}{\bar{N}^{(d)}} p_{a^{(d)}r}^{(l_{t'})} \right)^{y^{(d)}_r} \left( 1 -   \sum_{t'=1}^T \frac{\bar{N}^{(t'|d)}_{\setminus d, n} +
+    \delta(t' \teq t)}{\bar{N}^{(d)}} p_{a^{(d)}r}^{(l_{t'})} \right)^{1 - y^{(d)}_r}.
+  \end{align}.
+Therefore, if $N^{(d)} > 0$, then 
+\begin{align}
+  &P(z_n^{(d)} \teq t \g \mathcal{B}, \Gamma, \mathcal{S}, \mathcal{L},
+    \mathcal{Z}_{\setminus d, n}, \mathcal{W}, \mathcal{Y},
+    \mathcal{X}, \mathcal{A}) \notag \\
+        &\qquad \propto \left( \bar{N}^{(t|d)}_{\setminus d, n} +
+    \frac{\alpha}{T}\right) \frac{N^{(w_n^{(d)}|t)}_{\setminus
+        d, n} + \frac{\beta}{V}}{N^{(t)}_{\setminus d, n} + \beta}
+    \times {} \notag \\
+    &\qquad \quad
+  \prod_{r=1}^A 
+  \left(   \sum_{t'=1}^T \frac{\bar{N}^{(t'|d)}_{\setminus d, n} +
+    \delta(t' \teq t)}{\bar{N}^{(d)}} p_{a^{(d)}r}^{(l_{t'})} \right)^{y^{(d)}_r} \left( 1 -   \sum_{t'=1}^T \frac{\bar{N}^{(t'|d)}_{\setminus d, n} +
+    \delta(t' \teq t)}{\bar{N}^{(d)}} p_{a^{(d)}r}^{(l_{t'})} \right)^{1 - y^{(d)}_r},
+\end{align}
+If $N^{(d)} \teq 0$, the first term becomes $\frac{\alpha}{T}$ and
+disappears because it is a constant. The second term disappears
+because there are no tokens. Since $\bar{N}^{(t'|d)}_{\setminus
+  d, n} \teq 0 $, we therefore have
+\begin{equation}
+  P(z_1^{(d)} \teq t \g \mathcal{B}, \Gamma, \mathcal{S}, \mathcal{L},
+    \mathcal{Z}_{\setminus d, n}, \mathcal{W}, \mathcal{Y},
+    \mathcal{X}, \mathcal{A}) 
+    \propto 
+    \prod_{r=1}^A \left( p_{a^{(d)}r}^{(l_t)} \right)^{y^{(d)}_r} \left( 1 - p_{a^{(d)}r}^{(l_t)}\right)^{1 - y^{(d)}_r}.
+\end{equation}
+
+Next, let's consider $l_t$, whose conditional posterior probability
+of being latent space $c$
+\begin{align}
+  &P(l_t \teq c \g \mathcal{B}, \Gamma, \mathcal{S},
+  \mathcal{L}_{\setminus t}, \mathcal{Z}, \mathcal{W}, \mathcal{Y},
+  \mathcal{X}, \mathcal{A}) \notag \\
+  &\qquad \propto P(l_t, \mathcal{Y} \g \mathcal{B},
+  \Gamma, \mathcal{S},
+  \mathcal{L}_{\setminus t}, \mathcal{Z}, \mathcal{W},
+  \mathcal{X}, \mathcal{A})\\
+  &\qquad = P(l_t \teq c) P(\mathcal{Y} \g \mathcal{B}, \Gamma,
+  \mathcal{S}, l_t \teq c, \mathcal{L}_{\setminus t}, \mathcal{Z},
+  \mathcal{X}, \mathcal{A}).
+\end{align}
+We know that $P(l_t \teq c) = \frac{1}{C}$. Since this is a constant,
+this term disappears. We also know that
+\begin{align}
+  &P(\mathcal{Y} \g \mathcal{B}, \Gamma, \mathcal{S}, l_t \teq c,
+  \mathcal{L}_{\setminus t}, \mathcal{Z}, \mathcal{X}, \mathcal{A})
+  \notag \\
+  &\qquad =
+  \prod_{d=1}^D \prod_{r=1}^A
+  \left(   \sum_{t'=1}^T \frac{\bar{N}^{(t'|d)}}{\bar{N}^{(d)}} p_{a^{(d)}r}^{(l_{t'})}
+  \right)^{y^{(d)}_r} \left( 1 -   \sum_{t'=1}^T
+  \frac{\bar{N}^{(t'|d)}}{\bar{N}^{(d)}} p_{a^{(d)}r}^{(l_{t'})}\right)^{1 - y^{(d)}_r},
+\end{align}
+with $l_t \teq c$ throughout. (Note that in the product over $d$, I
+think we need only consider those emails that actually use topic $t$;
+the others will have no terms involving $l_t$.)  Therefore,
+\begin{align}
+  &P(l_t \teq c \g \mathcal{B}, \Gamma, \mathcal{S},
+  \mathcal{L}_{\setminus t}, \mathcal{Z}, \mathcal{W}, \mathcal{Y},
+  \mathcal{X}, \mathcal{A}) \notag\\
+  &\qquad \propto \prod_{d=1}^D \prod_{r=1}^A
+  \left(   \sum_{t'=1}^T \frac{\bar{N}^{(t'|d)}}{\bar{N}^{(d)}} p_{a^{(d)}r}^{(l_{t'})}
+  \right)^{y^{(d)}_r} \left( 1 -   \sum_{t'=1}^T
+  \frac{\bar{N}^{(t'|d)}}{\bar{N}^{(d)}} p_{a^{(d)}r}^{(l_{t'})}\right)^{1 - y^{(d)}_r}.
+\end{align}
+
+We can resample the values of $b^{(c)}$, $\bgamma^{(c)}$, and
+$\bs^{(c)}_a$ using Metropolis--Hastings or slice sampling. With
+either algorithm, we can separately resample the values of the
+variables or we can jointly resample the values of $\mathcal{B}$,
+$\Gamma$, and $\mathcal{S}$. Let's first consider the latter scenario
+using Metropolis--Hastings.
+
+As a quick reminder, Metropolis--Hastings uses a proposal density $Q$,
+which depends on the current values of the variables to be sampled:
+$Q(\mathcal{B}', \Gamma', \mathcal{S}' \g \mathcal{B}, \Gamma,
+\mathcal{S})$. Here, we'll assume that $Q$ is a multivariate Gaussian
+distribution, with a diagonal covariance matrix, centered on a vector
+that consists of the current state of the Markov chain (i.e., the
+current values of $\mathcal{B}$, $\Gamma$, and $\mathcal{S}$). Each
+iteration of the algorithm involves drawing a proposal $\mathcal{B}'$,
+$\Gamma'$, and $\mathcal{S}'$ from $Q$ given the current state of the
+Markov chain $\mathcal{B}$, $\Gamma$, and $\mathcal{S}$. This proposal
+is accepted as the new state of the chain if
+\begin{equation}
+  \frac{Q(\mathcal{B}, \Gamma, \mathcal{S} \g \mathcal{B}', \Gamma',
+    \mathcal{S}')}{Q(\mathcal{B}', \Gamma', \mathcal{S}' \g \mathcal{B},
+    \Gamma, \mathcal{S})}
+  \frac{P(\mathcal{B}', \Gamma',
+    \mathcal{S}' \g \mathcal{L}, \mathcal{Z}, \mathcal{W},
+    \mathcal{Y}, \mathcal{X}, \mathcal{A})}{
+        P(\mathcal{B}, \Gamma,
+    \mathcal{S} \g \mathcal{L}, \mathcal{Z}, \mathcal{W},
+    \mathcal{Y}, \mathcal{X}, \mathcal{A})} \geq 1.
+\end{equation}
+If $Q$ is a Gaussian distribution, then the first term disappears because
+\begin{equation}
+\frac{\frac{1}{\sqrt{2 \pi \sigma^2}} \exp{\left( - \frac{(x -
+      x')^2}{2 \sigma^2} \right)}}{\frac{1}{\sqrt{2 \pi \sigma^2}}
+  \exp{\left( - \frac{(x' - x)^2}{2 \sigma^2} \right)}} = \exp{\left(
+  \frac{1}{2 \sigma^2} \left( (x' - x)^2 - (x - x')^2\right)\right)} = \exp{(0)} = 1.
+\end{equation}
+To simplify the second term, note that
+\begin{equation}
+  \frac{P(\mathcal{B}', \Gamma',
+    \mathcal{S}' \g \mathcal{L}, \mathcal{Z}, \mathcal{W},
+    \mathcal{Y}, \mathcal{X}, \mathcal{A})}{
+        P(\mathcal{B}, \Gamma,
+    \mathcal{S} \g \mathcal{L}, \mathcal{Z}, \mathcal{W},
+    \mathcal{Y}, \mathcal{X}, \mathcal{A})} =
+  \frac{P(\mathcal{B}', \Gamma',
+    \mathcal{S}', \mathcal{L}, \mathcal{Z}, \mathcal{W},
+    \mathcal{Y} \g \mathcal{X}, \mathcal{A})}{
+        P(\mathcal{B}, \Gamma,
+    \mathcal{S}, \mathcal{L}, \mathcal{Z}, \mathcal{W},
+    \mathcal{Y} \g \mathcal{X}, \mathcal{A})}  
+  \end{equation}
+because the normalization constants that turn the joint distribution
+into the conditional distribution cancel. Any terms in the joint
+distribution that don't involve $\mathcal{B}$, $\Gamma$, or
+$\mathcal{S}$ also cancel, so
+\begin{align}
+  &\frac{
+    P(\mathcal{B}', \Gamma', \mathcal{S}', \mathcal{L},
+  \mathcal{Z}, \mathcal{W}, \mathcal{Y} \g \mathcal{X}, \mathcal{A})
+  }{    P(\mathcal{B}, \Gamma, \mathcal{S}, \mathcal{L},
+  \mathcal{Z}, \mathcal{W}, \mathcal{Y} \g \mathcal{X}, \mathcal{A})}
+  \notag \\
+  &\qquad =
+  \frac{
+  P(\mathcal{B'}) P(\Gamma') P(\mathcal{S}') P(\mathcal{L})
+  P(\mathcal{Z})
+  P(\mathcal{W} \g \mathcal{Z}) P(\mathcal{Y} \g \mathcal{B}',
+  \Gamma', \mathcal{S}', \mathcal{L}, \mathcal{Z}, \mathcal{X}, \mathcal{A})}{
+  P(\mathcal{B}) P(\Gamma) P(\mathcal{S}) P(\mathcal{L})
+  P(\mathcal{Z})
+  P(\mathcal{W} \g \mathcal{Z}) P(\mathcal{Y} \g \mathcal{B}, \Gamma,
+  \mathcal{S}, \mathcal{L}, \mathcal{Z},
+  \mathcal{X}, \mathcal{A})}\\
+  &\qquad = \frac{P(\mathcal{B}')P(\Gamma')P(\mathcal{S'})P(\mathcal{Y} \g
+    \mathcal{B}', \Gamma', \mathcal{S}', \mathcal{L}, \mathcal{Z},
+    \mathcal{X}, \mathcal{A})}{P(\mathcal{B}) P(\Gamma) P(\mathcal{S})
+  P(\mathcal{Y} \g \mathcal{B}, \Gamma, \mathcal{S}, \mathcal{L},
+  \mathcal{Z}, \mathcal{X}, \mathcal{A})}\\
+  &\qquad = \frac{P(\mathcal{B}') P(\Gamma') P(\mathcal{S}')}{P(\mathcal{B})
+    P(\Gamma) P(\mathcal{S})} \frac{
+    \prod_{d=1}^D \prod_{r=1}^A \left(
+    \sum_{t=1}^T \frac{\bar{N}^{(t|d)}}{\bar{N}^{(d)}}
+    {p'}^{(l_t)}_{a^{(d)}r}
+  \right)^{y^{(d)}_r} \left( 1 -
+    \sum_{t=1}^T \frac{\bar{N}^{(t|d)}}{\bar{N}^{(d)}}
+    {p'}^{(l_t)}_{a^{(d)}r}  
+  \right)^{1 - y^{(d)}_r}}{
+    \prod_{d=1}^D \prod_{r=1}^A \left(
+    \sum_{t=1}^T \frac{\bar{N}^{(t|d)}}{\bar{N}^{(d)}}
+    {p}^{(l_t)}_{a^{(d)}r}
+  \right)^{y^{(d)}_r} \left( 1 -
+    \sum_{t=1}^T \frac{\bar{N}^{(t|d)}}{\bar{N}^{(d)}}
+    {p}^{(l_t)}_{a^{(d)}r}  
+  \right)^{1 - y^{(d)}_r}}    \\
+  &\qquad = \frac{P(\mathcal{B}') P(\Gamma') P(\mathcal{S}')}{P(\mathcal{B})
+    P(\Gamma) P(\mathcal{S})} \prod_{d=1}^D \prod_{r=1}^A
+  \left( \frac{    \sum_{t=1}^T \frac{\bar{N}^{(t|d)}}{\bar{N}^{(d)}}
+    {p'}^{(l_t)}_{a^{(d)}r}
+}{          \sum_{t=1}^T \frac{
+      \bar{N}^{(t|d)}}{\bar{N}^{(d)}}
+    {p}^{(l_t)}_{a^{(d)}r}} \right)^{y^{(d)}_r}
+  \left( \frac{  1 -
+    \sum_{t=1}^T \frac{\bar{N}^{(t|d)}}{\bar{N}^{(d)}}
+    {p'}^{(l_t)}_{a^{(d)}r}  }{  1 -
+    \sum_{t=1}^T \frac{\bar{N}^{(t|d)}}{\bar{N}^{(d)}}
+    {p}^{(l_t)}_{a^{(d)}r}  
+} \right)^{1 - y^{(d)}_r},
+\end{align}
+where ${p'}^{(c)}_{ar} = \sigma({b'}^{(c)} + {{\bgamma'}^{(c)}}^{\top}
+\bx^{(ar)} - ||{\bs'}^{(c)}_a - {\bs'}^{(c)}_r||)$.
+
+Bruce suggests an alternative to step 14 of the generative process for
+the local variables:
+\begin{equation}
+  y^{(d)}_r \sim \Bern \left(
+  \frac{
+    \prod_{c=1}^C
+  \left(p^{(c)}_{a^{(d)}r}\right)^{\bar{N}^{(c|d)}}}{
+    \prod_{c=1}^C
+  \left(p^{(c)}_{a^{(d)}r}\right)^{\bar{N}^{(c|d)}} + \prod_{c=1}^C
+  \left(1 - p^{(c)}_{a^{(d)}r}\right)^{\bar{N}^{(c|d)}}}  
+  \right),
+  \end{equation}
+where $\bar{N}^{(c|d)} = \sum_{t=1}^T \bar{N}^{(t|d)} \delta(l_t \teq
+c)$. Currently, however, we have 
+\begin{align}
+y_r^{(d)} \sim \Bern \left(
+\sum_{t=1}^T \frac{\bar{N}^{(t|d)}}{\bar{N}^{(d)}}
+    p^{(l_t)}_{a^{(d)}r}
+    \right) = \Bern \left(
+\sum_{c=1}^C \frac{\bar{N}^{(c|d)}}{\bar{N}^{(d)}}
+    p^{(c)}_{a^{(d)}r}    
+    \right),
+\end{align}
+which implies that $y^{(d)}_r$ is drawn from a mixture model, where
+each mixture component is an interaction pattern. The (normalized)
+weight for each interaction pattern $c$ is the proportion of tokens in
+email $d$ that are associated with (topics associated with) that
+interaction pattern. In contrast, Bruce's suggestion implies that
+$y^{(d)}$ is drawn from a product model. Here too, the components are
+interaction patterns, however the weight for each pattern is now the
+number of tokens in email $d$ that are associated with that pattern,
+and the components' contributions are combined differently.
+
+In general, a $C$-component mixture model for a random variable $y \in
+\{0, 1\}$ implies that $y$ is drawn from a linear combination of $C$
+Bernoulli components, parameterized by $p^{(1)}, \ldots,
+p^{(C)}$---i.e., 
+\begin{align}
+  P(y \teq 1) = p
+  &= \frac{\sum_{c=1}^C \pi^{(c)}
+    p^{(c)}}{\sum_{c=1}^C \pi^{(c)} p^{(c)} + \sum_{c=1} \pi^{(c)}
+    \left( 1 - p^{(c)}\right)}\\
+  &= \frac{\sum_{c=1}^C \pi^{(c)}
+    p^{(c)}}{\sum_{c=1}^C \pi^{(c)} \left( p^{(c)} + 1 -
+    p^{(c)}\right)}\\
+  \label{eqn:mixture}
+  &= \sum_{c=1}^C \frac{\pi^{(c)}}{\sum_{c=1}^C \pi^{(c)}} p^{(c)},
+\end{align}
+where $\pi^{(1)} \geq 0, \ldots, \pi^{(C)} \geq 0$ are the component
+weights. In contrast, a $C$-component product model for $y$, formed
+from the same components and component weights, implies that
+\begin{equation}
+  P(y \teq 1) = p = \frac{\prod_{c=1}^C \left( p^{(c)}
+    \right)^{\pi^{(c)}}}{\prod_{c=1}^C \left(
+    p^{(c)}\right)^{\pi^{(c)}}+ \prod_{c=1}^C \left( 1 -
+    p^{(c)}\right)^{\pi^{(c)}}}.
+\end{equation}
+  
+There are two main differences between a mixture model and a product
+model. The first is in the way that the components' contributions are
+combined. In a mixture model, the component-specific probabilities are
+combined additively (i.e., via an ``or'' function); in a product
+model, the component-specific probabilities are combined
+multiplicatively (i.e., via an ``and'' function).
+
+To illustrate this difference, let's consider a simple example in
+which the value of $y \in \{0, 1\}$ is drawn from either a mixture
+model with two Bernoulli components, parameterized by $p^{(1)}$ and
+$p^{(2)}$, respectively, or a product model formed from the same two
+components. In both models, we'll assume that the components are
+equally weighted with $\pi^{(1)} = \pi^{(2)} = 1$. The mixture model
+therefore implies that
+\begin{equation}
+  P(y \teq 1) = p = \frac{1}{2} \sum_{c=1}^2 p^{(c)},
+  \end{equation}
+while the product model implies that
+\begin{equation}
+P(y \teq 1) = p = \frac{\prod_{c=1}^2 p^{(c)}}{\prod_{c=1}^2 p^{(c)} +
+  \prod_{c=1}^2 (1-p^{(c)})}.
+\end{equation}
+
+In the mixture model, the components can compensate for one
+another. For example, if $p^{(1)} \teq 0.9$ and $p^{(2)} \teq 0.2$,
+then $p = 0.55$. To better understand this example, let's quantify the
+uncertainty of a distribution as its entropy, so less certain
+distributions have higher entropy and vice versa. For a two
+dimensional distribution $q$, $0 \leq H(q) \leq 1.0$. Here, $H\left(
+p^{(1)} \right) \teq 0.469$, $H\left( p^{(2)} \right) \teq 0.722$, and
+$H(p) \teq 0.993$. Because the components disagree, both components
+are made less certain by their combination. In contrast, if $p^{(1)}
+\teq 0.9$ and $p^{(2)} \teq 0.7$, then $p = 0.8$. Here, $H\left(
+p^{(1)} \right) \teq 0.469$, $H\left( p^{(2)} \right) \teq 0.881$, and
+$H(p) \teq 0.722$. Because the components agree, but with differing
+certainties, the more certain component is made less certain while the
+less certain component is made more so. This compensatory behavior has
+the biggest substantive impact on components that are very
+certain. For example, if $p^{(1)} \teq 0$ and $p^{(2)} \teq 0.4$, then
+$p \teq 0.2$. Equivalently, $H\left(p^{(1)}\right) \teq 0$, $H\left(
+p^{(2)} \right) \teq 0.971$, and $H(p) \teq 0.722$. In other words,
+even though the first component was absolutely certain, the mixture
+model is not certain (i.e., $p \neq 0)$ because of the second
+component's non-zero probability.
+
+In general, a mixture model cannot be more certain than its most
+certain component. (It can, however, be more or less certain than the
+other components, though.) We can use Jensen's inequality to see why
+this is the case. Since entropy is a concave function, Jensen's
+inequality implies that
+\begin{equation}
+  \label{eqn:jensen}
+  H\left( \sum_{c=1}^C \frac{\pi^{(c)}}{\sum_{c=1}^C \pi^{(c)}}
+  p^{(c)} \right) \geq \sum_{c=1}^C \frac{\pi^{(c)}}{\sum_{c=1}^C
+    \pi^{(c)}} H\left(p^{(c)}\right).
+\end{equation}
+For a fixed set of components $p^{(1)}, \ldots, p^{(C)}$, making the
+mixture model as certain as possible is equivalent to minimizing its
+entropy with respect to the weights $\pi^{(1)}, \ldots,
+\pi^{(C)}$---i.e.,
+\begin{equation}
+  \min_{\boldsymbol{\pi}} H\left( \sum_{c=1}^C
+  \frac{\pi^{(c)}}{\sum_{c=1}^C \pi^{(c)}} p^{(c)} \right) \geq
+  \min_{\boldsymbol{\pi}}\sum_{c=1}^C \frac{\pi^{(c)}}{\sum_{c=1}^C
+    \pi^{(c)}} H\left(p^{(c)}\right).
+\end{equation}
+The right-hand side of equation~\ref{eqn:jensen} can only be minimized
+by placing all the weight (i.e., $\sum_{c=1}^C \pi^{(c)}$) on the most
+certain component (and no weight on the other components). Therefore,
+\begin{equation}
+  \label{eqn:mixture_certainty}
+  \min_{\boldsymbol{\pi}} H\left( \sum_{c=1}^C
+  \frac{\pi^{(c)}}{\sum_{c=1}^C \pi^{(c)}} p^{(c)} \right) \geq
+  \min_{c} H\left(p^{(c)}\right).
+\end{equation}
+In other words, no matter how we choose the weights $\pi^{(1)},
+\ldots, \pi^{(C)}$, the mixture model cannot be more certain than its
+most certain component. Moreover, by examining
+equation~\ref{eqn:mixture_certainty}, we can see that the mixture
+model will only be as certain as its most certain component if
+$p^{(1)} = \ldots = p^{(C)}$ or if we place all the weight on the most
+certain component and none on the other components.
+
+Returning to our model, let's consider an email whose tokens
+$\bw^{(d)}$ are associated (via $\bz^{(d)}$ and $\mathcal{L}$) with
+interaction patterns $c$ and $c'$. Even if interaction pattern $c$
+specifies that sender $a^{(d)}$ never interacts with recipient $r$,
+then provided interaction pattern $c'$ specifies a non-zero
+probability of interaction, the probability of $a^{(d)}$ sending the
+email to $r$ will be non-zero. For example, even if I never email my
+boss about personal matters (but do email her about work), there is a
+non-zero probability that I will send an her an email containing both
+personal and work content. Is this a reasonable assumption?
+Intuitively, I'm not sure that it is. Realistically, I can't see
+myself sending my boss an email containing personal content, even if
+some portion of the email is about work.
+
+In contrast, a product model can be more or less certain than its most
+certain component. For example, if $p^{(1)} \teq 0.9$ and $p^{(2)}
+\teq 0.2$, then $p \teq 0.692$. Equivalently, $H\left( p^{(1)}\right)
+\teq 0.469$, $H\left( p^{(2)}\right) \teq 0.722$, and $H(p) =
+0.890$. In other words, both components are made less certain by their
+combination. However, if $p^{(1)} \teq 0.9$ and $p^{(2)} \teq 0.7$,
+then $p \teq 0.955$. Here, $H\left( p^{(1)} \right) \teq 0.469$, $H
+\left( p^{(2)}\right) \teq 0.881$, and $H(p) \teq 0.267$. Both
+components are made more certain by their combination---even the most
+certain component. In addition to this difference, components can veto
+one another. For example, if $p^{(1)} \teq 0$ and $p^{(2)} \teq 0.4$,
+then $p \teq 0$. Equivalently, $H\left( p^{(1)} \right) \teq 0$, $H
+\left( p^{(2)}\right) \teq 0.971$, and $H(p) \teq 0$. In other words,
+the product model is certain that $y \teq 0$ because the first
+component was certain.
+
+Returning to Bruce's alternative to our model, if interaction pattern
+$c$ specifies that sender $a^{(d)}$ never interacts with recipient
+$r$, then the probability of $a^{(d)}$ sending to $r$ an email that
+contains some tokens associated with interaction pattern $c$ is
+zero. For example, if I never email my boss about personal matters
+(but do email her about work), then I will not send her an email
+containing both personal and work content. Is this a reasonable
+assumption?  Intuitively, I think it is.
+
+The second difference between a mixture model and a product model is
+in the components' weights. Because the weights in a mixture model are
+normalized (see equation~\ref{eqn:mixture}), their scale is
+ignored. For example, in a two-component mixture model, $\pi^{(1)}
+\teq 1$ and $\pi^{(2)} \teq 4$ and $\pi^{(1)} \teq 100$ and $\pi^{(2)}
+\teq 400$ will both be normalized to $\pi^{(1)} \teq 0.2$ and
+$\pi^{(2)} \teq 0.8$ and therefore yield the same mixture model.
+
+In our model, when forming the probability of $y_r^{(d)} \teq 1$, the
+weight for each interaction pattern $c$ is the number of tokens in
+email $d$ that are associated with that interaction pattern. When
+normalized, each weight becomes a proportion---i.e.,
+$\frac{\pi^{(c)}}{\sum_{c=1}^C \pi^{(c)}} =
+\frac{\bar{N}^{(c|d)}}{\bar{N}^{(d)}}$. Normalization means that two
+emails with the same sender will have identical probabilities of being
+sent to recipient $r$, provided their empirical distributions over
+interaction patterns are the same. For example, let's consider two
+such emails $d$ and $d'$ and assume that for every interaction
+pattern, the second email contains ten times as many tokens associated
+with that pattern as the first---i.e., $\bar{N}^{(c|d')} = 10 \cdot
+\bar{N}^{(c|d)}$. Since
+\begin{equation}
+  \frac{\bar{N}^{(c|d')}}{\bar{N}^{(d')}} = \frac{\bar{N}^{(c|d')}}{\sum_{c=1}^C
+    \bar{N}^{(c|d')}} = \frac{10 \cdot \bar{N}^{(c|d)}}{\sum_{c=1}^C 10 \cdot
+    \bar{N}^{(c|d)}} = \frac{\bar{N}^{(c|d)}}{\sum_{c=1}^C \bar{N}^{(c|d)}} =
+  \frac{\bar{N}^{(c|d)}}{\bar{N}^{(d)}},
+\end{equation}
+our model implies that
+\begin{equation}
+ P(y^{(d)}_r \teq 1) =
+ \sum_{c=1}^C \frac{\bar{N}^{(c|d)}}{\bar{N}^{(d)}}
+ p^{(c)}_{a^{(d)}r} =  \sum_{c=1}^C \frac{\bar{N}^{(c|d')}}{\bar{N}^{(d')}}
+ p^{(c)}_{a^{(d')}r} = P(y^{(d')}_r \teq 1).
+\end{equation}
+In other words, our model treats the two emails identically, even
+though they are different lengths, because their empirical
+distributions over interaction patterns are the same. Equivalently,
+our model assumes that email length does not affect the probability of
+sending an email to a particular recipient; an empirical distribution
+over interaction patterns formed from two tokens plays exactly the
+same role as one formed from 200 tokens. Is this a reasonable
+assumption? Intuitively, I'm not sure it is, given that the latter
+distribution is formed from much more data than the former.
+
+In the product model, the scale of the components' weights is not
+ignored. For example, let's consider a two-component mixture model
+with $p^{(1)} \teq 0.9$ and $p^{(2)} \teq 0.2$. If $\pi^{(1)} \teq
+0.2$ and $\pi^{(2)} \teq 0.8$, then $p = 0.339$; however, if
+$\pi^{(1)} \teq 1$ and $\pi^{(2)} \teq 4$, then $p = 0.033$. If
+$\pi^{(1)} \teq 100$ and $\pi^{(2)} \teq 400$, then $p \teq 0$. In
+other words, the larger the scale of the weights, the more certain the
+product model is.
+
+In Bruce's alternative model, when forming the probability of
+$y_r^{(d)} \teq 1$, the weight for interaction pattern $c$ is the
+number of tokens in email $d$ that are associated with that
+interaction pattern---i.e., $\pi^{(c)} = \bar{N}^{(c|d)}$. Two emails
+with the same sender will only have identical probabilities of being
+sent to recipient $r$ if their empirical distributions over
+interaction patterns \emph{and} their lengths are the same. Let's
+again consider two such emails $d$ and $d'$ and assume that for every
+interaction pattern, the second email contains ten times as many
+tokens associated with that pattern as the first. Now,
+\begin{align}
+P(y^{(d')}_r \teq 1)
+&= \frac{\prod_{c=1}^C \left( p^{(c)}_{a^{(d')}r}
+  \right)^{\bar{N}^{(c|d')}}}{\prod_{c=1}^C \left(
+  p^{(c)}_{a^{(d')}r}\right)^{\bar{N}^{(c|d')}} + \prod_{c=1}^C \left( 1 -
+  p^{(c)}_{a^{(d')}r}\right)^{\bar{N}^{(c|d')}}}\\
+&= \frac{\prod_{c=1}^C \left( p^{(c)}_{a^{(d)}r}
+  \right)^{10 \cdot \bar{N}^{(c|d)}}}{\prod_{c=1}^C \left(
+  p^{(c)}_{a^{(d)}r}\right)^{10 \cdot \bar{N}^{(c|d)}} + \prod_{c=1}^C \left( 1 -
+  p^{(c)}_{a^{(d)}r}\right)^{10 \cdot \bar{N}^{(c|d)}}}\\
+&= \frac{\left( \prod_{c=1}^C \left( p^{(c)}_{a^{(d)}r}
+  \right)^{\bar{N}^{(c|d)}}\right)^{10}}{\left(\prod_{c=1}^C \left(
+  p^{(c)}_{a^{(d)}r}\right)^{\bar{N}^{(c|d)}}\right)^{10} +\left( \prod_{c=1}^C \left( 1 -
+  p^{(c)}_{a^{(d)}r}\right)^{\bar{N}^{(c|d)}}\right)^{10}}\\
+&\neq P(y^{(d)}_r \teq 1).
+  \end{align}
+In other words, we can form $P(y^{(d')}_r \teq 1)$ by raising each of
+the constituent terms in $P(y^{(d)}_r \teq 1)$ to a power of ten. This
+power is effectively an ``inverse temperature''; larger values make
+the distribution more certain. Therefore, in Bruce's alternative to
+our model, if two emails $d$ and $d'$ have the same sender and
+empirical distribution over interaction patterns but different
+lengths, they will not be treated identically; if $N^{(d')} \geq
+N^{(d)}$, then the distribution over $y^{(d')}_r$ will be more certain
+than the distribution over $y^{(d)}_r$ for each recipient $r$. In
+general, raising (unnormalized) probabilities to a power has a major
+impact on the resultant distribution; the larger the power, the more
+certain the distribution will be. (This principle is used in simulated
+annealing; there, however, the powers are fractional to make
+distributions less certain.) For example, if an email $d$ contains a
+few hundred tokens, then its recipient distributions will be close to
+delta spikes.
+
+There are (at least) two ways to lessen the impact of email length and
+preserve some uncertainty for longer emails. First, we could use
+component weights that are proportions---i.e., $\pi^{(c)} =
+\frac{\bar{N}(c|d)}{\bar{N}(d)}$. However, this would mean that email
+length does not affect the probability of sending an email to a
+particular recipient, just as in our model. As I argued earlier, in
+the context of our model, I'm not sure this is a reasonable
+assumption. Another, less drastic, option would be to use component
+weights that are log counts---i.e., $\pi^{(c)} =
+\log{(\bar{N}^{(c|d)})}$. Intuitively, this approach is appealing as
+it implies that the length of an email does matter, but only in terms
+of its order of magnitude.
+
+How does moving to a product model affect our inference equations?
+
+Let's first consider $z_n^{(d)}$. Under Bruce's alternative to our
+model,
+\begin{align}
+  &P(z_n^{(d)} \teq t \g \mathcal{B}, \Gamma, \mathcal{S}, \mathcal{L},
+  \mathcal{Z}_{\setminus d, n}, \mathcal{W}, \mathcal{Y}, \mathcal{X},
+  \mathcal{A}) \notag \\
+&\qquad \propto \left( \bar{N}^{(t|d)}_{\setminus d, n} +
+      \frac{\alpha}{T}\right) \frac{N^{(w_n^{(d)}|t)}_{\setminus
+                  d, n} + \frac{\beta}{V}}{N^{(t)}_{\setminus d, n} +
+        \beta}
+          \times {} \notag \\
+&\qquad\quad \prod_{r=1}^A \left( \frac{
+                \prod_{t'=1}^T \left(
+                p^{(l_{t'})}_{a^{(d)}r}\right)^{\bar{N}^{(t'|d)}_{\setminus
+                    d,n} + \delta(t' \teq t)}
+              }{
+                \prod_{t'=1}^T \left(
+                p^{(l_{t'})}_{a^{(d)}r}\right)^{\bar{N}^{(t'|d)}_{\setminus
+                    d,n} + \delta(t' \teq t)} +
+                \prod_{t'=1}^T \left(1 - 
+                p^{(l_{t'})}_{a^{(d)}r}\right)^{\bar{N}^{(t'|d)}_{\setminus
+                    d,n} + \delta(t' \teq t)}                
+              }\right)^{y^{(d)}_r} \times {} \notag \\
+&\qquad \quad \left( \frac{
+                \prod_{t'=1}^T \left(1 - 
+                p^{(l_{t'})}_{a^{(d)}r}\right)^{\bar{N}^{(t'|d)}_{\setminus
+                    d,n} + \delta(t' \teq t)}
+              }{
+                \prod_{t'=1}^T \left(
+                p^{(l_{t'})}_{a^{(d)}r}\right)^{\bar{N}^{(t'|d)}_{\setminus
+                    d,n} + \delta(t' \teq t)} +
+                \prod_{t'=1}^T \left(1 - 
+                p^{(l_{t'})}_{a^{(d)}r}\right)^{\bar{N}^{(t'|d)}_{\setminus
+                    d,n} + \delta(t' \teq t)}                
+              }\right)^{1 - y^{(d)}_r}.
+\end{align}
+If $N^{(d)} \teq 0$, the first term becomes $\frac{\alpha}{T}$ and
+disappears because it is a constant. The second term disappears
+because there are no tokens. Since $\bar{N}^{(t'|d)}_{\setminus d, n}
+\teq 0$ and
+$\frac{p^{(l_t)}_{a^{(d)}r}}{p^{(l_t)}_{a^{(d)}r} + \left(1 -
+  p^{(l_t)}_{a^{(d)}r}\right)} = p^{(l_t)}_{a^{(d)}r}$,
+we have
+\begin{equation}
+ P(z_1^{(d)} \teq t \g \mathcal{B}, \Gamma, \mathcal{S}, \mathcal{L},
+  \mathcal{Z}_{\setminus d, n}, \mathcal{W}, \mathcal{Y}, \mathcal{X},
+  \mathcal{A}) \propto \prod_{r=1}^A \left(
+  p^{(l_t)}_{a^{(d)}r}
+    \right)^{y^{(d)}_r}
+  \left( 1 - p^{(l_t)}_{a^{(d)}r}\right)^{1 - y^{(d)}_r}.
+\end{equation}
+
+Next, let's consider $l_t$. Under Bruce's alternative to our model,
+\begin{align}
+&P(l_t \teq c \g \mathcal{B}, \Gamma, \mathcal{S},
+  \mathcal{L}_{\setminus t}, \mathcal{Z}, \mathcal{W}, \mathcal{Y},
+  \mathcal{X}, \mathcal{A}) \notag \\
+  &\qquad \propto \prod_{d=1}^D \prod_{r=1}^A \left(
+  \frac{\prod_{t'=1}^T
+    \left( p^{(l_{t'})}_{a^{(d)}r}\right)^{\bar{N}^{(t'|d)}}
+  }{\prod_{t'=1}^T     \left(
+    p^{(l_{t'})}_{a^{(d)}r}\right)^{\bar{N}^{(t'|d)}} +
+    \prod_{t'=1}^T     \left( 1 - p^{(l_{t'})}_{a^{(d)}r}\right)^{\bar{N}^{(t'|d)}}}
+  \right)^{y^{(d)}_r} \times {} \notag \\
+  &\qquad \quad \left(
+  \frac{ \prod_{t'=1}^T
+    \left( 1 - p^{(l_{t'})}_{a^{(d)}r}\right)^{\bar{N}^{(t'|d)}}
+  }{
+    \prod_{t'=1}^T     \left(
+    p^{(l_{t'})}_{a^{(d)}r}\right)^{\bar{N}^{(t'|d)}}
+     + \prod_{t'=1}^T
+         \left( 1 -p^{(l_{t'})}_{a^{(d)}r}\right)^{\bar{N}^{(t'|d)}}
+  }
+  \right)^{1 - y^{(d)}_r},
+\end{align}
+with $l_t \teq c$ throughout. Note that in the product over $d$, I
+think we need only consider those emails that actually use topic $t$;
+the others will have no terms involving $l_t$. Also, if $N^{(d)} = 0$
+then
+\begin{equation}
+  \frac{ \prod_{t'=1}^T
+    \left(p^{(l_{t'})}_{a^{(d)}r}\right)^{\bar{N}^{(t'|d)}}
+  }{
+    \prod_{t'=1}^T     \left(
+    p^{(l_{t'})}_{a^{(d)}r}\right)^{\bar{N}^{(t'|d)}}
+     + \prod_{t'=1}^T
+         \left( 1 -p^{(l_{t'})}_{a^{(d)}r}\right)^{\bar{N}^{(t'|d)}}
+  } = p^{(l_{z_1^{(d)}})}_{y^{(d)}_r}.
+  \end{equation}
+
+We can resample the values of $b^{(c)}$, $\bgamma^{(c)}$, and
+$\bs_a^{(c)}$ using Metropolis--Hastings or slice sampling. Let's
+consider jointly resampling the values of $\mathcal{B}$, $\Gamma$, and
+$\mathcal{S}$ using Metropolis--Hastings.
+
+Under Bruce's alternative to our model, the Metropolis--Hastings
+acceptance ratio is
+\begin{align}
+&\frac{P(\mathcal{B}', \Gamma', \mathcal{S}', \mathcal{L},
+    \mathcal{Z}, \mathcal{W}, \mathcal{Y} \g \mathcal{X},
+    \mathcal{A})}{P(\mathcal{B}, \Gamma, \mathcal{S}, \mathcal{L},
+    \mathcal{Z}, \mathcal{W}, \mathcal{Y} \g \mathcal{X},
+    \mathcal{A})}\notag \\
+  &\qquad =
+  \frac{P(\mathcal{B}')P(\Gamma')P(\mathcal{S}')}{P(\mathcal{B})P(\Gamma)
+  P(\mathcal{S}')}\times{} \notag\\
+  &\qquad \quad \prod_{d=1}^D \prod_{r=1}^A \left(
+  \frac{
+    \prod_{t=1}^T \left(
+    p^{(l_t)}_{a^{(d)}r}\right)^{\bar{N}^{(t|d)}} + \prod_{t=1}^T
+    \left( 1 - p^{(l_t)}_{a^{(d)}r}\right)^{\bar{N}^{(t|d)}}
+  }{
+    \prod_{t=1}^T \left(
+    {p'}^{(l_t)}_{a^{(d)}r}\right)^{\bar{N}^{(t|d)}} + \prod_{t=1}^T
+    \left( 1 - {p'}^{(l_t)}_{a^{(d)}r}\right)^{\bar{N}^{(t|d)}}
+  }
+  \prod_{t=1}^T \left( \frac{ {p'}^{(l_t)}_{a^{(d)}r}}{p^{(l_t)}_{a^{(d)}r}} \right)^{\bar{N}^{(t|d)}}  
+  \right)^{y^{(d)}_r} \times {} \notag \\
+  &\qquad \quad \left(
+  \frac{
+    \prod_{t=1}^T \left(
+    p^{(l_t)}_{a^{(d)}r}\right)^{\bar{N}^{(t|d)}} + \prod_{t=1}^T
+    \left( 1 - p^{(l_t)}_{a^{(d)}r}\right)^{\bar{N}^{(t|d)}}
+  }{
+    \prod_{t=1}^T \left(
+    {p'}^{(l_t)}_{a^{(d)}r}\right)^{\bar{N}^{(t|d)}} + \prod_{t=1}^T
+    \left( 1 - {p'}^{(l_t)}_{a^{(d)}r}\right)^{\bar{N}^{(t|d)}}
+  }
+  \prod_{t=1}^T \left( \frac{1 - {p'}^{(l_t)}_{a^{(d)}r}}{1 - p^{(l_t)}_{a^{(d)}r}} \right)^{\bar{N}^{(t|d)}}    
+  \right)^{1 - y^{(d)}_r}\\
+  &\qquad =   \frac{P(\mathcal{B}')P(\Gamma')P(\mathcal{S}')}{P(\mathcal{B})P(\Gamma)
+  P(\mathcal{S}')}\times{} \notag\\  
+  &\qquad \quad \prod_{d=1}^D \prod_{r=1}^A
+  \frac{
+    \prod_{t=1}^T \left(
+    p^{(l_t)}_{a^{(d)}r}\right)^{\bar{N}^{(t|d)}} + \prod_{t=1}^T
+    \left( 1 - p^{(l_t)}_{a^{(d)}r}\right)^{\bar{N}^{(t|d)}}
+  }{
+    \prod_{t=1}^T \left(
+    {p'}^{(l_t)}_{a^{(d)}r}\right)^{\bar{N}^{(t|d)}} + \prod_{t=1}^T
+    \left( 1 - {p'}^{(l_t)}_{a^{(d)}r}\right)^{\bar{N}^{(t|d)}}
+  } \times {} \notag \\
+&\qquad \quad   \left( \prod_{t=1}^T \left(\frac{{p'}^{(l_t)}_{a^{(d)}r}}{p^{(l_t)}_{a^{(d)}r}} \right)^{\bar{N}^{(t|d)}} \right)^{y^{(d)}_r}
+  \left( \prod_{t=1}^T \left( \frac{1 - {p'}^{(l_t)}_{a^{(d)}r}}{1 - p^{(l_t)}_{a^{(d)}r}} \right)^{\bar{N}^{(t|d)}} \right)^{1 -y^{(d)}_r},
+\end{align}
+where ${p'}^{(c)}_{ar} = \sigma({b'}^{(c)} + {{\bgamma'}^{(c)}}^{\top}
+\bx^{(ar)} - ||{\bs'}^{(c)}_a - {\bs'}^{(c)}_r||)$.
+
+\end{document}
