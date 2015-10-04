@@ -163,15 +163,7 @@
 \usepackage{natbib}
 \usepackage{bm}% bold math
 %\newcommand{\bm}[1]{\boldsymbol{#1}} %makes bold math symbols easier
-\newcommand{\R}{\textsf{R}\space} %R in textsf font
-\newcommand{\X}{\bm{\mathcal{X}}} %shorthand for iid
-\renewcommand{\P}{\mathcal{P}}
-\newcommand{\bt}{\pmb{\theta}}
-\newcommand{\bl}{\pmb{\lambda}}
-\newcommand{\bL}{\pmb{\Lambda}}
-%\newcommand{\bG}{\pmb{\Gamma}}
-\newcommand{\bh}{\pmb{\text{h}}}
-\newcommand{\h}{\pmb{\text{h}}}
+
 \usepackage{amsmath,amssymb,amsthm}
 \def\citeapos#1{\citeauthor{#1}'s (\citeyear{#1})}
 \DeclareMathOperator*{\argmax}{arg\,max}
@@ -183,7 +175,51 @@
 \usepackage{multirow}
 
 %% OPTIONAL MACRO DEFINITIONS
-\def\s{\sigma}
+\newcommand{\comment}[1]{}
+
+% bold letters and symbols
+
+\newcommand{\ba}{\boldsymbol{a}}
+\newcommand{\bb}{\boldsymbol{b}}
+\newcommand{\bc}{\boldsymbol{c}}
+%\newcommand{\bm}{\boldsymbol{m}}
+\newcommand{\bn}{\boldsymbol{n}}
+\newcommand{\bs}{\boldsymbol{s}}
+\newcommand{\bt}{\boldsymbol{t}}
+\newcommand{\bw}{\boldsymbol{w}}
+\newcommand{\bx}{\boldsymbol{x}}
+\newcommand{\by}{\boldsymbol{y}}
+\newcommand{\bz}{\boldsymbol{z}}
+
+\newcommand{\bN}{\boldsymbol{N}}
+
+\newcommand{\bzero}{\boldsymbol{0}}
+
+\newcommand{\bchi}{\boldsymbol{\chi}}
+\newcommand{\bgamma}{\boldsymbol{\gamma}}
+\newcommand{\bphi}{\boldsymbol{\phi}}
+\newcommand{\btheta}{\boldsymbol{\theta}}
+
+\newcommand{\I}{\boldsymbol{\text{I}}}
+
+% distributions
+
+\newcommand{\Bern}{\text{Bern}}
+\newcommand{\Dir}{\text{Dir}}
+\newcommand{\Mult}{\text{Mult}}
+\newcommand{\Pois}{\text{Pois}}
+\newcommand{\Norm}{\mathcal{N}}
+\newcommand{\Unif}{\text{Unif}}
+
+\newcommand{\g}{\,|\,}
+\newcommand{\teq}{\!=\!}
+\newcommand{\is}{:=}
+
+\newcommand{\intd}{\,\textrm{d}}
+
+%\renewcommand{\algorithmiccomment}[1]{\% #1}
+
+%\newcommand{\argmax}{\operatornamewithlimits{argmax}}
 \usepackage{color, colortbl}
 \definecolor{lred}{rgb}{1,.8,.8}
 
@@ -215,6 +251,65 @@ Table \ref{fig:heatmaps} displays the aggregate number of times each department 
 	\includegraphics[width = 0.8\textwidth]{images/Aggregate_Email_Flows.pdf}
 	\caption{\label{fig:heatmaps}Heat map depicting the total number of emails sent from the managers of each department to the managers of each other department, aggregated across counties. Departments are ordered by the total number emails their managers sent.}
 	\end{figure*}
+	
+	
+\section{A Model for Email Data}
+
+The message content is assumed to be generated via LDA. Under this model, we assume that all unique words in our vocabulary are associated to varying degrees with each of $T$ latent \emph{topics}. Each topic is then a distribution over unique words (or \emph{word types}), $\boldsymbol{\phi}^{(t)}$. For example \emph{doctor}, \emph{virus}, and \emph{medicine} might all have high probability in a topic about hospitals, while \emph{cat} and \emph{music} might have low probability in that topic. We further assume that each topic distribution is drawn from a Dirichlet prior: 
+\begin{equation}
+	\boldsymbol{\phi}^{(t)} \sim \text{Dirichlet}(\beta,\boldsymbol{n}) \text{ for } t = \{1, ..., T\}
+\end{equation}
+where the base measure $\boldsymbol{n}$ is the mean of the distribution, and the concentration parameter $\beta$ controls how concentrated typical draws are around that mean. 
+%For example, \emph{patient} might generally have a higher probability than most word types in a corpus of documents about healthcare, and this could be represe.   
+
+To generate each of the $D$ documents (messages) in our corpus, we first draw a document-specific distribution over topics:
+\begin{equation}
+	\boldsymbol{\theta}^{(d)} \sim \text{Dirichlet}(\alpha,\boldsymbol{m}) \text{ for } d = \{1,...,D\}
+\end{equation}
+%Here, the concentration parameter $\alpha$ controls how specific the distributions over topics in the documents generated are, and $\boldsymbol{m}$ controls the bias in how likely certain topics are to appear. 
+Once we have drawn our document-specific distribution over topics we can then generate each of $N$ tokens (words) in the document via a two step process. First we draw the latent topic assignment for that token from the document specific distribution over topics.
+\begin{equation}
+	z_n^{(d)} \sim \boldsymbol{\theta}^{(d)} \text{ for } n = \{1,...,N\}
+\end{equation}
+ Then we draw the word type of that token from the topic specific distribution over word types.
+ \begin{equation}
+ 	w_n^{(d)} \sim \boldsymbol{\phi}^{(z_n^{(d)})} \text{ for } n = \{1,...,N\}
+ \end{equation}
+We proceed in this manner for all tokens in all documents. 
+
+
+In our extension of TPME, we further assume each topic is uniquely associated with one of $C$ clusters, drawn from a discrete uniform distribution.
+\begin{equation}
+	C_t \sim \text{U}(1,...,C) \text{ for } t = \{1, ..., T\}
+\end{equation}
+The intuition is that different broad content areas of communication (e.g. \emph{planning}, \emph{sports}, \emph{meeting planning}) -each of which is a collection of more specific topics- will imply a different pattern of communication. Importantly, under this model, a message can be about a number of topics, and these topics can be associated with different clusters. Since each cluster is associated with a different pattern of communication, the probability that any actor is a recipient of that particular message depends on an admixture of their probabilities of being a recipient under those different communication patterns. For example, if a department manager in an organization sent an email message to schedule a budget meeting, they would likely include both staff whose job includes setting up meetings, and staff who needed to provide input on the budget as recipients. 
+
+Finally, for a given cluster $c$, the probability that an actor is selected as a recipient of a particular message is specified by the LSM \citep{Hoff2002a}. Under this model, we assume there is some baseline propensity to include message recipients on any email, which is governed by a scalar intercept parameter.
+\begin{equation}
+	b^{(c)} \sim \text{Normal}(\mu, \tau^2)
+\end{equation} 
+For example, messages about sensitive HR matters will probably include fewer recipients than messages announcing a department party. Second, some attributes $X$, of the sender and potential recipient (which we assume are observed) may also affect the probability of that actor being a recipient. The effects that each of these $L$ different attributes have on the probability of an actor being included as a message recipient can then be parameterized by a vector: 
+\begin{equation}
+	\mathbf{\gamma}_l^{(c)} \sim \text{M. V. Normal}(\mathbf{\lambda}, \mathbf{\eta}^2) \text{ for } l = \{1, ..., L\}
+\end{equation}
+These covariate effect parameter vectors may vary in size depending on whether the effect is only associated with the attribute of the email sender (only requiring a single parameter), or with the combination of covariate values for the sender and recipient. For example, there is a great deal of social science literature demonstrating gender homophily in communication. Our model could generate a gender-homophilous email communication pattern by drawing positive parameters for male--male and female--female sender--recipient dyads, and negative parameters for female--male and male--female sender--recipient dyads. 
+
+The additional variation in the probability that a message is sent between two actors is governed by how close they are in a $k$ dimensional \emph{latent social space}. To generate these latent positions, each actor $a$ is assumed to have some position in the $k$-dimensional latent space
+\begin{equation}
+	\mathbf{s}_a^{(c)} \sim \text{M. V. Normal}(0, \sigma^2) \text{ for } a = \{1, ...,A\}
+\end{equation}
+and the probability that they send a message to a recipient $r \neq a$ is decreasing in their latent distance from $r$. Thus the probability of actor $r$ being a recipient of a message from actor $a$ under this model is:
+\begin{equation}
+	P(y_{a,r}^{(c)} = 1) = \text{logisitic sigmoid}\left( b^{(c)} + \sum_L \left[\mathbf{X}_{a,r} \mathbf{\gamma}_l^{(c)}\right] - |\mathbf{s}_a^{(c)} - \mathbf{s}_r^{(c)}| \right)
+\end{equation}
+% \begin{equation}
+% \text{Accptance Ratio} = \frac{	\prod_a \prod_{a \neq r} \sigma\left(b^{(c)'} - \mathbf{\gamma}^{(c)'} \cdot x^{(ar)}  - ||\mathbf{s}_a^{(c)'} - \mathbf{s}_r^{(c)'}|| \right)}{\prod_a \prod_{a \neq r} \sigma\left(b^{(c)} - \mathbf{\gamma}^{(c)} \cdot x^{(ar)}  - ||\mathbf{s}_a^{(c)} - \mathbf{s}_r^{(c)}|| \right)}
+% \end{equation}
+Edge values for an individual message are then drawn from a Bernoulli distribution. However, the probability that $y_{a,r} = 1$ for a given message $d$ may be dependent on multiple latent spaces (because documents can be about multiple topics). The weight given to $P(y_{a,r}^{(c)})$ for each cluster is determined by the proportion of tokens in the message that are assigned to topics associated with cluster $c$.  
+\begin{equation}
+	P(y_{a,r}^{(d)} = 1) = \sum_C P(y_{a,r}^{(c)} = 1) \times *
+\end{equation}
+where $*$ is the proportion of tokens in document $d$ assigned to topics associated with cluster $c$. In this way, we condition the probability that any given actor $r$ is a recipient of an email (document) from actor $a$ on the content of that email, thus linking LDA and the LSM in the generative process.
 	
 \section{Corpus Descriptive Statistics}
 
