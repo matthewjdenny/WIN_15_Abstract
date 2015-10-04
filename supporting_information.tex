@@ -205,7 +205,17 @@ Hanna Wallach\affil{2}{}\affil{3}{Microsoft Research NYC},
 \maketitle
 
 \begin{article}
+	
+\section{Department-to-Department Email }
 
+Table \ref{fig:heatmaps} displays the aggregate number of times each department manager was a recipient of an email sent by a manager of each other department. 
+	
+	\begin{figure*}[ht]
+	\centering
+	\includegraphics[width = 0.8\textwidth]{images/Aggregate_Email_Flows.pdf}
+	\caption{\label{fig:heatmaps}Heat map depicting the total number of emails sent from the managers of each department to the managers of each other department, aggregated across counties. Departments are ordered by the total number emails their managers sent.}
+	\end{figure*}
+	
 \section{Corpus Descriptive Statistics}
 
 % latex table generated in R 3.2.2 by xtable 1.7-4 package
@@ -245,75 +255,7 @@ Alexander & 907 & 1595 & 15437 & 17.0 & 975 & 13 \\
 \caption{\label{tab:corpus desc stats} County email corpus descriptive statistics. Note that \textbf{Words Removed} indicates the the number of unique words that appeared in only one email in a given county, and were therefore removed in text preprocessing. \textbf{0 Token Emails} indicates the number of emails in each county that contain no tokens after text cleaning.}
 \end{table*}
 
-
-% \newpage
-%
-% \begin{table}
-% \centering
-% \begin{tabular}{rrrr}
-%   \toprule
-%   \multicolumn{2}{r}{Most Used}& \multicolumn{2}{r}{Least Used}\\
-%   \cmidrule{1-2} \cmidrule{3-4}
-%  Word & Count & Word & Count \\
-%   \midrule
-%  will & 8322 & live/on & 2 \\
-%  director & 4179 & streaming & 2 \\
-%    fax & 4085 & horses & 2 \\
-%  box & 3103 & concise & 2 \\
-%    email & 2894 & doa & 2 \\
-%    phone & 2685 & lglawyers & 2 \\
-%    meeting & 2588 & sorted & 2 \\
-%    office & 2522 & alphabetically & 2 \\
-%    time & 2335 & \#aba & 2 \\
-%    class & 1860 & cdw & 2 \\
-%    good & 1553 & transmissions & 2 \\
-%    received & 1480 & monitored & 2 \\
-%    message & 1464 & utm & 2 \\
-%    work & 1421 & from/to & 2 \\
-%    plan & 1399 & layers & 2 \\
-%    attached & 1395 & ets & 2 \\
-%    budget & 1375 & spares & 2 \\
-%    employees & 1291 & crap & 2 \\
-%    department & 1269 & servicie & 2 \\
-%    manager & 1241 & captions & 2 \\
-%    address & 1238 & traditional & 2 \\
-%    junk & 1226 & cancelation & 2 \\
-%    call & 1224 & mask & 2 \\
-%    contact & 1162 & outpouring & 2 \\
-%    planning & 1162 & sympathy & 2 \\
-%    subject & 1118 & heartfelt & 2 \\
-%   health & 1114 & deepest & 2 \\
-%    questions & 1088 & demolitions & 2 \\
-%    review & 1071 & lgfcu & 2 \\
-%    benefits & 1032 & prospects & 2 \\
-%    report & 981 & downloading & 2 \\
-%    building & 956 & scrutiny & 2 \\
-%    cell & 919 & falsifying & 2 \\
-%    summary & 907 & envirolink & 2 \\
-%    help & 905 & expediting & 2 \\
-%    great & 894 & stagecoach & 2 \\
-%   tax & 888 & voip & 2 \\
-%   request & 879 & misc & 2 \\
-%   public & 871 & bcbsnc & 2 \\
-%    intended & 865 & mportant & 2 \\
-%    attachments & 849 & blanks & 2 \\
-%    working & 838 & sertoma & 2 \\
-%   note & 831 & beginng & 2 \\
-%   well & 800 & scheduler & 2 \\
-%    send & 792 & unexpectedly & 2 \\
-%    changes & 790 & quit & 2 \\
-%   property & 783 & calming & 2 \\
-%   resources & 774 & bynum & 2 \\
-%    sure & 769 & date/time & 2 \\
-%    recipient & 766 & microscope & 2 \\
-%   \bottomrule
-% \end{tabular}
-% \caption{\label{tab: top and bottom} Words and counts for the 50 most frequent and infrequently used words in aggregate, across all emails in all counties. Compiled after preprocessing.\\}
-% \end{table}
-
-\newpage
-.
-\begin{table*}
+\begin{table*}[ht]
 \centering
 \begin{tabular}{lr|lr|lr|lr}
  \toprule
@@ -373,15 +315,11 @@ Alexander & 907 & 1595 & 15437 & 17.0 & 975 & 13 \\
    recipient &  766 & \cellcolor{lred} sender & 526 & issue & 402 & bill & 317 \\ 
    \bottomrule
 \end{tabular}
-\caption{\label{tab: top words} Words and counts for the 200 most frequently used words in aggregate, across all emails in all counties. Compiled after preprocessing.\\ \bigskip}
+\caption{\label{tab: top words} Words and counts for the 200 most frequently used words in aggregate, across all emails in all counties. Compiled after preprocessing.}
 \end{table*}
 
-.
 
-\clearpage 
-.
-
-\begin{table*}
+\begin{table*}[ht]
 	\begin{tabular}{m{2.2in}|m{2.2in}|m{2.2in}}
 		\toprule
 		\multicolumn{1}{c}{MM = MF = FM = FF} &  \multicolumn{1}{c}{MM $>$ MF/FM $>$ FF}  & \multicolumn{1}{c}{FF $>$ MF/FM $>$ MM}\\
@@ -406,11 +344,7 @@ Alexander & 907 & 1595 & 15437 & 17.0 & 975 & 13 \\
 
 
 
-
-\clearpage
-.
-
-\begin{table*}
+\begin{table*}[ht]
 	\begin{tabular}{ll}
 		\toprule
 		County & Topic Top Words\\
@@ -481,11 +415,7 @@ Nash &\fontseries{m}\selectfont\textcolor{black!47.5}{email}, \fontseries{m}\sel
 \end{table*}
 
 
-
-\clearpage
-.
-
-\begin{table*}
+\begin{table*}[ht]
 \begin{tabular}{ll}
 \toprule
 County & Topic Top Words\\
@@ -556,10 +486,9 @@ Lenoir &\fontseries{m}\selectfont\textcolor{black!30}{medical}, \fontseries{m}\s
 \end{table*}
 
 
-\clearpage
-.
 
-\begin{table*}
+
+\begin{table*}[ht]
 \begin{tabular}{ll}
 \toprule
 County & Topic Top Words\\

@@ -403,13 +403,36 @@ To test whether the gender of an email sender is related to the gender of its re
 \section{Domain-Dependent Gendered Communication}
 Within large organizations that perform heterogeneous functions, it is of little value to ask whether communication is gender biased in the aggregate. Broad patterns may be dominated by personal communications or mundane professional interactions that are inconsequential to the direction of the organization or the careers of employees. Examining domain specific patterns of communication will build upon limited existing findings, which indicate that gendering patterns depend upon the domain or context of communication. For example, Brass \citep{Brass1985} finds a higher degree of male-male homophily in communication network domains that deal with long range strategic planning. We should also expect female managers to be relatively more likely to send heterophilous ties in communication network content partitions that deal with short and medium term coordination and planning, as research has found that female managers tend to preferentially communicate through formal channels  \citep{Ragins1989} and favor gender-heterophilous instrumental connections \citep{Ibarra1992}. The scope and scale of our data present an unprecedented opportunity for understanding whether and how gendering patterns vary with the domain of communication.
 
-We take a two-pronged approach to understanding how the gendering of communication varies with the domain of communication within local government organizations. Our two empirical analyses are complimentary along two dimensions -- the use of within versus across-county variation and the operationalization of domain through email content vs the department affiliations of the managers. 
+We take a two-pronged approach to understanding how the gendering of communication varies with the domain of communication within local government organizations. Our two empirical analyses are complimentary along two dimensions: (1) the use of within versus across-county variation; and (2) the operationalization of domain through email content versus the department affiliations of the managers. 
 
 \subsection{Department Affiliation as Domain}
 
 Governments, and organizations more generally, spawn subordinate partitions in order to separate tasks according to the domain of organizational function. In the current analysis, we use the departmental affiliations of the managers in our data as proxy measures for the domain of organizational function about which managers communicate (or choose not to communicate) with each other. The use of department affiliation to measure communication domain raises a couple of distinct challenges in our strictly within-county e-mail data, which we solve by combining data across counties. First, aside from a few outlying cases, we only observe one or two managers with a given department affiliation in each county (e.g., one parks department manager). This means that we observe very little within-department communication in our data. Second, within each county, we only observe a handful of across-department dyads of a selected type (e.g., one parks/tax departments pair), which means that we cannot identify gendered patterns within counties that are specific to department pairs (i.e., domain-specific).
 
- We solve the problems raised through using department affiliation to proxy domain by looking across counties for comparable department pairs. The department affiliations are comparable across counties, which means that for most department pairings, we observe a mix of female/female, female/male and male/female dyads.  Using the department pairing to divide potential communication ties into domains, by looking across counties, we're able to observe how the intensity of communication within a given domain varies across different gender combinations. Table \ref{tab:gender position} gives the gender and department affiliation breakdown of managers in our data. In our first approach to domain-specific analysis of gendering, we construct subsets of data that are specific to department pairings, but span all of the counties in which such pairings are observed. Consider, for example, the pairing of ``Human Resources'' and ``Emergency Services'' departments (HR and EMS, respectively). There is at least one HR and one EMS manager in fifteen counties. Across all counties we observe eight male/male pairs of HR/EMS managers, twenty-two mixed gender pairs and two female/female pairs. We construct department-pairing-specific datasets such as this for all of the 300 pairings that can be constructed using the twenty-five departments in our data. 
+We solve the problems raised through using department affiliation to proxy domain by looking across counties for comparable department pairs. The department affiliations are comparable across counties, which means that for most department pairings, we observe a mix of male/male, female/female, female/male and male/female dyads.  Using the department pairing to divide potential communication ties into domains, by looking across counties, we're able to observe how the intensity of communication within a given domain varies across different gender combinations. Table \ref{tab:gender position} gives the gender and department affiliation breakdown of managers in our data. Departments were hand coded into one of twenty-five different categories based on the title given in the county directory, to group departments that perform a similar function. Note that not all departments are represented in each county.
+
+\setlength{\tabcolsep}{4pt}
+\begin{table*}
+  \centering
+  \begin{tabular}{rrrrrrrrrrrrrrrrrrrrrrrrrrrrr}
+    \toprule
+	
+	   & \rotatebox{90}{Emergency} & \rotatebox{90}{Manager} & \rotatebox{90}{HR} & \rotatebox{90}{Finance} & \rotatebox{90}{IT} & \rotatebox{90}{Health} & \rotatebox{90}{Plan/Dev} & \rotatebox{90}{Util/Waste} & \rotatebox{90}{Tax} & \rotatebox{90}{Parks/Rec} & \rotatebox{90}{Soc\_Serv} & \rotatebox{90}{Transport} & \rotatebox{90}{Info} & \rotatebox{90}{Misc} & \rotatebox{90}{Inspections} & \rotatebox{90}{Maintenance} & \rotatebox{90}{Library} & \rotatebox{90}{Veterans} & \rotatebox{90}{Seniors} & \rotatebox{90}{Animal} & \rotatebox{90}{Elections} & \rotatebox{90}{Sheriff} & \rotatebox{90}{Environment} & \rotatebox{90}{Deeds} & \rotatebox{90}{Extension} \\ 
+	     \midrule
+	   Male & 29 & 15 & 3 & 5 & 11 & 6 & 17 & 15 & 11 & 9 & 8 & 8 & 2 & 5 & 13 & 5 & 3 & 5 & 2 & 9 & 2 & 16 & 9 & 6 & 8 \\ 
+	     Female & 3 & 2 & 12 & 12 & 2 & 11 & 6 & 2 & 7 & 5 & 10 & 1 & 6 & 2 & 3 & 1 & 8 & 7 & 6 & 3 & 11 & 1 & 4 & 9 & 5 \\ 
+		 \midrule
+	     Total & 32 & 17 & 15 & 17 & 13 & 17 & 23 & 17 & 18 & 14 & 18 & 9 & 8 & 7 & 16 & 6 & 11 & 12 & 8 & 12 & 13 & 17 & 13 & 15 & 13 \\
+    \bottomrule
+    \end{tabular}
+  \caption{\label{tab:gender position} Number of male and female
+    managers for each department.}
+  \end{table*}
+\setlength{\tabcolsep}{6pt}
+
+We can see that some departments are mostly managed by men: the county manager (the supervisor of all other department managers), the sheriff, and the emergency manager, for example. Other departments  are mostly managed by women: the HR, finance, and health departments, for example. A a $\chi^2$ test for the independence of department and gender confirms our qualitative finding that there is a strong bias in which departments tend to be managed by women $(\chi^2 = 98.6, p < 0.001)$. This result indicates a bias in the gender breakdown of department managers for each department, but cannot tell us about differences in email communication by men and women who manage the same department.
+
+In our first approach to domain-specific analysis of gendering, we construct subsets of data that are specific to department pairings, but span all of the counties in which such pairings are observed. Consider, for example, the pairing of ``Human Resources'' and ``Emergency Services'' departments (HR and EMS, respectively). There is at least one HR and one EMS manager in fifteen counties. Across all counties we observe eight male/male pairs of HR/EMS managers, twenty-two mixed gender pairs and two female/female pairs. We construct department-pairing-specific datasets such as this for all of the 300 pairings that can be constructed using the twenty-five departments in our data. 
  
  \begin{table*}[H]
 \centering
@@ -462,81 +485,9 @@ FF$>$FM$>$MF$>$MM & FF$>$MF$>$FM$>$MM \\
  
 For each of the 130 department-pairing datasets in which there is at least one of each gender pairing type, we fit two Poisson models (the base model and the gendered model) to the frequency of communication between managers. Let $y_{ij}\sim \text{Pois}(\exp(\eta_{ij}))$ be the number of e-mails from $i$ to $j$. In the base model $$ \eta_{ij} = \beta_0,$$ and in the gendered model $$ \eta_{ij} =  \beta_{1}g_ig_j + \beta_{2}g_i(1-g_j)+\beta_{3}(1-g_i)g_j+\beta_{4}(1-g_i)(1-g_j),$$ where $g_i$ and $g_i$ are indicators of the genders of the senders and recipients of e-mails, respectively, with males coded 0 and females 1. Since the gendered model reduces to the base model if $\beta_1 = \beta_2 = \hdots = \beta_4$, we use a likelihood-ratio test to evaluate whether the fit of the gendered model, in which separate rates are estimated for each directed gender pairing, is significantly better than the fit of the base (i.e., constant rate) model. We deem a domain, as represented by a pairing of departments, to exhibit gendered communication patterns if the gendered model fits statistically significantly better than the base model, and we use a $p$ value of 0.05 as the threshold for determining statistical significance. 
 
-The gendered model fits better in approximately 70\% (90 out of 130) of the domains. This result indicates that there is a substantial degree of within-domain gender bias. To summarize domain specific results in those domains in which we find significant gendering, we present lists of domains in which we find a consistent gendering pattern, for the six largest gendering patterns we identify. We take a gendering pattern to be a rank-ordering of the coefficients ($\beta$'s) in the gendered model. The domains that exhibit the six most prevalent gendering patterns are presented in table \ref{tab:significant domain table}. The most prevalent gendering pattern, depicted in the first column and first row of Table \ref{tab:significant domain table}, is characterized by female-centric communication in which both females and males send communications to females at a higher rate than to males, and females send communication at a higher rate than do males. This gendering pattern is dominated by HR departments. The second most prevalent gendering pattern is also female-centric in that senders of both genders communicate more frequently with females than with males. Both the departments of Elections and Emergency Services are disproportionately represented in this pattern, with Elections appearing in pairs only within this pattern of gendering and Emergency Services appearing only once outside of this pattern. The two gendering patterns in the second row that in the second column of the third row are more male centric, with both females and males exhibiting bias in favor of male recipients. Soil and Water, County Extension, Sheriff, and Social Services departments appear either exclusively or disproportionately within these patterns. Looking across gendering patterns, we see that the forms of bias exhibited in communication with managers of some departments, including Information Technology, Health, Tax Administrator and County Manager, depend upon the affiliation of the other manager in the dyad, as these departments are relatively evenly spread across gendering patterns. 
+The gendered model fits better in approximately 70\% (90 out of 130) of the domains. This result indicates that there is a substantial degree of within-domain gender bias. To summarize domain specific results in those domains in which we find significant gendering, we present lists of domains in which we find a consistent gendering pattern, for the six largest gendering patterns we identify. We take a gendering pattern to be a rank-ordering of the coefficients ($\beta$'s) in the gendered model. The domains that exhibit the six most prevalent gendering patterns are presented in table \ref{tab:significant domain table}. The most prevalent gendering pattern, depicted in the first column and first row of Table \ref{tab:significant domain table}, is characterized by female-centric communication in which both females and males send communications to females at a higher rate than to males, and females send communication at a higher rate than do males. This gendering pattern is dominated by HR departments. The second most prevalent gendering pattern is also female-centric in that senders of both genders communicate more frequently with females than with males. Both the departments of Elections and Emergency Services are disproportionately represented in this pattern, with Elections appearing in pairs only within this pattern of gendering and Emergency Services appearing only once outside of this pattern. The two gendering patterns in the second row, and in the second column of the third row, are more male centric, with both females and males exhibiting bias in favor of male recipients. Soil and Water, County Extension, Sheriff, and Social Services departments appear either exclusively or disproportionately within these patterns. Looking across gendering patterns, we see that the forms of bias exhibited in communication with managers of some departments, including Information Technology, Health, Tax Administrator and County Manager, depend upon the affiliation of the other manager in the dyad, as these departments are relatively evenly spread across gendering patterns. 
 
 There are several limitations involved with using the department affiliations of managers to operationalize domain. First, we need to combine dyads across counties to build domain-specific datasets, which involves the questionable assumption that managers from comparably named departments, but very different counties (e.g., urban/rural, wealthy/poor, coastal/Appalachian), perform similar governing functions. Second, this approach does not make use of the textual content in the e-mails, which is likely relevant to understanding the domain of communication. Our second analytical approach addresses the limitations associated with using department affiliation to measure the domain of communication.
-
-% \setlength{\tabcolsep}{4pt}
-% \begin{table*}
-%   \centering
-%   \begin{tabular}{rrrrrrrrrrrrrrrrrrrrrrrrrrrrr}
-%     \toprule
-%
-% 	   & \rotatebox{90}{Emergency} & \rotatebox{90}{Manager} & \rotatebox{90}{HR} & \rotatebox{90}{Finance} & \rotatebox{90}{IT} & \rotatebox{90}{Health} & \rotatebox{90}{Plan/Dev} & \rotatebox{90}{Util/Waste} & \rotatebox{90}{Tax} & \rotatebox{90}{Parks/Rec} & \rotatebox{90}{Soc\_Serv} & \rotatebox{90}{Transport} & \rotatebox{90}{Info} & \rotatebox{90}{Misc} & \rotatebox{90}{Inspections} & \rotatebox{90}{Maintenance} & \rotatebox{90}{Library} & \rotatebox{90}{Veterans} & \rotatebox{90}{Seniors} & \rotatebox{90}{Animal} & \rotatebox{90}{Elections} & \rotatebox{90}{Sheriff} & \rotatebox{90}{Environment} & \rotatebox{90}{Deeds} & \rotatebox{90}{Extension} \\
-% 	     \midrule
-% 	   Male & 29 & 15 & 3 & 5 & 11 & 6 & 17 & 15 & 11 & 9 & 8 & 8 & 2 & 5 & 13 & 5 & 3 & 5 & 2 & 9 & 2 & 16 & 9 & 6 & 8 \\
-% 	     Female & 3 & 2 & 12 & 12 & 2 & 11 & 6 & 2 & 7 & 5 & 10 & 1 & 6 & 2 & 3 & 1 & 8 & 7 & 6 & 3 & 11 & 1 & 4 & 9 & 5 \\
-% 		 \midrule
-% 	     Total & 32 & 17 & 15 & 17 & 13 & 17 & 23 & 17 & 18 & 14 & 18 & 9 & 8 & 7 & 16 & 6 & 11 & 12 & 8 & 12 & 13 & 17 & 13 & 15 & 13 \\
-%     \bottomrule
-%     \end{tabular}
-%   \caption{\label{tab:gender position} Number of male and female
-%     managers for each department.}
-%   \end{table*}
-% \setlength{\tabcolsep}{6pt}
-
-
-This result contradicts what we know about gender-driven interaction
-in the workplace, and is possibly a result of the vast majority of
-e-mails being substantively uninteresting (e.g. meeting reminders sent
-automatically from a manager's Microsoft Outlook account). Therefore,
-we need to partition e-mails according to content in order to observe
-substantively interesting patterns. Our data allow us to use the
-department of each manager as a rough proxy for the content of their
-email communication. We begin by looking for aggregate differences in
-the gender breakdown of department managers for each department,
-across our sample (see table \ref{tab:gender position}). Departments
-were hand coded into one of twenty-five different categories based on
-the title given in the county directory, to group departments that
-perform a similar function. Note that not all departments are
-represented in each county.
-
-\setlength{\tabcolsep}{4pt}
-\begin{table*}
-  \centering
-  \begin{tabular}{rrrrrrrrrrrrrrrrrrrrrrrrrrrrr}
-    \toprule
-	
-	   & \rotatebox{90}{Emergency} & \rotatebox{90}{Manager} & \rotatebox{90}{HR} & \rotatebox{90}{Finance} & \rotatebox{90}{IT} & \rotatebox{90}{Health} & \rotatebox{90}{Plan/Dev} & \rotatebox{90}{Util/Waste} & \rotatebox{90}{Tax} & \rotatebox{90}{Parks/Rec} & \rotatebox{90}{Soc\_Serv} & \rotatebox{90}{Transport} & \rotatebox{90}{Info} & \rotatebox{90}{Misc} & \rotatebox{90}{Inspections} & \rotatebox{90}{Maintenance} & \rotatebox{90}{Library} & \rotatebox{90}{Veterans} & \rotatebox{90}{Seniors} & \rotatebox{90}{Animal} & \rotatebox{90}{Elections} & \rotatebox{90}{Sheriff} & \rotatebox{90}{Environment} & \rotatebox{90}{Deeds} & \rotatebox{90}{Extension} \\ 
-	     \midrule
-	   Male & 29 & 15 & 3 & 5 & 11 & 6 & 17 & 15 & 11 & 9 & 8 & 8 & 2 & 5 & 13 & 5 & 3 & 5 & 2 & 9 & 2 & 16 & 9 & 6 & 8 \\ 
-	     Female & 3 & 2 & 12 & 12 & 2 & 11 & 6 & 2 & 7 & 5 & 10 & 1 & 6 & 2 & 3 & 1 & 8 & 7 & 6 & 3 & 11 & 1 & 4 & 9 & 5 \\ 
-		 \midrule
-	     Total & 32 & 17 & 15 & 17 & 13 & 17 & 23 & 17 & 18 & 14 & 18 & 9 & 8 & 7 & 16 & 6 & 11 & 12 & 8 & 12 & 13 & 17 & 13 & 15 & 13 \\
-    \bottomrule
-    \end{tabular}
-  \caption{\label{tab:gender position} Number of male and female
-    managers for each department.}
-  \end{table*}
-\setlength{\tabcolsep}{6pt}
-		
-We can see that some departments are mostly managed by men: the county manager (the supervisor of all other department managers), the sheriff, and the emergency manager, for example. Other departments  are mostly managed by women: the HR, finance, and health departments, for example. A a $\chi^2$ test for the independence of department and gender confirms our qualitative finding that there is a strong bias in which departments tend to be managed by women $(\chi^2 = 98.6, p < 0.001)$. This result indicates a bias in the gender breakdown of department managers for each department, across our sample, but cannot tell us about differences in email communication by men and women who manage the same department. To answer this question, we need to know whether the gender of an email sender and the gender of its recipients is independent of the their respective departments. 
-	
-	\begin{figure*}
-	\centering
-	\includegraphics[width = 0.8\textwidth]{images/Aggregate_Email_Flows.pdf}
-	\caption{\label{fig:heatmaps}Heat map depicting the total number of emails sent from the managers of each department to the managers of each other department, aggregated across counties. Departments are ordered by the total number emails their managers sent.}
-	\end{figure*}
-
-	
-	
-Table \ref{fig:heatmaps} displays the aggregate number of times each department manager was a recipient of an email sent by a manager of each other department. We see pronounced differences in email sending an receiving by department, but cannot graphically disentangle the role of gender. 
-%To test for the independence of the gender of an email sender and the gender of its recipients, from the departments they direct, 
-Next, we construct a contingency table of department dyad-types (where each ``dyad-type'' is a unique combination of sender and recipient department, eg. finance $\longrightarrow$ HR) against gender dyad-types (where each ``dyad-type'' is a unique combination of sender and recipient gender, eg. male $\longrightarrow$ female).  We then perform a $\chi^2$ test on this contingency table, which indicates that the gender of an email sender and its recipients is not independent of their respective departments ($\chi^2 = 40,805, p < 0.001$).
-	
-	
-This dyadic $\chi^2$ test tells us that there is an association between gender mixing patterns and department mixing patterns. Indeed, when we construct similar contingency tables for each department, we find that email senders in utilities and waste management departments exhibit gender-homophilous behavior ($\chi^2 = 11.61, p < 0.001$), senders in the parks and recreation departments exhibit gender-heterophilous behavior ($\chi^2 = 7.06, p < 0.007$), and senders in the tax departments seem unbiased ($\chi^2 = 0.1, p = 0.75$). However, we can't say from these results that the form of gender bias depends upon the domain of interaction since factors other than content are likely to vary with department labels, including the county in which the manager is working, the experience of the manager, and the manager's status in the organizational hierarchy. To disentangle these effects, we need explicitly model the topical content of emails. To do this, we extend a recently introduced joint model for communication topical content and network structure \citep{Krafft2012}, and apply it to our email data.
-	
 
 
 \section{A Model of Email Content}
