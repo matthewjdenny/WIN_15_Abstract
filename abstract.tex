@@ -519,14 +519,14 @@ To perform inference, we must also select a number of iterations for our MCMC sa
 
 
 \subsection{Analysis}
-We can now combine the output of our model from each county to understand the domain-specific relationship between the gender of an email sender and the gender of its recipients. However, before doing this, it will be instructive to examine a few examples of our model output for particular topic-clusters. 
+To perform an analysis similar to the department-level analysis presented in the previous section, we can now use the mixing parameter estimates and associated topic top-words inferred by our model. However, before diving into this analysis, it will be useful to examine a few examples of our model output. Our data collection window happend to overlap with Hurricane Sandy (October, 2013), and one of the counties in our sample (Dare county) happens to be located on the outer banks, so we might expect one domain of communication in this county to be disaster preparation and response. As illustrated in figure \ref{tab: dare 3 mp}, our model infers a disaster response topic-cluster. We can see from the mixing parameter plots that this topic is strongly male-centric, which makes sense given that the emergency managers and county manager are all male in this county. Importantly, our model also assigns some topics that follow a similar pattern of communication, but are not disaster related, to this cluster -- such as topics related to costal and fisheries management.  In contrast to the above example, other topic-clusters display no discernable gender bias. This is well illustrated by an IT and health related topic-cluster presented in figure \ref{tab: hoke 3 mp} from Hoke county.
 
 \begin{figure}
 	\centering
 	\includegraphics[width = .37\textwidth]{./images/Dare_3_MP.png}
 	\begin{tabular}{m{.49\textwidth}}
 	\toprule
-	Topic top words from top 5 topics\\
+	Topic top words\\
 	\midrule
 	will, track, winds, system, forecast, atlantic, east\\ 
 	storm, sandy, high, coastal, tides, night, hurricane\\ 
@@ -536,8 +536,9 @@ We can now combine the output of our model from each county to understand the do
 	\bottomrule
 
 	\end{tabular}
-	\caption{\label{tab: dare 3 mp} Mixing parameter estimates and topic top words for selected topic-cluster in Dare county.}
+	\caption{\label{tab: dare 3 mp} Mixing parameter estimates and topic top words for the disaster response topic-cluster in Dare county. Topics are presented (one per line) in decreasing order of use within the topic-cluster, as are words within each topic.}
 \end{figure}
+
 
 
 \begin{figure}
@@ -545,7 +546,7 @@ We can now combine the output of our model from each county to understand the do
 	\includegraphics[width = .37\textwidth]{./images/Hoke_3_MP.png}
 	\begin{tabular}{m{.49\textwidth}}
 	\toprule
-	Topic top words from top 5 topics\\
+	Topic top words\\
 	\midrule
 	junk, box, summary, emails, will, login, email\\ 
 	description, cell, director, works, public, fax,  office\\ 
@@ -555,13 +556,10 @@ We can now combine the output of our model from each county to understand the do
 	\bottomrule
 
 	\end{tabular}
-	\caption{\label{tab: hoke 3 mp} Mixing parameter estimates and topic top words for selected topic-cluster in Dare county.}
+	\caption{\label{tab: hoke 3 mp} Mixing parameter estimates and topic top words for the IT and health related topic-cluster in Dare county. Topics are presented (one per line) in decreasing order of use within the topic-cluster, as are words within each topic.}
 \end{figure}
 
-
-	
-
-Here are our results
+Our analysis goal is to construct a table similar to table \ref{tab:significant domain table}, but now relating rank-orderings of gender mixing parameters to words that appear most frequently in the topics associated with them.
 
 \begin{table*}
 	\begin{tabular}{m{2.2in}|m{2.2in}|m{2.2in}}
