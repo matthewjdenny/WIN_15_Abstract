@@ -518,7 +518,48 @@ We apply our model separately to the email data from each county and then pool o
 To perform inference, we must also select a number of iterations for our MCMC sampler. In the first step of inference, we alternate between one iteration of Gibbs sampling for the LDA parameters, and 1,000 iterations of Metropolis Hastings sampling for the LSM parameters, as the Metropolis Hastings algorithm explores the parameter space much more slowly than Gibbs sampling. We did this for a total of 4,000 iterations of Gibbs sampling, until Geweke statistics indicated convergence in the un-normalized LDA model log likelihood for all counties. We then ran the LSM component of our model for an additional 10,000,000 iterations, holding the LDA parameters fixed, to ensure that all latent space parameter estimates had converged.
 
 
-\subsection{Results}	
+\subsection{Analysis}
+We can now combine the output of our model from each county to understand the domain-specific relationship between the gender of an email sender and the gender of its recipients. However, before doing this, it will be instructive to examine a few examples of our model output for particular topic-clusters. 
+
+\begin{figure}
+	\centering
+	\includegraphics[width = .37\textwidth]{./images/Dare_3_MP.png}
+	\begin{tabular}{m{.49\textwidth}}
+	\toprule
+	Topic top words from top 5 topics\\
+	\midrule
+	will, track, winds, system, forecast, atlantic, east\\ 
+	storm, sandy, high, coastal, tides, night, hurricane\\ 
+	status, update, boat, today, weather, people, ago\\ 
+	board, meeting, planning, seafood, will, hearing, public\\ 
+	box, planning, director, manteo, permit, building, collector\\ 
+	\bottomrule
+
+	\end{tabular}
+	\caption{\label{tab: dare 3 mp} Mixing parameter estimates and topic top words for selected topic-cluster in Dare county.}
+\end{figure}
+
+
+\begin{figure}
+	\centering
+	\includegraphics[width = .37\textwidth]{./images/Hoke_3_MP.png}
+	\begin{tabular}{m{.49\textwidth}}
+	\toprule
+	Topic top words from top 5 topics\\
+	\midrule
+	junk, box, summary, emails, will, login, email\\ 
+	description, cell, director, works, public, fax,  office\\ 
+	pharmacist, good, will, send, morning, schedule, day\\ 
+	director, communications, emergency, central, status, check\\ 
+	box, director, fax, work, address, will, payroll\\ 
+	\bottomrule
+
+	\end{tabular}
+	\caption{\label{tab: hoke 3 mp} Mixing parameter estimates and topic top words for selected topic-cluster in Dare county.}
+\end{figure}
+
+
+	
 
 Here are our results
 
