@@ -496,22 +496,22 @@ There are several limitations involved with using the department affiliations of
 
 
 \section{Email Content as Domain}
-% <<<<<<< HEAD
-% In our second analytical approach we use the content of emails to determine the domain of communication. This is a natural and flexible way of accounting for the domain of communication, as emails about different domains will typically have different content. However, the challenge with using the raw text to classify emails according to domain is that language use does not vary in a perfectly predictable manner across domains. As such, we use a statistical model that has been developed by Denny et al$.$ \citep{Denny2015} for application to text-valued interpersonal communication data, in order to infer domains from patterns of word co-occurence and sender-receiver interaction. The modeling framework we adopt represents a joint model of email content and content-specific network structure, which captures the content-conditional relationship between the gender of an email sender and the gender of its recipients.  This approach compliments the department-based analysis in two ways. 
 
-The department-based analysis described in the previous section uses
-department affiliations as a proxy for (latent) domains of
-communication. In contrast, our second analytical approach, described
-in this section, uses the content of emails---specifically word
-co-occurrence patterns---to determine the domain of
-communication. Because our goal is to understand the relationship
-between the gender of an email's sender and the genders of its
-recipients, we use a new model that jointly accounts for email content
-and content-specific gender mixing patterns. This model extends Krafft
-et al.'s topic-partitioned multinetwork embeddings
-model~\cite{Krafft2012}. We apply this model to the email data from
-each county to infer within-county variation in gender mixing
-patterns.
+In our second analytical approach we use the content of emails to determine the domain of communication. This is a natural and flexible way of accounting for the domain of communication, as emails about different domains will typically have different content. However, the challenge with using the raw text to classify emails according to domain is that language use does not vary in a perfectly predictable manner across domains. As such, we use a statistical model that has been developed by Denny et al$.$ \citep{Denny2015} for application to text-valued interpersonal communication data, in order to infer domains from patterns of word co-occurence and sender-receiver interaction. The modeling framework we adopt represents a joint model of email content and content-specific network structure, which captures the content-conditional relationship between the gender of an email sender and the gender of its recipients.  This approach compliments the department-based analysis in two ways. 
+
+% The department-based analysis described in the previous section uses
+% department affiliations as a proxy for (latent) domains of
+% communication. In contrast, our second analytical approach, described
+% in this section, uses the content of emails---specifically word
+% co-occurrence patterns---to determine the domain of
+% communication. Because our goal is to understand the relationship
+% between the gender of an email's sender and the genders of its
+% recipients, we use a new model that jointly accounts for email content
+% and content-specific gender mixing patterns. This model extends Krafft
+% et al.'s topic-partitioned multinetwork embeddings
+% model~\cite{Krafft2012}. We apply this model to the email data from
+% each county to infer within-county variation in gender mixing
+% patterns.
 
 
 
