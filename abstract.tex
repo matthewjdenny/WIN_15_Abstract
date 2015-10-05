@@ -158,7 +158,7 @@
 
 
 \setlength{\footskip}{.5in}
-\usepackage{algorithm2e}
+%\usepackage{algorithm2e}
 %% ADDITIONAL OPTIONAL STYLE FILES Font specification
 \usepackage{natbib}
 \usepackage{bm}% bold math
@@ -182,6 +182,10 @@
 \usepackage{hyperref,booktabs,tabularx,float}
 \usepackage{multirow}
 
+\usepackage[plain]{algorithm}
+\usepackage{algpseudocode}
+
+
 %% OPTIONAL MACRO DEFINITIONS
 \def\s{\sigma}
 
@@ -202,6 +206,7 @@ Hanna Wallach\affil{2}{}\affil{3}{Microsoft Research NYC},
 
 \maketitle
 
+\input{macros}
 \begin{article}
 \begin{abstract}
 	
@@ -491,9 +496,44 @@ There are several limitations involved with using the department affiliations of
 
 
 \section{Email Content as Domain}
-Our second analytical approach uses the content of emails to determine the domain of communication. This is a natural and flexible way of accounting for the domain of communication, as emails about different domains will have different content. Moreover, since the words people use to talk about a particular domain (e.g. disaster response) will likely co-occur at a rate which is higher than by chance, we can use a statistical topic model to find these domains across emails. However, because we wish to understand the content-conditional relationship between the gender of an email sender and the gender of its recipients, we adopt a joint model of email content, and content specific network structure. Whereas the department based analysis presented in the previous section makes use of observed department affiliations as a proxy for communication content, the model we use in this section directly infers the latent domains of communication.
+% <<<<<<< HEAD
+In our second analytical approach we use the content of emails to determine the domain of communication. This is a natural and flexible way of accounting for the domain of communication, as emails about different domains will typically have different content. However, the challenge with using the raw text to classify emails according to domain is that language use does not vary in a perfectly predictable manner across domains. As such, we use a statistical model that has been developed by Denny et al$.$ \citep{Denny2015} for application to text-valued interpersonal communication data, in order to infer domains from patterns of word co-occurence and sender-receiver interaction. The modeling framework we adopt represents a joint model of email content and content-specific network structure, which captures the content-conditional relationship between the gender of an email sender and the gender of its recipients.  This approach compliments the department-based analysis in two ways. 
+% =======
+%
+% The department-based analysis described in the previous section uses
+% department affiliations as a proxy for (latent) domains of
+% communication. In contrast, our second analytical approach, described
+% in this section, uses the content of emails---specifically word
+% co-occurrence patterns---to determine the domain of
+% communication. Because our goal is to understand the relationship
+% between the gender of an email's sender and the genders of its
+% recipients, we use a new model that jointly accounts for email content
+% and content-specific gender mixing patterns. This model extends Krafft
+% et al.'s topic-partitioned multinetwork embeddings
+% model~\cite{Krafft2012}. We apply this model to the email data from
+% each county to infer within-county variation in gender mixing
+% patterns.
 
-The model we select is an extension of the recently developed topic-partitioned multinetwork embedding (TPME) model \citep{Krafft2012}. We then apply this model to the email data in each county, making use of within-county variation in gendered communication, which complements the department based analysis presented in the previous section.
+
+
+%Our second analytical approach uses the content of emails to determine
+%the domain of communication.
+%This is a natural and flexible way of
+%accounting for the domain of communication, as emails about different
+%domains will have different content. Moreover, since the words people
+%use to talk about a particular domain (e.g., disaster response) will
+%likely co-occur at a rate which is higher than by chance, we can use a
+%statistical topic model to find these domains across emails. However,
+%because we wish to understand the content-conditional relationship
+%between the gender of an email sender and the genders of its
+%recipients, we adopt a joint model of email content, and content
+%specific network structure. Whereas the department-based analysis
+%presented in the previous section uses observed department
+%affiliations as a proxy for communication content, the model we use in
+%this section directly infers the latent domains of communication.
+
+%The model we select is an extension of the recently developed topic-partitioned multinetwork embedding (TPME) model \citep{Krafft2012}. We then apply this model to the email data in each county, making use of within-county variation in gendered communication, which complements the department based analysis presented in the previous section.
+%>>>>>>> origin/master
 
 %  \begin{figure}
 % \caption{\label{fig:splitting} Different patterns of communication across different domains.}
@@ -502,8 +542,21 @@ The model we select is an extension of the recently developed topic-partitioned 
 % \end{figure}
 
 \subsection{A Model of Email Content}
-Here we provide a brief overview of our extension to the topic-partitioned
-multinetwork embedding (TPME) model \citep{Krafft2012}. In particular, we illustrate how this model lets us make inferences about the gender-specific patterns of communication in organizations, and how these patterns change with the topics of communication. Our model follows Krafft et al. \citep{Krafft2012} by integrating the latent space network model (LSM) \citep{Hoff2002a} with latent Dirichlet allocation (LDA) \cite{Blei2003} to jointly model the content and structure of an email network. This model is designed to be applied to email data where we observe each message sender and its recipients, as well as the email content (the words). 
+
+Our model jointly accounts for the structure and content of an
+observed email network. Like Krafft et al's model~\cite{Krafft2012},
+our model combines ideas from latent space network
+modeling~\cite{Hoff2002a} with ideas from statistical topic
+modeling~\cite{Blei2003}. We treat the sender, recipients, and
+contents of each email as observed, and simultaneously infer latent
+topics of communication and content-based gender mixing patterns.
+
+Our model is a probabilistic, generative model; that is, it implies a
+particular probabilistic generative process, by which an email network
+could theoretically have been generated. This genertive process ...
+
+%Here we provide a brief overview of our extension to the topic-partitioned
+%multinetwork embedding (TPME) model \citep{Krafft2012}. In particular, we illustrate how this model lets us make inferences about the gender-specific patterns of communication in organizations, and how these patterns change with the topics of communication. Our model follows Krafft et al. \citep{Krafft2012} by integrating the latent space network model (LSM) \citep{Hoff2002a} with latent Dirichlet allocation (LDA) \cite{Blei2003} to jointly model the content and structure of an email network. This model is designed to be applied to email data where we observe each message sender and its recipients, as well as the email content (the words). 
 
 At a high level, our model assumes the following generative process for a message sent across the email network. First, we sample the content of the message following the generative process for LDA. Then, for a given message sender, we draw whether each other actor in the network is a recipient of that message following the LSM. However, different topics are associated with different latent spaces, so how likely each actor is to be a recipient of a particular message is dependent on the content of that message. We review this process in greater detail in the supplemental information, but provide a diagrammatic representation of the generative process inf figure [need to make figure].
 
