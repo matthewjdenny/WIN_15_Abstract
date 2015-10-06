@@ -280,7 +280,11 @@ homophily and heterophily for different topics of
 communication. From a policy perspective, these findings suggest
 that a gender-equitable working environment cannot be created by
 hiring decisions alone, as gender bias in communication still
-exists independent of the positions held by men and women.
+exists independent of the positions held by men and women. 
+
+\begin{center}
+Draft results may change, please contact authors before citing.
+\end{center}
 }
 \end{abstract} 
 
@@ -606,7 +610,7 @@ emails could theoretically have been generated.
 
 This generative process starts by generating the global (corpus-wide)
 variables. There are two main types of global variables: those that
-describe the topics people talk about and those that descibe how
+describe the topics people talk about and those that describe how
 people interact (interaction patterns). The former are a set of $T$
 topics. Each topic $\bphi^{(t)}$ is a discrete distribution over $V$
 word types. The latter are a set of $C$ interaction patterns. Each
@@ -656,14 +660,11 @@ $\mathcal{L} = \{ l_t\}_{t=1}^T$, $\Theta = \{ \btheta^{(d)}
 \{ \bw^{(d)} \}_{d=1}^D$, and $\mathcal{Y} = \{ \by^{(d)} \}_{d=1}^D$
 given $\mathcal{X} = \{ \{ \bx^{(ar)} \}_{r=1}^A \}_{a=1}^A$,
 $\mathcal{A} = \{ a^{(d)} \}_{d=1}^D$, and $\mathcal{N} = \{ N^{(d)}
-\}_{d=1}^D$.
+\}_{d=1}^D$. The complete generative process is provided in
+figure~\ref{fig:generative_process}.
 
-The complete generative process is provided in
-figure~\ref{alg:generative process.}
-
-\begin{figure}[t]
-  \caption{Generative process for Denny et al.'s model.}
-  \label{alg:generative_process}
+\begin{figure}[ht]
+  \caption{\label{fig:generative_process}Generative process for Denny et al.'s model.}
   \begin{algorithmic}[1]
     \For{$t = 1$ to $T$}
     \State draw $\bphi^{(t)} \sim \Dir(\beta, \boldsymbol{n})$
@@ -743,10 +744,25 @@ figure~\ref{alg:generative process.}
 
 \subsection{Inference}
 
-\begin{figure}[t]
-  \caption{Block Metropolis-within-Gibbs inference algorithm for Denny
-    et al's model.}
-  \label{alg:inference_algorithm}
+For real-world email networks, we must invert the generative process
+described in the previous section to infer plausible values for the
+latent variables $\Phi$, $\mathcal{B}$, $\Gamma$, $\mathcal{S}$,
+$\mathcal{L}$, $\Theta$, and $\mathcal{Z}$. Denny et al. achieve this
+goal by integrating out $\Phi$ and $\Theta$ and then drawing samples
+from the posterior distribution over $\mathcal{B}$, $\Gamma$,
+$\mathcal{S}$, $\mathcal{L}$, and $\mathcal{Z}$ given $\mathcal{W}$,
+$\mathcal{Y}$, $\mathcal{X}$, and $\mathcal{A}$. Specifically, they
+define a Metropolis-within-Gibbs algorithm, in which each iteration
+involves sequentially resampling the value of each $z_n^{(d)}$
+variable from its conditional posterior distribution, sequentially
+resampling the value of each $l_t$ variable similarly, and then
+jointly sampling the values of $\mathcal{B}$, $\Gamma$, and
+$\mathcal{S}$ using the Metropolis algorithm. This procedure is
+outlined in figure~\ref{fig:inference_algorithm}.
+
+\begin{figure}[ht]
+  \caption{\label{fig:inference_algorithm}Block Metropolis-within-Gibbs inference algorithm for Denny et al's model.}
+  
   \begin{algorithmic}[1]
     \For{$i = 1$ to $I$}
     \For{$d = 1$ to $D$}
@@ -785,22 +801,6 @@ figure~\ref{alg:generative process.}
     \EndFor
   \end{algorithmic}
 \end{figure}
-
-For real-world email networks, we must invert the generative process
-described in the previous section to infer plausible values for the
-latent variables $\Phi$, $\mathcal{B}$, $\Gamma$, $\mathcal{S}$,
-$\mathcal{L}$, $\Theta$, and $\mathcal{Z}$. Denny et al. achieve this
-goal by integrating out $\Phi$ and $\Theta$ and then drawing samples
-from the posterior distribution over $\mathcal{B}$, $\Gamma$,
-$\mathcal{S}$, $\mathcal{L}$, and $\mathcal{Z}$ given $\mathcal{W}$,
-$\mathcal{Y}$, $\mathcal{X}$, and $\mathcal{A}$. Specifically, they
-define a Metropolis-within-Gibbs algorithm, in which each iteration
-involves sequentially resampling the value of each $z_n^{(d)}$
-variable from its conditional posterior distribution, sequentially
-resampling the value of each $l_t$ variable similarly, and then
-jointly sampling the values of $\mathcal{B}$, $\Gamma$, and
-$\mathcal{S}$ using the Metropolis algorithm. This procedure is
-outlined in algorithm~\ref{alg:inference_algorithm}.
 
 %\footnote{The inference algorithm is currently implemented in a beta version as an R package, and is available here: \url{https://github.com/matthewjdenny/ContentStructure}}
 
@@ -843,6 +843,8 @@ iterations, we fixed the values of $\mathcal{Z}$ and $\mathcal{L}$ and
 resampled the remaining variables for an additional 10,000,000
 iterations.
 
+
+
 \subsection{Analysis}
 Our model produces three key outputs that will be useful to an analysis of content specific patterns of gender mixing in communication. First, it infers a set of (in this case) 40 topics of communication for each county. These topics are distributions over words, and are commonly summarized by listing the words that are most frequently assigned to them. For example, a law enforcement topic might have the following top 10 words:
 ￼\emph{safety, management, understanding, training, law, enforcement, local, basics, workplace, corrections}. Our model also associates each topic with one of (in this case) 4 clusters, based on a common pattern of communication. Finally, a set of gender mixing parameters is inferred for each cluster. Therefore, we can use the mixing parameter estimates and associated topic top-words inferred by our model as ingredients in an analysis that is similar to the one presented in the previous section.
@@ -852,7 +854,7 @@ Before diving into this analysis, it will be useful to examine a few examples of
 \begin{figure}
 	\centering
 	\includegraphics[width = .37\textwidth]{./images/Dare_3_MP.png}
-	\begin{tabular}{m{.49\textwidth}}
+	\begin{tabular}{m{.47\textwidth}}
 	\toprule
 	Topic top words\\
 	\midrule
@@ -872,7 +874,7 @@ Before diving into this analysis, it will be useful to examine a few examples of
 \begin{figure}
 	\centering
 	\includegraphics[width = .37\textwidth]{./images/Hoke_3_MP.png}
-	\begin{tabular}{m{.49\textwidth}}
+	\begin{tabular}{m{.47\textwidth}}
 	\toprule
 	Topic top words\\
 	\midrule
@@ -891,6 +893,56 @@ Our analysis goal is to construct a table similar to table \ref{tab:significant 
 
 What we are particularly interested in are the words that distinguish between each of these communication patterns. We therefore filter the lists of top words associated with each pattern to only those words that appear one or fewer times in either of the other lists. The reason for this is that we do not wish to exclude words which appear very frequently in topics associated with one pattern but appear only once in topics associated with the others. The results of this filtering are presented in table \ref{tab:top words for each pattern}. As we can see, there is significant variation in the distinctive words across the three patterns of communication. For example, the top words associated with the MM = MF = FM = FF pattern seem to be mostly related to daily operations and legal matters, while the top words associated with the MM $>$ MF/FM $>$ FF pattern are mostly related to planning, education, and development. While it is not unexpected that finance and budget
 
+
+
+% \begin{table*}
+% 	\begin{tabular}{m{2.2in}|m{2.2in}|m{2.2in}}
+% 		\toprule
+% 		\multicolumn{1}{c}{FM $>$  MF $>$ FF $>$ MM} &  \multicolumn{1}{c}{MM $>$ FM $>$ MF $>$ FF}  & \multicolumn{1}{c}{FF $>$ FM $>$ MF $>$ MM}\\
+% 		\midrule
+%
+% \fontseries{b}\selectfont\textcolor{black!100}{cell}, \fontseries{b}\selectfont\textcolor{black!85}{employees}, \fontseries{b}\selectfont\textcolor{black!85}{message}, \fontseries{m}\selectfont\textcolor{black!70}{class}, \fontseries{m}\selectfont\textcolor{black!70}{junk},  \fontseries{m}\selectfont\textcolor{black!70}{summary},  \fontseries{m}\selectfont\textcolor{black!70}{benefits}, \fontseries{m}\selectfont\textcolor{black!70}{confidential}, \fontseries{m}\selectfont\textcolor{black!70}{plan}, \fontseries{m}\selectfont\textcolor{black!70}{error}, \fontseries{m}\selectfont\textcolor{black!70}{emails}, \fontseries{m}\selectfont\textcolor{black!70}{fire}, \fontseries{m}\selectfont\textcolor{black!70}{survey}, \fontseries{m}\selectfont\textcolor{black!70}{state},  \fontseries{m}\selectfont\textcolor{black!70}{main}, \fontseries{m}\selectfont\textcolor{black!70}{report}, \fontseries{m}\selectfont\textcolor{black!70}{documents}, \fontseries{m}\selectfont\textcolor{black!70}{system},  \fontseries{m}\selectfont\textcolor{black!70}{accompanying}, \fontseries{m}\selectfont\textcolor{black!70}{economic}, \fontseries{m}\selectfont\textcolor{black!70}{insurance}, \fontseries{m}\selectfont\textcolor{black!70}{recipient}, \fontseries{m}\selectfont\textcolor{black!70}{service}, \fontseries{m}\selectfont\textcolor{black!70}{marshal}, \fontseries{m}\selectfont\textcolor{black!70}{enrollment}, \fontseries{m}\selectfont\textcolor{black!70}{prohibited}
+%
+%  &
+%
+% \fontseries{b}\selectfont\textcolor{black!100}{received}, \fontseries{b}\selectfont\textcolor{black!85}{description}, \fontseries{b}\selectfont\textcolor{black!85}{law}, \fontseries{b}\selectfont\textcolor{black!85}{mail}, \fontseries{b}\selectfont\textcolor{black!85}{planning}, \fontseries{b}\selectfont\textcolor{black!85}{intended}, \fontseries{b}\selectfont\textcolor{black!85}{records},  \fontseries{b}\selectfont\textcolor{black!85}{church}, \fontseries{b}\selectfont\textcolor{black!85}{suite}, \fontseries{b}\selectfont\textcolor{black!85}{subject}, \fontseries{b}\selectfont\textcolor{black!85}{third},  \fontseries{b}\selectfont\textcolor{black!85}{address}, \fontseries{b}\selectfont\textcolor{black!85}{tax}, \fontseries{b}\selectfont\textcolor{black!85}{parties}, \fontseries{b}\selectfont\textcolor{black!85}{water}, \fontseries{m}\selectfont\textcolor{black!70}{marion}, \fontseries{m}\selectfont\textcolor{black!70}{operations}, \fontseries{m}\selectfont\textcolor{black!70}{electronic}, \fontseries{m}\selectfont\textcolor{black!70}{jail}, \fontseries{m}\selectfont\textcolor{black!70}{fort}, \fontseries{m}\selectfont\textcolor{black!70}{project}, \fontseries{m}\selectfont\textcolor{black!70}{pool}, \fontseries{m}\selectfont\textcolor{black!70}{april}, \fontseries{m}\selectfont\textcolor{black!70}{full}, \fontseries{m}\selectfont\textcolor{black!70}{center}, \fontseries{m}\selectfont\textcolor{black!70}{insurance}, \fontseries{m}\selectfont\textcolor{black!70}{cashiers}, \fontseries{m}\selectfont\textcolor{black!70}{book}
+%
+%  &
+%
+%  \fontseries{b}\selectfont\textcolor{black!100}{east}, \fontseries{b}\selectfont\textcolor{black!100}{fyi},  \fontseries{m}\selectfont\textcolor{black!70}{password}, \fontseries{m}\selectfont\textcolor{black!70}{insurance}, \fontseries{m}\selectfont\textcolor{black!70}{washington}, \fontseries{m}\selectfont\textcolor{black!70}{contact}, \fontseries{m}\selectfont\textcolor{black!70}{zee}, \fontseries{m}\selectfont\textcolor{black!70}{main}, \fontseries{m}\selectfont\textcolor{black!70}{debt}, \fontseries{m}\selectfont\textcolor{black!70}{learn},  \fontseries{m}\selectfont\textcolor{black!70}{great}, \fontseries{m}\selectfont\textcolor{black!70}{actions}, \fontseries{m}\selectfont\textcolor{black!70}{day}, \fontseries{m}\selectfont\textcolor{black!70}{inspire}, \fontseries{m}\selectfont\textcolor{black!70}{disclosure}, \fontseries{m}\selectfont\textcolor{black!70}{supply}, \fontseries{m}\selectfont\textcolor{black!70}{dream}, \fontseries{m}\selectfont\textcolor{black!70}{animal}, \fontseries{m}\selectfont\textcolor{black!70}{form},  \fontseries{m}\selectfont\textcolor{black!70}{item}, \fontseries{m}\selectfont\textcolor{black!70}{shelter}, \fontseries{m}\selectfont\textcolor{black!70}{audit}, \fontseries{m}\selectfont\textcolor{black!70}{funds}, \fontseries{m}\selectfont\textcolor{black!70}{refunding}, \fontseries{m}\selectfont\textcolor{black!70}{site}
+%
+%  \\
+% \midrule
+% \multicolumn{1}{c}{MF $>$ FM $>$ FF $>$ MM} &  \multicolumn{1}{c}{FF $>$ MF $>$ FM $>$ MM}  & \multicolumn{1}{c}{MM $>$ FF $>$ MF $>$ FM} \\
+% \midrule
+%
+% \fontseries{m}\selectfont\textcolor{black!70}{requisition}, \fontseries{m}\selectfont\textcolor{black!70}{payment}, \fontseries{m}\selectfont\textcolor{black!70}{approval}, \fontseries{m}\selectfont\textcolor{black!70}{notification}, \fontseries{m}\selectfont\textcolor{black!70}{munis}, \fontseries{m}\selectfont\textcolor{black!70}{class},  \fontseries{m}\selectfont\textcolor{black!70}{computer}, \fontseries{m}\selectfont\textcolor{black!70}{program}, \fontseries{m}\selectfont\textcolor{black!70}{general}, \fontseries{m}\selectfont\textcolor{black!70}{position}, \fontseries{m}\selectfont\textcolor{black!70}{system}, \fontseries{m}\selectfont\textcolor{black!70}{plan}, \fontseries{m}\selectfont\textcolor{black!70}{excellent}, \fontseries{m}\selectfont\textcolor{black!70}{benefits}, \fontseries{m}\selectfont\textcolor{black!70}{chuck}, \fontseries{m}\selectfont\textcolor{black!70}{pending}, \fontseries{m}\selectfont\textcolor{black!70}{cemetery}, \fontseries{m}\selectfont\textcolor{black!70}{week}, \fontseries{m}\selectfont\textcolor{black!70}{fiscal},  \fontseries{m}\selectfont\textcolor{black!70}{requirements}, \fontseries{m}\selectfont\textcolor{black!70}{lane}, \fontseries{m}\selectfont\textcolor{black!70}{company}, \fontseries{m}\selectfont\textcolor{black!70}{planner/section}, \fontseries{m}\selectfont\textcolor{black!70}{user}, \fontseries{m}\selectfont\textcolor{black!70}{entered}, \fontseries{m}\selectfont\textcolor{black!70}{e/s}, \fontseries{m}\selectfont\textcolor{black!70}{customer}, \fontseries{m}\selectfont\textcolor{black!70}{commodity}
+%
+%  &
+%
+% \fontseries{b}\selectfont\textcolor{black!100}{budget}, \fontseries{b}\selectfont\textcolor{black!85}{read}, \fontseries{b}\selectfont\textcolor{black!85}{work}, \fontseries{b}\selectfont\textcolor{black!85}{request}, \fontseries{b}\selectfont\textcolor{black!85}{emergency}, \fontseries{m}\selectfont\textcolor{black!70}{password}, \fontseries{m}\selectfont\textcolor{black!70}{transportation},  \fontseries{m}\selectfont\textcolor{black!70}{electronic},  \fontseries{m}\selectfont\textcolor{black!70}{administrator}, \fontseries{m}\selectfont\textcolor{black!70}{worker}, \fontseries{m}\selectfont\textcolor{black!70}{comp}, \fontseries{m}\selectfont\textcolor{black!70}{ipad}, \fontseries{m}\selectfont\textcolor{black!70}{officer}, \fontseries{m}\selectfont\textcolor{black!70}{change}, \fontseries{m}\selectfont\textcolor{black!70}{call}, \fontseries{m}\selectfont\textcolor{black!70}{check}, \fontseries{m}\selectfont\textcolor{black!70}{center}, \fontseries{m}\selectfont\textcolor{black!70}{legion}, \fontseries{m}\selectfont\textcolor{black!70}{well}, \fontseries{m}\selectfont\textcolor{black!70}{utilities}, \fontseries{m}\selectfont\textcolor{black!70}{report}, \fontseries{m}\selectfont\textcolor{black!70}{review}, \fontseries{m}\selectfont\textcolor{black!70}{policy}, \fontseries{m}\selectfont\textcolor{black!70}{dss}, \fontseries{m}\selectfont\textcolor{black!70}{increase},
+%
+%  &
+%
+% \fontseries{b}\selectfont\textcolor{black!100}{services},  \fontseries{m}\selectfont\textcolor{black!70}{class}, \fontseries{m}\selectfont\textcolor{black!70}{benefits},  \fontseries{m}\selectfont\textcolor{black!70}{funding}, \fontseries{m}\selectfont\textcolor{black!70}{recipient}, \fontseries{m}\selectfont\textcolor{black!70}{attachments}, \fontseries{m}\selectfont\textcolor{black!70}{plan}, \fontseries{m}\selectfont\textcolor{black!70}{questions},  \fontseries{m}\selectfont\textcolor{black!70}{notice}, \fontseries{m}\selectfont\textcolor{black!70}{requisition}, \fontseries{m}\selectfont\textcolor{black!70}{pending}, \fontseries{m}\selectfont\textcolor{black!70}{survey},  \fontseries{m}\selectfont\textcolor{black!70}{interim}, \fontseries{m}\selectfont\textcolor{black!70}{john}, \fontseries{m}\selectfont\textcolor{black!70}{enrollment}, \fontseries{m}\selectfont\textcolor{black!70}{error}, \fontseries{m}\selectfont\textcolor{black!70}{requested}, \fontseries{m}\selectfont\textcolor{black!70}{approval}, \fontseries{m}\selectfont\textcolor{black!70}{notified}, \fontseries{m}\selectfont\textcolor{black!70}{disclosed}, \fontseries{m}\selectfont\textcolor{black!70}{tel}, \fontseries{m}\selectfont\textcolor{black!70}{insurance}, \fontseries{m}\selectfont\textcolor{black!70}{seal}, \fontseries{m}\selectfont\textcolor{black!70}{mph}, \fontseries{m}\selectfont\textcolor{black!70}{electronic}, \fontseries{m}\selectfont\textcolor{black!70}{officer}
+%
+%  \\
+% 		\bottomrule
+% 	\end{tabular}
+% 	\caption{\label{tab:top words for each pattern} Most common exclusive words in topic clusters associated with three gender mixing patterns.}
+% \end{table*}
+
+
+\begin{acknowledgments}
+This work was supported by US National Science Foundation Grant CISE-1320219 (Hanna Wallach and Bruce A. Desmarais, PIs)
+\vspace{-.5cm}
+\end{acknowledgments}
+\bibliographystyle{plain}
+\bibliography{PINLab.bib}
+
+
+
+\newpage
 \begin{table*}
 	\begin{tabular}{m{.48\textwidth}|m{.48\textwidth}}
 		\toprule
@@ -1095,54 +1147,6 @@ What we are particularly interested in are the words that distinguish between ea
 	\end{tabular}
 	\caption{\label{tab:top words for each pattern} Topic top-words (one topic per line) for the three topics with the greatest $N_t$ in each cluster, for each cluster associated with each gender mixing parameter ordering. Words are shaded by their aggregate frequency in all topic topic top-words associated with each gender mixing parameter ordering.}
 \end{table*}
-
-
-
-% \begin{table*}
-% 	\begin{tabular}{m{2.2in}|m{2.2in}|m{2.2in}}
-% 		\toprule
-% 		\multicolumn{1}{c}{FM $>$  MF $>$ FF $>$ MM} &  \multicolumn{1}{c}{MM $>$ FM $>$ MF $>$ FF}  & \multicolumn{1}{c}{FF $>$ FM $>$ MF $>$ MM}\\
-% 		\midrule
-%
-% \fontseries{b}\selectfont\textcolor{black!100}{cell}, \fontseries{b}\selectfont\textcolor{black!85}{employees}, \fontseries{b}\selectfont\textcolor{black!85}{message}, \fontseries{m}\selectfont\textcolor{black!70}{class}, \fontseries{m}\selectfont\textcolor{black!70}{junk},  \fontseries{m}\selectfont\textcolor{black!70}{summary},  \fontseries{m}\selectfont\textcolor{black!70}{benefits}, \fontseries{m}\selectfont\textcolor{black!70}{confidential}, \fontseries{m}\selectfont\textcolor{black!70}{plan}, \fontseries{m}\selectfont\textcolor{black!70}{error}, \fontseries{m}\selectfont\textcolor{black!70}{emails}, \fontseries{m}\selectfont\textcolor{black!70}{fire}, \fontseries{m}\selectfont\textcolor{black!70}{survey}, \fontseries{m}\selectfont\textcolor{black!70}{state},  \fontseries{m}\selectfont\textcolor{black!70}{main}, \fontseries{m}\selectfont\textcolor{black!70}{report}, \fontseries{m}\selectfont\textcolor{black!70}{documents}, \fontseries{m}\selectfont\textcolor{black!70}{system},  \fontseries{m}\selectfont\textcolor{black!70}{accompanying}, \fontseries{m}\selectfont\textcolor{black!70}{economic}, \fontseries{m}\selectfont\textcolor{black!70}{insurance}, \fontseries{m}\selectfont\textcolor{black!70}{recipient}, \fontseries{m}\selectfont\textcolor{black!70}{service}, \fontseries{m}\selectfont\textcolor{black!70}{marshal}, \fontseries{m}\selectfont\textcolor{black!70}{enrollment}, \fontseries{m}\selectfont\textcolor{black!70}{prohibited}
-%
-%  &
-%
-% \fontseries{b}\selectfont\textcolor{black!100}{received}, \fontseries{b}\selectfont\textcolor{black!85}{description}, \fontseries{b}\selectfont\textcolor{black!85}{law}, \fontseries{b}\selectfont\textcolor{black!85}{mail}, \fontseries{b}\selectfont\textcolor{black!85}{planning}, \fontseries{b}\selectfont\textcolor{black!85}{intended}, \fontseries{b}\selectfont\textcolor{black!85}{records},  \fontseries{b}\selectfont\textcolor{black!85}{church}, \fontseries{b}\selectfont\textcolor{black!85}{suite}, \fontseries{b}\selectfont\textcolor{black!85}{subject}, \fontseries{b}\selectfont\textcolor{black!85}{third},  \fontseries{b}\selectfont\textcolor{black!85}{address}, \fontseries{b}\selectfont\textcolor{black!85}{tax}, \fontseries{b}\selectfont\textcolor{black!85}{parties}, \fontseries{b}\selectfont\textcolor{black!85}{water}, \fontseries{m}\selectfont\textcolor{black!70}{marion}, \fontseries{m}\selectfont\textcolor{black!70}{operations}, \fontseries{m}\selectfont\textcolor{black!70}{electronic}, \fontseries{m}\selectfont\textcolor{black!70}{jail}, \fontseries{m}\selectfont\textcolor{black!70}{fort}, \fontseries{m}\selectfont\textcolor{black!70}{project}, \fontseries{m}\selectfont\textcolor{black!70}{pool}, \fontseries{m}\selectfont\textcolor{black!70}{april}, \fontseries{m}\selectfont\textcolor{black!70}{full}, \fontseries{m}\selectfont\textcolor{black!70}{center}, \fontseries{m}\selectfont\textcolor{black!70}{insurance}, \fontseries{m}\selectfont\textcolor{black!70}{cashiers}, \fontseries{m}\selectfont\textcolor{black!70}{book}
-%
-%  &
-%
-%  \fontseries{b}\selectfont\textcolor{black!100}{east}, \fontseries{b}\selectfont\textcolor{black!100}{fyi},  \fontseries{m}\selectfont\textcolor{black!70}{password}, \fontseries{m}\selectfont\textcolor{black!70}{insurance}, \fontseries{m}\selectfont\textcolor{black!70}{washington}, \fontseries{m}\selectfont\textcolor{black!70}{contact}, \fontseries{m}\selectfont\textcolor{black!70}{zee}, \fontseries{m}\selectfont\textcolor{black!70}{main}, \fontseries{m}\selectfont\textcolor{black!70}{debt}, \fontseries{m}\selectfont\textcolor{black!70}{learn},  \fontseries{m}\selectfont\textcolor{black!70}{great}, \fontseries{m}\selectfont\textcolor{black!70}{actions}, \fontseries{m}\selectfont\textcolor{black!70}{day}, \fontseries{m}\selectfont\textcolor{black!70}{inspire}, \fontseries{m}\selectfont\textcolor{black!70}{disclosure}, \fontseries{m}\selectfont\textcolor{black!70}{supply}, \fontseries{m}\selectfont\textcolor{black!70}{dream}, \fontseries{m}\selectfont\textcolor{black!70}{animal}, \fontseries{m}\selectfont\textcolor{black!70}{form},  \fontseries{m}\selectfont\textcolor{black!70}{item}, \fontseries{m}\selectfont\textcolor{black!70}{shelter}, \fontseries{m}\selectfont\textcolor{black!70}{audit}, \fontseries{m}\selectfont\textcolor{black!70}{funds}, \fontseries{m}\selectfont\textcolor{black!70}{refunding}, \fontseries{m}\selectfont\textcolor{black!70}{site}
-%
-%  \\
-% \midrule
-% \multicolumn{1}{c}{MF $>$ FM $>$ FF $>$ MM} &  \multicolumn{1}{c}{FF $>$ MF $>$ FM $>$ MM}  & \multicolumn{1}{c}{MM $>$ FF $>$ MF $>$ FM} \\
-% \midrule
-%
-% \fontseries{m}\selectfont\textcolor{black!70}{requisition}, \fontseries{m}\selectfont\textcolor{black!70}{payment}, \fontseries{m}\selectfont\textcolor{black!70}{approval}, \fontseries{m}\selectfont\textcolor{black!70}{notification}, \fontseries{m}\selectfont\textcolor{black!70}{munis}, \fontseries{m}\selectfont\textcolor{black!70}{class},  \fontseries{m}\selectfont\textcolor{black!70}{computer}, \fontseries{m}\selectfont\textcolor{black!70}{program}, \fontseries{m}\selectfont\textcolor{black!70}{general}, \fontseries{m}\selectfont\textcolor{black!70}{position}, \fontseries{m}\selectfont\textcolor{black!70}{system}, \fontseries{m}\selectfont\textcolor{black!70}{plan}, \fontseries{m}\selectfont\textcolor{black!70}{excellent}, \fontseries{m}\selectfont\textcolor{black!70}{benefits}, \fontseries{m}\selectfont\textcolor{black!70}{chuck}, \fontseries{m}\selectfont\textcolor{black!70}{pending}, \fontseries{m}\selectfont\textcolor{black!70}{cemetery}, \fontseries{m}\selectfont\textcolor{black!70}{week}, \fontseries{m}\selectfont\textcolor{black!70}{fiscal},  \fontseries{m}\selectfont\textcolor{black!70}{requirements}, \fontseries{m}\selectfont\textcolor{black!70}{lane}, \fontseries{m}\selectfont\textcolor{black!70}{company}, \fontseries{m}\selectfont\textcolor{black!70}{planner/section}, \fontseries{m}\selectfont\textcolor{black!70}{user}, \fontseries{m}\selectfont\textcolor{black!70}{entered}, \fontseries{m}\selectfont\textcolor{black!70}{e/s}, \fontseries{m}\selectfont\textcolor{black!70}{customer}, \fontseries{m}\selectfont\textcolor{black!70}{commodity}
-%
-%  &
-%
-% \fontseries{b}\selectfont\textcolor{black!100}{budget}, \fontseries{b}\selectfont\textcolor{black!85}{read}, \fontseries{b}\selectfont\textcolor{black!85}{work}, \fontseries{b}\selectfont\textcolor{black!85}{request}, \fontseries{b}\selectfont\textcolor{black!85}{emergency}, \fontseries{m}\selectfont\textcolor{black!70}{password}, \fontseries{m}\selectfont\textcolor{black!70}{transportation},  \fontseries{m}\selectfont\textcolor{black!70}{electronic},  \fontseries{m}\selectfont\textcolor{black!70}{administrator}, \fontseries{m}\selectfont\textcolor{black!70}{worker}, \fontseries{m}\selectfont\textcolor{black!70}{comp}, \fontseries{m}\selectfont\textcolor{black!70}{ipad}, \fontseries{m}\selectfont\textcolor{black!70}{officer}, \fontseries{m}\selectfont\textcolor{black!70}{change}, \fontseries{m}\selectfont\textcolor{black!70}{call}, \fontseries{m}\selectfont\textcolor{black!70}{check}, \fontseries{m}\selectfont\textcolor{black!70}{center}, \fontseries{m}\selectfont\textcolor{black!70}{legion}, \fontseries{m}\selectfont\textcolor{black!70}{well}, \fontseries{m}\selectfont\textcolor{black!70}{utilities}, \fontseries{m}\selectfont\textcolor{black!70}{report}, \fontseries{m}\selectfont\textcolor{black!70}{review}, \fontseries{m}\selectfont\textcolor{black!70}{policy}, \fontseries{m}\selectfont\textcolor{black!70}{dss}, \fontseries{m}\selectfont\textcolor{black!70}{increase},
-%
-%  &
-%
-% \fontseries{b}\selectfont\textcolor{black!100}{services},  \fontseries{m}\selectfont\textcolor{black!70}{class}, \fontseries{m}\selectfont\textcolor{black!70}{benefits},  \fontseries{m}\selectfont\textcolor{black!70}{funding}, \fontseries{m}\selectfont\textcolor{black!70}{recipient}, \fontseries{m}\selectfont\textcolor{black!70}{attachments}, \fontseries{m}\selectfont\textcolor{black!70}{plan}, \fontseries{m}\selectfont\textcolor{black!70}{questions},  \fontseries{m}\selectfont\textcolor{black!70}{notice}, \fontseries{m}\selectfont\textcolor{black!70}{requisition}, \fontseries{m}\selectfont\textcolor{black!70}{pending}, \fontseries{m}\selectfont\textcolor{black!70}{survey},  \fontseries{m}\selectfont\textcolor{black!70}{interim}, \fontseries{m}\selectfont\textcolor{black!70}{john}, \fontseries{m}\selectfont\textcolor{black!70}{enrollment}, \fontseries{m}\selectfont\textcolor{black!70}{error}, \fontseries{m}\selectfont\textcolor{black!70}{requested}, \fontseries{m}\selectfont\textcolor{black!70}{approval}, \fontseries{m}\selectfont\textcolor{black!70}{notified}, \fontseries{m}\selectfont\textcolor{black!70}{disclosed}, \fontseries{m}\selectfont\textcolor{black!70}{tel}, \fontseries{m}\selectfont\textcolor{black!70}{insurance}, \fontseries{m}\selectfont\textcolor{black!70}{seal}, \fontseries{m}\selectfont\textcolor{black!70}{mph}, \fontseries{m}\selectfont\textcolor{black!70}{electronic}, \fontseries{m}\selectfont\textcolor{black!70}{officer}
-%
-%  \\
-% 		\bottomrule
-% 	\end{tabular}
-% 	\caption{\label{tab:top words for each pattern} Most common exclusive words in topic clusters associated with three gender mixing patterns.}
-% \end{table*}
-
-
-\begin{acknowledgments}
-This work was supported by US National Science Foundation Grant CISE-1320219 (Hanna Wallach and Bruce A. Desmarais, PIs)
-\vspace{-.5cm}
-\end{acknowledgments}
-\bibliographystyle{plain}
-\bibliography{PINLab.bib}
-
 
 \end{article}
 
