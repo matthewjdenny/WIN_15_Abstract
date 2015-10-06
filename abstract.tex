@@ -438,7 +438,7 @@ We begin our analysis of the relationship between a department manager's gender 
     statistics.}
 \end{table}
 
-To test whether the gender of an email sender is related to the gender of its recipients, in aggregate, we construct a contingency table of email sending and receiving by gender (see table \ref{tab:gender email agg stats}). We then perform a $\chi^2$ test for independence between the rows and columns. The $\chi^2$ test statistic we obtain indicates that the gender of an email sender and its recipients is not independent $(\chi^2 = 6.4, p = 0.011)$. However, inspection of the contingency table indicates that the test statistic is actually driven by mild gender heterophily in communication. Furthermore, the gender differences we observe are substantively quite small, as both male and female department managers send emails to recipients of each gender in rough proportion to their overall representation in the sample (60\% to men, 40\% to women).  
+To test whether the gender of an email sender is related to the gender of its recipients, in aggregate, we construct a contingency table of email sending and receiving by gender (see table \ref{tab:gender email agg stats}). We then perform a $\chi^2$ test for independence between the rows and columns. The $\chi^2$ test statistic we obtain indicates that the gender of an email sender and its recipients is not independent $(\chi^2 = 6.4, p = 0.011)$. However, inspection of the contingency table indicates that the test statistic is actually driven by mild gender heterophily in communication. Furthermore, the gender differences we observe are substantively quite small, as both male and female department managers send emails to recipients of each gender in rough proportion to their overall representation in the sample (60\% to men, 40\% to women). For the rest of the paper, we use the term \emph{gendered} to refer to patterns of communication where we observe statistically significant variation between the propensity for men to send emails to men, men to send emails to women, women to send emails to men, and women to send emails to women.   
 	
 	% make this a contingency table and do a chi squared test
 	\begin{table}
@@ -663,7 +663,7 @@ $\mathcal{A} = \{ a^{(d)} \}_{d=1}^D$, and $\mathcal{N} = \{ N^{(d)}
 \}_{d=1}^D$. The complete generative process is provided in
 figure~\ref{fig:generative_process}.
 
-\begin{figure}[ht]
+\begin{figure}
   \caption{\label{fig:generative_process}Generative process for Denny et al.'s model.}
   \begin{algorithmic}[1]
     \For{$t = 1$ to $T$}
@@ -760,7 +760,7 @@ jointly sampling the values of $\mathcal{B}$, $\Gamma$, and
 $\mathcal{S}$ using the Metropolis algorithm. This procedure is
 outlined in figure~\ref{fig:inference_algorithm}.
 
-\begin{figure}[ht]
+\begin{figure}
   \caption{\label{fig:inference_algorithm}Block Metropolis-within-Gibbs inference algorithm for Denny et al's model.}
   
   \begin{algorithmic}[1]
