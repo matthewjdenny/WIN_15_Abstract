@@ -639,12 +639,13 @@ recipients. For each possible recipient $r \neq a^{(d)}$, a binary
 variable $y^{(d)}_r$ is generated indicating whether or not the email
 is sent to that recipient. This variable is drawn from a Bernoulli
 distribution, parameterized by a mixture of pattern-specific
-probabilities: $\sum_{c=1}^C \frac{\pi^{(c)}}{\sum_{c=1}^C \pi^{(c)}}
-p^{(c)}_{a^{(d)}r}$. The unnormalized mixing weight $\pi^{(c)}$ for
-pattern $c$ is the number of tokens associated with (a topic
-associated with) pattern $c$ in that document. As a result, the
-email's recipients depend on the topics expressed in that email and
-the interaction patterns associated with those topics.
+probabilities: $\sum_{c=1}^C \frac{\bar{N}^{(c|d)}}{\bar{N}^{(d)}}
+p^{(c)}_{a^{(d)}r}$. The normalized mixing weight
+$\frac{\bar{N}^{(c|d)}}{\bar{N}^{(d)}}$ for interaction pattern $c$ is
+the proportion of tokens in that email associated with (a topic
+associated with) pattern $c$. As a result, the email's recipients
+depend on the topics expressed within it and, in turn, on the
+interaction patterns associated with those topics.
 
 This generative process implies a particular factorization of the
 joint distribution over $\Phi = \{ \bphi^{(t)} \}_{t=1}^T$,
@@ -665,7 +666,7 @@ figure~\ref{alg:generative process.}
   \label{alg:generative_process}
   \begin{algorithmic}[1]
     \For{$t = 1$ to $T$}
-    \State draw $\bphi^{(t)} \sim \Dir(\beta, \bm)$
+    \State draw $\bphi^{(t)} \sim \Dir(\beta, \boldsymbol{n})$
     \EndFor
     \For{$c = 1$ to $C$}
     \State draw $b^{(c)} \sim \Norm(0, \sigma_1^2)$
@@ -673,7 +674,7 @@ figure~\ref{alg:generative process.}
     \, \I_P)$
     \For{$a = 1$ to $A$}
     \State draw $\bs^{(c)}_a \sim \Norm(\bzero,
-    \sigma_2^2\, \I_K)$
+    \sigma_3^2\, \I_K)$
     \EndFor
     \For{$a=1$ to $A$}
     \For{$r=1$ to $A$}
@@ -696,7 +697,7 @@ figure~\ref{alg:generative process.}
           \State draw $l_t \sim \Unif(1, C)$
           \EndFor
     \For{$d=1$ to $D$}
-    \State draw $\btheta^{(d)} \sim \Dir(\alpha, \bm)$
+    \State draw $\btheta^{(d)} \sim \Dir(\alpha, \boldsymbol{m})$
     \State set $\bar{N}^{(d)} = \textrm{max}(1, N^{(d)})$
     \For{$n=1$ to $\bar{N}^{(d)}$}
     \State draw $z_n^{(d)} \sim \btheta^{(d)}$
@@ -705,20 +706,29 @@ figure~\ref{alg:generative process.}
     \bphi^{(z_n^{(d)})}$
     \EndIf
     \EndFor
-    \For{$t=1$ to $T$}
-    \State set
-    $\bar{N}^{(t|d)} =
-    \sum_{n=1}^{\bar{N}^{(d)}}
-    \delta(z_n^{(d)} \teq
-    t)$
+%    \For{$t=1$ to $T$}
+%    \State set
+%    $\bar{N}^{(t|d)} =
+%    \sum_{n=1}^{\bar{N}^{(d)}}
+%    \delta(z_n^{(d)} \teq
+%    t)$
+%    \EndFor
+    \For{$c=1$ to $C$}
+    \State set $\bar{N}^{(c|d)} = \sum_{n=1}^{\bar{N}^{(d)}}
+    \delta(l_{z_n^{(d)}} \teq c)$
     \EndFor
     \For{$r=1$ to
       $A$}
     \State
+%    draw
+%    $y_r^{(d)} \sim \Bern(\sum_{t=1}^T \frac{\bar{N}^{(t|d)}}{
+%	\bar{N}^{(d)}}
+%    p^{(l_t)}_{a^{(d)}r})$
+    \State
     draw
-    $y_r^{(d)} \sim \Bern(\sum_{t=1}^T \frac{\bar{N}^{(t|d)}}{
+    $y_r^{(d)} \sim \Bern(\sum_{c=1}^C \frac{\bar{N}^{(c|d)}}{
 	\bar{N}^{(d)}}
-    p^{(l_t)}_{a^{(d)}r})$
+    p^{(c)}_{a^{(d)}r})$    
     \EndFor
     \EndFor
     \end{algorithmic}
@@ -732,6 +742,50 @@ figure~\ref{alg:generative process.}
 
 
 \subsection{Inference}
+
+\begin{figure}[t]
+  \caption{Block Metropolis-within-Gibbs inference algorithm for Denny
+    et al's model.}
+  \label{alg:inference_algorithm}
+  \begin{algorithmic}[1]
+    \For{$i = 1$ to $I$}
+    \For{$d = 1$ to $D$}
+    \For{$n = 1$ to $N^{(d)}$}
+    \State $z^{(d)}_n \sim P(z_n^{(d)} \g
+    \mathcal{B},
+    \Gamma, \mathcal{S}, \mathcal{L},
+    \mathcal{Z}_{\setminus d, n},
+    \mathcal{W}, \mathcal{Y}, \mathcal{X},
+    \mathcal{A})$
+    \EndFor
+    \EndFor
+    \For{$t = 1$ to $T$}
+    \State $l_t \sim
+    P(l_t \g \mathcal{B},
+    \Gamma,
+    \mathcal{S},
+    \mathcal{L}_{\setminus
+      t}, \mathcal{Z},
+    \mathcal{X},
+    \mathcal{A})$
+    \EndFor
+    \State $\mathcal{B},
+    \Gamma,
+    \mathcal{S}
+    \sim
+    P(\mathcal{B},
+    \Gamma,
+    \mathcal{S}
+    \g
+    \mathcal{L},
+    \mathcal{Z},
+    \mathcal{Y},
+    \mathcal{X},
+    \mathcal{A})$
+    \EndFor
+  \end{algorithmic}
+\end{figure}
+
 For real-world email networks, we must invert the generative process
 described in the previous section to infer plausible values for the
 latent variables $\Phi$, $\mathcal{B}$, $\Gamma$, $\mathcal{S}$,
@@ -745,12 +799,12 @@ involves sequentially resampling the value of each $z_n^{(d)}$
 variable from its conditional posterior distribution, sequentially
 resampling the value of each $l_t$ variable similarly, and then
 jointly sampling the values of $\mathcal{B}$, $\Gamma$, and
-$\mathcal{S}$ using the Metropolis algorithm. This procedure is in
-algorithm~\ref{}.\footnote{The inference algorithm is currently
-  implemented in a beta version as an R package, and is available
-  here:
-  \href{https://github.com/matthewjdenny/ContentStructure}{github.com/matthewjdenny/ContentStructure}}.
+$\mathcal{S}$ using the Metropolis algorithm. This procedure is
+outlined in algorithm~\ref{alg:inference_algorithm}.
 
+%\footnote{The inference algorithm is currently implemented in a beta version as an R package, and is available here: \url{https://github.com/matthewjdenny/ContentStructure}}
+
+  
 %Given that we do not directly observe the generative process, we have
 %to perform inference for the posterior distribution of our model
 %parameters given the data. We do this by \emph{inverting} the
@@ -766,10 +820,28 @@ algorithm~\ref{}.\footnote{The inference algorithm is currently
 % However, it is important to briefly discuss the interpretation of the LSM parameters inferred using our model, as their meaning is somewhat counter-intuitive. Durring inference, the latent positions of actors capture all un-modeled factors associated with the propensity for any two actors to form a tie. In a typical social network this might include difficult or impossible to measure quantities like how nice a person is, or whether two people have \emph{chemistry}. Additionally, it may capture observable traits that the researcher was unable to collect data on (e.g. sexual orientation, or ethnicity). This makes the latent positions difficult to interpret when including covariates in the model (because some characteristics that would otherwise be considered latent are fixed by the covariate data), so great care should be taken when doing so. In the analysis that follows, we refrain from interpreting the inferred latent positions of actors.
 
 
-We apply our model separately to the email data from each county and then pool our model results. To perform inference on real data, we must first select a number of model hyper-parameters. In particular, we must select the number topics, number of clusters, and topic model hyper-parameters\footnote{We use uniform base measures $\mathbf{m}$ and $\mathbf{n}$, and set $\alpha = 1$ and $\beta$ equal to 0.01 times the length of the vocabulary for each county. This is standard practice in the literature using LDA, and provides good performance.} to be used by our model, which we hold constant across counties. We choose to include manager gender as the only covariate in our specification, and include the full complment of gender mixing parameters in our model\footnote{male--male, male--female, female--male, and female--female}. In addition, we fix the male-male mixing parameter at zero for our analysis, to aid in directly interpreting the other gender mixing parameters. We select 40 topics and 4 clusters, to provide reasonable granularity in capturing variation in the content of communication, while improving the interpretability of the latent space model results by constraining the number of possible patterns of communication. This choice has a practical advantage of ensuring that enough data will be available to fit each cluster’s latent space with reasonably low uncertainty in the parameter estimates.
+We applied Denny et al.'s model separately to the email data from each
+county and then aggregated the model results. We used uniform base
+measures for the Dirichlet priors and set $\alpha = 1$ and $\beta =
+0.01 V$, where $V$ is the length of the vocabulary for each county. We
+also set $\sigma_1^2 = \sigma_2^2 = \sigma^2_3 = 5$. We used forty
+topics and four clusters, to provide reasonable granularity in
+capturing variation in content, while making sure that the interaction
+patterns were interpretable and did not exhibit redundancy. We used
+the same values for all counties. Since our goal was to study gendered
+communication, we used four binary gender mixing covariates (i.e., MM,
+MF, FM, and FF). To ensure identifiability and interpretability of
+the coefficients $\Gamma$, we fixed the coefficient for the MM covariate to
+zero.
 
-To perform inference, we must also select a number of iterations for our MCMC sampler. In the first step of inference, we alternate between one iteration of Gibbs sampling for the LDA parameters, and 1,000 iterations of Metropolis Hastings sampling for the LSM parameters, as the Metropolis Hastings algorithm explores the parameter space much more slowly than Gibbs sampling. We did this for a total of 4,000 iterations of Gibbs sampling, until Geweke statistics indicated convergence in the un-normalized LDA model log likelihood for all counties. We then ran the LSM component of our model for an additional 10,000,000 iterations, holding the LDA parameters fixed, to ensure that all latent space parameter estimates had converged.
-
+For each county, we ran Denny et al's inference algorithm for 4,000
+iterations. This was sufficient to reach convergence (indicated by
+Geweke statistics) for all counties. To ensure mixing of Denny et al's
+inference algorithm, we draw 1,000 samples of $\mathcal{B}$, $\Gamma$,
+$\mathcal{S}$ during each iteration (line 10). After the 4,000
+iterations, we fixed the values of $\mathcal{Z}$ and $\mathcal{L}$ and
+resampled the remaining variables for an additional 10,000,000
+iterations.
 
 \subsection{Analysis}
 Our model produces three key outputs that will be useful to an analysis of content specific patterns of gender mixing in communication. First, it infers a set of (in this case) 40 topics of communication for each county. These topics are distributions over words, and are commonly summarized by listing the words that are most frequently assigned to them. For example, a law enforcement topic might have the following top 10 words:
