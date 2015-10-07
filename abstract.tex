@@ -894,7 +894,13 @@ Before diving into this analysis, it will be useful to examine a few examples of
 
 We seek to construct a table similar to table \ref{tab:significant domain table}, but now we will relate rank-orderings of inferred gender-mixing parameters to words that appear most frequently in the topics associated with them. To do this, we first rank-order the mixing parameter estimates in each cluster, for each county. We then discard those cluster observations where we fail to reject the null hypothesis that all mixing parameters are equal. We then examine the topic top words from those clusters which display one of the six most prevalent rank orderings of gender mixing parameters, as determined by the total number of tokens assigned to all topics in all clusters associated with a particular rank ordering. Table~\ref{tab:top words for each pattern} displays the three topics which have the largest number of tokens assigned to them, from each of the clusters associated with each of the six most prevalent gender mixing parameter rank orderings. The patterns are displayed in descending order of the total number of tokens that we assigned to all topics associated with (from top left to bottom right, by rows). Note that in this analysis, we only make use of data from sixteen counties, as the email data from Caldwell county did not contain a sufficient number of tokens per email (after stopword filtering) to facilitate interpretation of model results.  
 
-The most frequently observed gendered communication pattern exhibits gender heterophily (FM $>$  MF $>$ FF $>$ MM), and includes topics that appear to be associated public safety and and planning. The second most frequently observed gendered communication pattern is male-centric (MM $>$ FM $>$ MF $>$ FF), and contains a numer of topics that appear to be associated with planning and meeting scheduling. Also of note, the two female centric rank orderings of gender mixing parameters (FF $>$ FM $>$ MF $>$ MM and FF $>$ MF $>$ FM $>$ MM) contain a number of topics which appear to be associated with finance and human resources respectively. We refrain from offering further analysis of these topics until we have applied a validation similar to that employed in \cite{grimmer2010bayesian}. 
+In addition to displaying the top words associated with each topic, we assigned a hand-coded label to each topic using the following procedure. First, for each topic (which is specific to a county) we calculated a weight for each email based on the representation of that topic in the email using the following weighting scheme.
+\begin{equation}
+	\omega_t^{(d)} = \frac{\left(N_t^{(d)}\right)^2}{N^{(d)}}
+\end{equation}
+In words, the weight we assign each document is equal to the proportion of tokens in that email that are assigned to the topic times the number of tokens assigned to the topic. This gives the highest weight to long emails that contain a high proportion of tokens assigned to the topic\footnote{We compared this approach to simply weighting documents based on the number of tokens assigned to the topic or the proportion of tokens assigned to the topic separately, and we found that it yields more interpretable emails.}. We then selected the ten highest weight emails and read them, before assigning a hand coded label to the topic.
+
+The most frequently observed gendered communication pattern exhibits gender heterophily (FM $>$  MF $>$ FF $>$ MM), and does not exhibit a systematic pattern in the topics associated with it. The second most frequently observed gendered communication pattern is male-centric (MM $>$ FM $>$ MF $>$ FF), and is associated high proportion of topics related to planning and public works projects than the other patterns. Perhaps most interestingly, the two female-centric rank orderings of gender mixing parameters (FF $>$ FM $>$ MF $>$ MM and FF $>$ MF $>$ FM $>$ MM) are both associated with a large number of topics related to finance and HR. The finance and HR departments are both primarily managed by women.
 
 
 
@@ -951,7 +957,7 @@ This work was supported by US National Science Foundation Grant CISE-1320219 (Ha
 	\vspace*{-.4in}
 \begin{table*}
 	\hspace*{-.7in}
-	\begin{tabular}{lm{.44\textwidth}|lm{.44\textwidth}}
+	\begin{tabular}{lm{.42\textwidth}|lm{.43\textwidth}}
 		\toprule
 		Coding & \multicolumn{1}{c}{FM $>$  MF $>$ FF $>$ MM} & Coding &  \multicolumn{1}{c}{MM $>$ FM $>$ MF $>$ FF}\\
 		  % & \\
