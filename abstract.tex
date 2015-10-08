@@ -235,9 +235,6 @@
 \usepackage{algpseudocode}
 
 
-
-
-
 %% OPTIONAL MACRO DEFINITIONS
 \def\s{\sigma}
 
@@ -417,6 +414,36 @@ significant variation across counties.
     of manager-to-manager emails sent.}
 \end{table}
 
+We also took a number of steps to prepare the text of these emails for analysis. We began by removing any quoted text using a series of heuristics and indicators provided by the email program which was used to create them (for example microsoft outlook email files share a common delineator for quoted text). We then ran the text of the emails through CoreNLP pipeline and named entity recognizer \cite{manningetal2014} to tokenize the text and remove any resulting tokens that were classified as person names, before removing a list of common and domain specific stopwords. We then preformed a series of validation experiments using the raw email data to verify that the final text we extracted accurately reflected the original email text\footnote{Our validation efforts indicate a 100 percent agreement between human coding of our emails and automated text extraction. A separate technical report detailing these efforts is available upon request.}. Descriptive statistics detailing the number of unique words and total number of tokens in each county email corpus (after preprocessing) is provided in table \ref{tab:corpus desc stats}.  
+
+
+\begin{table}
+\centering
+\begin{tabular}{rrrr}
+  \toprule
+ & \# Emails & \# Unique Words & \# Tokens  \\ 
+  \midrule
+Alexander & 907 & 1595 & 15437 \\ 
+  Caldwell & 121 & 94 & 2870 \\ 
+  Chowan & 2027 & 3038 & 39635  \\ 
+  Columbus & 920 & 1326 & 13763  \\ 
+  Dare & 2247 & 2907 & 38174  \\ 
+  Duplin & 1914 & 2380 & 83162  \\ 
+  Hoke & 1106 & 1397 & 19409 \\ 
+  Jackson & 1499 & 2493 & 34290  \\ 
+  Lenoir & 560 & 1340 & 19780  \\ 
+  Lincoln & 573 & 1458 & 13754  \\ 
+  McDowell & 326 & 1178 & 8863 \\ 
+  Montgomery & 679 & 1137 & 11166  \\ 
+  Nash & 1147 & 2214 & 31629  \\ 
+  Person & 1491 & 2618 & 29153  \\
+  Transylvania & 1857 & 3157 & 57431  \\ 
+  Vance & 185 & 620 & 4070  \\ 
+  Wilkes & 303 & 510 & 5594  \\
+   \bottomrule
+\end{tabular}
+\caption{\label{tab:corpus desc stats} County email corpus descriptive statistics.}
+\end{table}
 
 
 \section{Descriptive Analysis}
@@ -850,7 +877,7 @@ iterations.
 
 \subsection{Analysis}
 Denny et al.'s model produces three key outputs that will be useful to an analysis of content specific patterns of gender mixing in communication. First, it infers a set of 40 topics of communication for each county. These topics are distributions over words, and are commonly summarized by listing the words that are most frequently assigned to them. For example, a law enforcement topic might have the following top 10 words:
-￼\emph{safety, police, law, training, jail, enforcement, local, firearm, crime, corrections}. Denny et al.'s model also associates each topic with one of 4 clusters, based on a common pattern of communication. Finally, a set of gender mixing parameters is inferred for each cluster. Therefore, we can use the mixing parameter estimates and associated topic top-words inferred by the model as ingredients in an analysis that is similar to the one presented in the previous section.
+￼\emph{safety, police, law, training, jail, enforcement, local, firearm, crime, corrections}. Denny et al.'s model also associates each topic with one of 4 clusters, based on a common communication pattern. Finally, a set of gender mixing parameters is inferred for each communication pattern. Therefore, we can use the mixing parameter estimates and associated topic top-words inferred by the model as ingredients in an analysis that is similar to the one presented in the previous section.
 
 Before diving into this analysis, it will be useful to examine a few examples of model output. Our data collection window happend to overlap with Hurricane Sandy (October, 2013), and one of the counties in our sample (Dare county) is located on the coast, so we might expect there to be some hurricane related topics in our model output. As illustrated in figure \ref{tab: dare 3 mp}, our model infers a topic-cluster where some of the topic top-words seem to be associated with Hurricane Sandy. We can see from the mixing parameter plot that this topic-cluster is strongly male-centric. This would make sense if this is a communication pattern related to the hurricane, given that the emergency managers and county manager are all male in this county. In contrast to the above example, other topic-clusters display no discernable gender bias. This is well illustrated by the topic-cluster presented in figure \ref{tab: hoke 3 mp} from Hoke county.
 
@@ -898,7 +925,7 @@ In addition to displaying the top words associated with each topic, we assigned 
 \begin{equation}
 	\omega_t^{(d)} = \frac{\left(N_t^{(d)}\right)^2}{N^{(d)}}
 \end{equation}
-In words, the weight we assign each document is equal to the proportion of tokens in that email that are assigned to the topic times the number of tokens assigned to the topic. This gives the highest weight to long emails that contain a high proportion of tokens assigned to the topic\footnote{We compared this approach to simply weighting documents based on the number of tokens assigned to the topic or the proportion of tokens assigned to the topic separately, and we found that it yields more interpretable emails.}. We then selected the ten highest weight emails and read them, before assigning a hand coded label to the topic.
+In words, the weight we assign each document is equal to the proportion of tokens in that email that are assigned to the topic times the number of tokens assigned to the topic. This gives the highest weight to long emails that contain a high proportion of tokens assigned to the topic\footnote{We compared this approach to simply weighting documents based on the number of tokens assigned to the topic or the proportion of tokens assigned to the topic separately, and we found that it yields more interpretable emails.}. We then selected the ten highest weight emails and read them, before assigning a hand coded label to the topic. This hand coding was performed by one member of our team, and a label was selected using the following criterion: the coder selected a word or phrase that best summarized the common thread between the emails, unless no common thread was detected, in which case the topic was labeled as a junk topic. In practice, these labels most often reflect what we have termed a domain of communication. For example, the ten emails associated with a topic labeled "finance" might all involve other department managers emailing back and forth with the finance manager to ask them about the proper procedures for purchasing supplies. Alternatively, they might involve the finance department manager emailing with other department managers to clarify budget items and their expectations for their funding needs in the coming fiscal year. A small proportion of topics were associated with emails about some particular event, like managers emailing each other to see if they were all safe after hurricane sandy, that did not specifically relate to an organizational function. 
 
 The most frequently observed gendered communication pattern exhibits gender heterophily (FM $>$  MF $>$ FF $>$ MM), and does not exhibit a systematic pattern in the topics associated with it. The second most frequently observed gendered communication pattern is male-centric (MM $>$ FM $>$ MF $>$ FF), and is associated high proportion of topics related to planning and public works projects than the other patterns. Perhaps most interestingly, the two female-centric rank orderings of gender mixing parameters (FF $>$ FM $>$ MF $>$ MM and FF $>$ MF $>$ FM $>$ MM) are both associated with a large proportion of topics related to finance and HR. Recent findings by Dasgupta et al. \cite{Dasgupta2015} suggest we should expect more female-centric interaction patterns in domains with greater representation of women, and the finance and HR departments are both primarily managed by women. Thus our results seem to agree with this finding.
 
