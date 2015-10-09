@@ -888,24 +888,24 @@ iterations.
 Denny et al.'s model produces three key outputs that will be useful to an analysis of content specific patterns of gender mixing in communication. First, it infers a set of forty topics of communication for each county. These topics are distributions over words, and are commonly summarized by listing the words that have the highest posterior probability of being assigned to that topic. For example, a law enforcement topic might have the following top ten words:
 ￼\emph{safety, police, law, training, jail, enforcement, local, firearm, crime, corrections}. Denny et al.'s model also associates each topic with one of four interaction patterns. Finally, a set of gender mixing parameters is inferred for each interaction pattern. Therefore, we can use the mixing parameter estimates and associated topic top-words inferred by the model as ingredients in an analysis that is similar to our analysis using department as a proxy for the domain of communication.
 
-Before diving into this analysis, we provide a few examples of model output. Our data collection window happend to overlap with Hurricane Sandy (October, 2013), and one of the counties in our sample (Dare county) is located on the coast, so we might expect there to be some hurricane related topics in our model output. As illustrated in figure \ref{tab: dare 3 mp}, our model infers an interaction pattern where some of the associated topics are related to Hurricane Sandy. We can see from the mixing parameter plot that this interaction pattern is strongly male-centric. This would make sense if this is a communication pattern related to the hurricane, given that the emergency managers and county manager in Dare county are all male. In contrast to the above example, other interaction patterns display no discernable gender bias. This is well illustrated by the interaction pattern presented in figure \ref{tab: hoke 3 mp} from Hoke county.
+Before diving into this analysis, we provide a few examples of model output. Our data collection window happend to overlap with Hurricane Sandy (October, 2013), and one of the counties in our sample (Dare county) is located on the coast, so we might expect there to be some hurricane related topics in our model output. As illustrated in figure \ref{tab: dare 3 mp}, our model infers an interaction pattern where a number of the associated topics are related to Hurricane Sandy. We can see from the mixing parameter plot that this interaction pattern is strongly male-centric. This makes sense, given that the emergency managers and county manager in Dare county are all male. In contrast to the above example, other interaction patterns display no discernable gender bias. This is well illustrated by the interaction pattern presented in figure \ref{tab: hoke 3 mp} from Hoke county.
 
 \begin{figure}
 	\centering
 	\includegraphics[width = .37\textwidth]{./images/Dare_3_MP.png}
-	\begin{tabular}{m{.47\textwidth}}
+	\begin{tabular}{l m{.36\textwidth}}
 	\toprule
-	Topic top words\\
+	Coding & Topic top words\\
 	\midrule
-	will, track, winds, system, forecast, atlantic, east\\ 
-	storm, sandy, high, coastal, tides, night, hurricane\\ 
-	status, update, boat, today, weather, people, ago\\ 
-	board, meeting, planning, seafood, will, hearing, public\\ 
-	box, planning, director, manteo, permit, building, collector\\ 
+	\textbf{Sandy} & will, track, winds, system, forecast\\ 
+	\textbf{Sandy} & storm, sandy, high, coastal, tides, night\\ 
+	\textbf{Harbor} & status, update, boat, today, weather\\ 
+	\textbf{Planning} & board, meeting, planning, seafood, hearing\\ 
+	\textbf{Storm} & box, planning, director,  permit, building \\ 
 	\bottomrule
 
 	\end{tabular}
-	\caption{\label{tab: dare 3 mp} Mixing parameter estimates and topic top words for the selected topic-cluster in Dare county. Topics are presented (one per line) in decreasing order of use within the topic-cluster, as are words within each topic.}
+	\caption{\label{tab: dare 3 mp} Mixing parameter estimates and topic top words for the hurricane related interaction pattern in Dare county. Topics are presented (one per line) in decreasing order of use within the interaction pattern, as are words within each topic. The hand coding procedure is discussed below.}
 \end{figure}
 
 
@@ -913,19 +913,19 @@ Before diving into this analysis, we provide a few examples of model output. Our
 \begin{figure}
 	\centering
 	\includegraphics[width = .37\textwidth]{./images/Hoke_3_MP.png}
-	\begin{tabular}{m{.47\textwidth}}
+	\begin{tabular}{l m{.32\textwidth}}
 	\toprule
-	Topic top words\\
+	Coding & Topic top words\\
 	\midrule
-	junk, box, summary, emails, will, login, email\\ 
-	description, cell, director, works, public, fax,  office\\ 
-	pharmacist, good, will, send, morning, schedule, day\\ 
-	director, communications, emergency, central, status, check\\ 
-	box, director, fax, work, address, will, payroll\\ 
+	\textbf{IT} & junk, box, summary, emails,  login\\ 
+	\textbf{Public Works} & description, cell, director, works, public\\ 
+	\textbf{Health} & pharmacist, good, morning, schedule\\ 
+	\textbf{Emergency} &  communications, emergency, status\\ 
+	\textbf{HR} & box, director, fax, work, address,  payroll\\ 
 	\bottomrule
 
 	\end{tabular}
-	\caption{\label{tab: hoke 3 mp} Mixing parameter estimates and topic top words for the selected topic-cluster in Dare county. Topics are presented (one per line) in decreasing order of use within the topic-cluster, as are words within each topic.}
+	\caption{\label{tab: hoke 3 mp} Mixing parameter estimates and topic top words for the selected interaction pattern in Dare county. Topics are presented (one per line) in decreasing order of use within the interaction pattern, as are words within each topic. The hand coding procedure is discussed below.}
 \end{figure}
 
 For our analysis, we seek to construct a table similar to table \ref{tab:significant domain table}, but now we relate rank-orderings of inferred gender-mixing parameters to topics associated with them. To do this, we first rank-order the mixing parameter estimates in each interaction pattern, for each county. We then discard those interaction pattern observations where we fail to reject the null hypothesis that all mixing parameters are equal. We then examine the topics from those interaction pattern which display one of the six most prevalent rank orderings of gender mixing parameters, as determined by the total number of tokens assigned to all topics in all interaction patterns associated with a particular rank ordering. Table~\ref{tab:top words for each pattern} displays the three topics which have the largest number of tokens assigned to them, from each of the interaction patterns associated with each of the six most prevalent gender mixing parameter rank orderings. The gender mixing patterns are displayed in descending order of the total number of tokens that were assigned to all topics associated with them (from top left to bottom right, by rows). Note that in this analysis, we only make use of data from sixteen counties, as the email data from Caldwell county did not contain a sufficient number of tokens per email (after preprocessing) to facilitate interpretation of model results.  
