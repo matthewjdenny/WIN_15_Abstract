@@ -275,12 +275,17 @@ homophily and others exhibiting heterophily. Finally, to
 determine the extent to which these patterns are driven by
 communication content, we use a recently developed latent
 variable model to identify topic-specific communication
-subnetworks for each county. We find differing degrees of gender
-homophily and heterophily for different topics of
-communication. From a policy perspective, these findings suggest
-that a gender-equitable working environment cannot be created by
-hiring decisions alone, as gender bias in communication still
-exists independent of the positions held by men and women. 
+subnetworks for each county. Using both approaches, we find 
+robust patterns in terms of how interaction depends upon gender 
+across discussion domains. Our results agree with recent findings 
+in the literature indicating that females are more active in 
+small groups when the groups are majority female.
+% We find differing degrees of gender
+% homophily and heterophily for different topics of
+% communication. From a policy perspective, these findings suggest
+% that a gender-equitable working environment cannot be created by
+% hiring decisions alone, as gender bias in communication still
+% exists independent of the positions held by men and women.
 
 \begin{center}
 Draft results may change, please contact authors before citing.
@@ -342,7 +347,7 @@ are driven by communication content rather than other factors
 correlated with managers' departments, we use a recently developed
 latent variable model to identify topic-specific communication
 subnetworks for each county. We find differing degrees of gender
-homophily and heterophily for different topics of communication.
+homophily and heterophily for different topics of communication. 
 
 
 \section{Data}
@@ -354,7 +359,7 @@ our email data set, we issued public records requests to the one
 hundred North Carolina county governments. Our request to each county
 covered all emails sent and received by the department managers (e.g.,
 health, finance, and elections) over a randomly selected period of
-three months between January and October in 2013. Twenty-three
+three months in 2013. Twenty-three
 counties complied with our request, of which seventeen provided
 sufficient data for our analyses in an electronic
 format. Figure~\ref{fig:nc map} indicates the seventeen
@@ -414,7 +419,7 @@ significant variation across counties.
     of manager-to-manager emails sent.}
 \end{table}
 
-We also took a number of steps to prepare the text of these emails for analysis. We began by removing any quoted text using a series of heuristics and indicators provided by the email program which was used to create them (for example microsoft outlook email files share a common delineator for quoted text). We then ran the text of the emails through CoreNLP pipeline and named entity recognizer \cite{manningetal2014} to tokenize the text and remove any resulting tokens that were classified as person names, before removing a list of common and domain specific stopwords. We then preformed a series of validation experiments using the raw email data to verify that the final text we extracted accurately reflected the original email text\footnote{Our validation efforts indicate a 100 percent agreement between human coding of our emails and automated text extraction. A separate technical report detailing these efforts is available upon request.}. Descriptive statistics detailing the number of unique words and total number of tokens in each county email corpus (after preprocessing) is provided in table \ref{tab:corpus desc stats}.  
+We also took a number of steps to prepare the text of these emails for analysis. We began by removing any quoted text using a series of heuristics and indicators provided by the email program which was used to create them (for example microsoft outlook email files share a common delineator for quoted text). We then ran the text of the emails through the Stanford CoreNLP text processing libraries \cite{manningetal2014} and named entity recognizer \cite{finkeletall2005} to tokenize the text and remove any resulting tokens that were classified as the name of a person, before removing a list of common and domain specific stopwords. We then preformed a series of validation experiments using the raw email data to verify that the final text we extracted accurately reflected the original email text\footnote{Our validation experiments indicate a 100 percent agreement between human coding of our emails and our automated text extraction approach. A separate technical report detailing these efforts is available upon request.}. Descriptive statistics detailing the number of unique words and total number of tokens in each county email corpus (after preprocessing) is provided in table \ref{tab:corpus desc stats}.  
 
 
 \begin{table}
@@ -442,7 +447,7 @@ Alexander & 907 & 1595 & 15437 \\
   Wilkes & 303 & 510 & 5594  \\
    \bottomrule
 \end{tabular}
-\caption{\label{tab:corpus desc stats} County email corpus descriptive statistics.}
+\caption{\label{tab:corpus desc stats} County email corpus descriptive statistics. The number of tokens is the sum of all tokens (after filtering) in all emails.}
 \end{table}
 
 
@@ -468,7 +473,7 @@ We begin our analysis of the relationship between a department manager's gender 
     statistics.}
 \end{table}
 
-To test whether the gender of an email sender is related to the gender of its recipients, in aggregate, we construct a contingency table of email sending and receiving by gender (see table \ref{tab:gender email agg stats}). We then perform a $\chi^2$ test for independence between the rows and columns. The $\chi^2$ test statistic we obtain indicates that the gender of an email sender and its recipients is not independent $(\chi^2 = 6.4, p = 0.011)$. However, inspection of the contingency table indicates that the test statistic is actually driven by mild gender heterophily in communication. Furthermore, the gender differences we observe are substantively quite small, as both male and female department managers send emails to recipients of each gender in rough proportion to their overall representation in the sample (60\% to men, 40\% to women). For the rest of the paper, we use the term \emph{gendered} to refer to patterns of communication where we observe statistically significant variation between the propensity for men to send emails to men, men to send emails to women, women to send emails to men, and women to send emails to women.   
+To test whether the gender of an email sender is related to the gender of its recipients, in aggregate, we construct a contingency table of email sending and receiving by gender (see table \ref{tab:gender email agg stats}). We then perform a $\chi^2$ test for independence between the rows and columns. The $\chi^2$ test statistic we obtain indicates that the gender of an email sender and its recipients is not independent $(\chi^2 = 6.4, p = 0.011)$. However, inspection of the contingency table indicates that the test statistic is actually driven by mild gender heterophily in communication. Furthermore, the gender differences we observe are substantively quite small, as both male and female department managers send emails to recipients of each gender in rough proportion to their overall representation in the sample (60\% to men, 40\% to women).    
 	
 	% make this a contingency table and do a chi squared test
 	\begin{table}
@@ -489,9 +494,10 @@ To test whether the gender of an email sender is related to the gender of its re
 	\end{table}
 
 \subsection{Domain-Dependent Gendered Communication}
-Within large organizations that perform heterogeneous functions, it is of little value to ask whether communication is gender biased in the aggregate. Broad patterns may be dominated by personal communications or mundane professional interactions that are inconsequential to the direction of the organization or the careers of employees. Examining domain specific patterns of communication will build upon limited existing findings, which indicate that gendering patterns depend upon the domain or context of communication. For example, Brass \citep{Brass1985} finds a higher degree of male-male homophily in communication network domains that deal with long range strategic planning. We should also expect female managers to be relatively more likely to send heterophilous ties in communication network content partitions that deal with short and medium term coordination and planning, as research has found that female managers tend to preferentially communicate through formal channels  \citep{Ragins1989} and favor gender-heterophilous instrumental connections \citep{Ibarra1992}. The scope and scale of our data present an unprecedented opportunity for understanding whether and how gendering patterns vary with the domain of communication.
+Within large organizations that perform heterogeneous functions, it is of little value to ask whether communication is gender biased in the aggregate. Broad patterns may be dominated by personal communications or mundane professional interactions that are inconsequential to the direction of the organization or the careers of employees. Examining domain specific patterns of communication will build upon limited existing findings, which indicate that gendering\footnote{For the rest of the paper, we use the term \emph{gendered} to refer to patterns of communication where we observe statistically significant variation between the propensity for men to send emails to men, men to send emails to women, women to send emails to men, and women to send emails to women.} patterns depend upon the domain or context of communication. For example, Brass \citep{Brass1985} finds a higher degree of male-male homophily in communication network content partitions that deal with long range strategic planning. We should also expect female managers to be relatively more likely to send heterophilous ties in communication network content partitions that deal with short and medium term coordination and planning, as research has found that female managers tend to preferentially communicate through formal channels  \citep{Ragins1989} and favor gender-heterophilous instrumental connections \citep{Ibarra1992}. The scope and scale of our data present an unprecedented opportunity for understanding whether and how gendering patterns vary with the domain of communication.
 
-We take a two-pronged approach to understanding how the gendering of communication varies with the domain of communication within local government organizations. Our two empirical analyses are complimentary along two dimensions: (1) the use of within versus across-county variation; and (2) the operationalization of domain through email content versus the department affiliations of the managers. Going forward we use the term ``domain'' to refer to an organizational function with which a communication instance is concerned (e.g., long-range strategic planning, human resource management, public relations). A single communication instance may be concerned with more than one domain. For example, a discussion thread concerned with composing a job advertisement may involve both the human resource management and public relations domains. Furthermore, individuals may use the same language to discuss different domains. For example, one employee may commend another on the results of a project, exclaiming that the project leader deserves a promotion. Such a communication may concern human resource management, but it may be a show of enthusiasm concerning the domain with which the project is concerned, and have no real bearing on personnel decisions. Given the importance of domain in understanding the structure of organizational communication networks, and the ambiguities that arise in measuring the domain of communication, we take a two-pronged empirical approach to the analysis of domain-dependent communication patterns.
+% We take a two-pronged approach to understanding how the gendering of communication varies with the domain of communication within local government organizations. Our two empirical analyses are complimentary along two dimensions: (1) the use of within versus across-county variation; and (2) the operationalization of domain through email content versus the department affiliations of the managers.
+Going forward we use the term ``domain'' to refer to an organizational function with which a communication instance is concerned (e.g., long-range strategic planning, human resource management, public relations). A single communication instance may be concerned with more than one domain. For example, a discussion thread concerned with composing a job advertisement may involve both the human resource management and public relations domains. Furthermore, individuals may use the same language to discuss different domains. For example, one employee may commend another on the results of a project, exclaiming that the project leader deserves a promotion. Such a communication may concern human resource management, but it may be a show of enthusiasm concerning the domain with which the project is concerned, and have no real bearing on personnel decisions. Given the importance of domain in understanding the structure of organizational communication networks, and the ambiguities that arise in measuring the domain of communication, we take a two-pronged empirical approach to the analysis of domain-dependent communication patterns. Our two empirical analyses are complimentary along two dimensions: (1) the use of within versus across-county variation; and (2) the operationalization of domain through email content versus the department affiliations of the managers.
 
 
 \section{Department Affiliation as Domain}
@@ -931,7 +937,7 @@ The most frequently observed gendered communication pattern exhibits gender hete
 
 \section{Conclusion}
 
-Interactions between employees of an organization represent the building blocks of fundamental processes that drive employee and organizational performance, such as leadership, collaboration, and competition. Communication is a ubiquitous form of intra-organizational interaction. In the current paper we study electronic communication within local government organizations, with the goal of identifying domain-specific patterns of gender-dependent interaction. Using internal e-mail corpora covering department managers in fifteen North Carolina counties, we find that the specific forms of gender dependence vary widely across domains. Using two distinct analytical approaches, we find robust patterns in terms of how interaction depends upon gender across domains. Specifically, in communications relevant to finance and human resources, we find female-centric interaction patterns, in which both males and females are more likely to direct their communications to females than to males. Given that the finance and HR department managers in our sample are overwhelmingly female, our results agree with recent findings in the literature indicating that females are more active in small groups when the groups are majority female. 
+Interactions between employees of an organization represent the building blocks of fundamental processes that drive employee and organizational performance, such as leadership, collaboration, and competition. Communication is a ubiquitous form of intra-organizational interaction. In the current paper we study electronic communication within local government organizations, with the goal of identifying domain-specific patterns of gender-dependent interaction. Using internal e-mail corpora covering department managers in seventeen North Carolina counties, we find that the specific forms of gender dependence vary widely across domains. Using two distinct analytical approaches, we find robust patterns in terms of how interaction depends upon gender across domains. Specifically, in communications relevant to finance and human resources, we find female-centric interaction patterns, in which both males and females are more likely to direct their communications to females than to males. Given that the finance and HR department managers in our sample are overwhelmingly female, our results agree with recent findings in the literature indicating that females are more active in small groups when the groups are majority female. 
 
 
 % \begin{table*}
