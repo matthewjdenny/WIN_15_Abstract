@@ -1,4 +1,4 @@
-\documentclass[xcolor={table}]{beamer}
+\documentclass[xcolor={table}, fleqn]{beamer}
 %\usetheme{singapore}
 \usepackage{bm}
 \usepackage{listings,verbatim}
@@ -134,11 +134,9 @@
 \end{frame}
 
 
-\begin{frame}\frametitle{The Data}
+\begin{frame}[plain]
 	\Large
-\begin{changemargin}{-1cm}{ -1cm}	
-	  \centering
-	  \vspace*{-.3in}
+\begin{changemargin}{-1cm}{ -1cm}		  
 	  \centering
 	  \begin{tabular}{lrrrr}
 	    \toprule
@@ -151,7 +149,7 @@
 	    Chowan & 12 & 11 & 2,027   \\
 	    Columbus & 14 & 10 & 920   \\
 	    Dare & 15 & 12 & 2,247    \\
-	    Duplin & 13 & 14 & 1,914    \\
+	    %Duplin & 13 & 14 & 1,914    \\
 	    % Hoke & 13 & 11 & 1,106  \\
   % 	    Jackson & 18 & 6 & 1,499    \\
 		\vdots & \vdots & \vdots & \vdots \\
@@ -203,6 +201,7 @@
 	\Large
 	
 	
+	\LARGE
 	\begin{itemize}
 		\item Mild gender-heterophily.
 	\end{itemize}
@@ -257,6 +256,25 @@
 	\cellcolor{female} Female dominated positions 
 \end{tabular}
 \end{changemargin} 
+\end{frame}
+
+
+\begin{frame}\frametitle{Department-Dyad Regression Analysis}
+	\LARGE
+	\begin{itemize}
+		\item Model department interaction.
+		\vspace*{.3in}
+		\item Base Model: Single Intercept
+		\vspace*{.3in}
+		\item Gender Model: Separate intercepts
+		\vspace*{.15in}
+		\begin{itemize}
+			\LARGE
+			\item MM, MF, FM, FF
+		\end{itemize}
+		\vspace*{.15in}
+		\item Likelihood-Ratio Test.
+	\end{itemize}
 \end{frame}
 
 
@@ -321,7 +339,30 @@
 \begin{frame}\frametitle{A Generative Model for Email Data}
 	\begin{changemargin}{-1cm}{ -1cm}
     \centering
-	\includegraphics[width=0.98\textwidth]{images/Generative_Process.png}
+	\includegraphics[width=0.98\textwidth]{images/Gen_Proc_1.png}
+	\end{changemargin} 
+\end{frame}
+
+
+\begin{frame}\frametitle{A Generative Model for Email Data}
+	\begin{changemargin}{-1cm}{ -1cm}
+    \centering
+	\includegraphics[width=0.98\textwidth]{images/Gen_Proc_1a.png}
+	\end{changemargin} 
+\end{frame}
+
+\begin{frame}\frametitle{A Generative Model for Email Data}
+	\begin{changemargin}{-1cm}{ -1cm}
+    \centering
+	\includegraphics[width=0.98\textwidth]{images/Gen_Proc_2.png}
+	\end{changemargin} 
+\end{frame}
+
+
+\begin{frame}\frametitle{A Generative Model for Email Data}
+	\begin{changemargin}{-1cm}{ -1cm}
+    \centering
+	\includegraphics[width=0.98\textwidth]{images/Gen_Proc_3.png}
 	\end{changemargin} 
 \end{frame}
 
@@ -477,9 +518,9 @@
 	\begin{itemize}
 		\item Locus of control. 
 		\vspace*{.3in}
-		\item Direction of causality.
+		\item Direction of causality?
 		\vspace*{.3in}
-		\item Interventions to improve gender mixing. 
+		\item Other hypotheses about domain? 
 		\vspace*{.3in}
 		\item Cross-organization communication.
 	\end{itemize}
