@@ -4,7 +4,8 @@
 \usepackage{listings,verbatim}
 \usepackage{fancyvrb,tikz,color,xcolor,colortbl}
 \usepackage{hyperref,booktabs,tabularx,float}
-\usepackage{multirow}
+\usepackage{multirow,soul}
+\newcommand{\hlc}[2][yellow]{{\sethlcolor{#1} \hl{#2}}}
 %\usepackage[table]{xcolor}
 %\usepackage{verbatim}
 % \usepackage{array}
@@ -14,8 +15,10 @@
 %\newcommand{\bG}{\pmb{\Gamma}}
 \newcommand{\p}{\pause}
 \definecolor{Grey}{rgb}{0.95,0.95,0.95}
-\definecolor{lred}{rgb}{1,.8,.8}
-\definecolor{lblue}{rgb}{.8,.8,1}
+\definecolor{male}{rgb}{1,.8,1}
+\definecolor{female}{rgb}{.8,1,.8}
+\newcommand{\male}[1]{\colorbox{male}{#1}}
+\newcommand{\female}[1]{\colorbox{female}{#1}}
 \newcommand{\pitem}{\pause \item}
 \newenvironment{graytext}{\color{gray}}{\ignorespacesafterend}
 
@@ -172,7 +175,7 @@
 
 \begin{frame}\frametitle{}
 	\begin{center}
-		\Huge\textbf{Descriptive Analysis}
+		\Huge\textbf{Aggregate Analysis}
 	\end{center}
 \end{frame}
 
@@ -201,8 +204,6 @@
 	
 	
 	\begin{itemize}
-		\item No evidence for gender bias in aggregate.
-		\vspace*{.1in}
 		\item Mild gender-heterophily.
 	\end{itemize}
 	
@@ -222,6 +223,14 @@
 \end{frame}
 
 
+
+
+\begin{frame}\frametitle{}
+	\begin{center}
+		\Huge\textbf{Department Affiliation as Domain}
+	\end{center}
+\end{frame}
+
 \begin{frame}\frametitle{Individual Department Gender Breakdown}
 	
 	\begin{changemargin}{-1cm}{ -1cm}
@@ -231,12 +240,12 @@
 	  \begin{tabular}{rrrrrrrrrrrrrrrrrrrrrrrr}
 	    \toprule
 	
-		   & \cellcolor{lred} \rotatebox{90}{Emergency} & \cellcolor{lred}\rotatebox{90}{Manager} & \cellcolor{lblue}\rotatebox{90}{HR} & \cellcolor{lblue}\rotatebox{90}{Finance} & \rotatebox{90}{IT} & \cellcolor{lblue}\rotatebox{90}{Health} & \rotatebox{90}{Plan/Dev} & \cellcolor{lred}\rotatebox{90}{Util/Waste} & \rotatebox{90}{Tax} & \rotatebox{90}{Parks/Rec} & \rotatebox{90}{Soc\_Serv} & \rotatebox{90}{Transport} & \rotatebox{90}{Info} & \rotatebox{90}{Misc} & \rotatebox{90}{Inspections} \\ % & \rotatebox{90}{Maintenance} & \rotatebox{90}{Library} & \rotatebox{90}{Veterans} & \rotatebox{90}{Seniors} & \rotatebox{90}{Animal}  \\ 
+		   & \cellcolor{male} \rotatebox{90}{Emergency} & \cellcolor{male}\rotatebox{90}{Manager} & \cellcolor{female}\rotatebox{90}{HR} & \cellcolor{female}\rotatebox{90}{Finance} & \cellcolor{male}\rotatebox{90}{IT} & \rotatebox{90}{Health} & \cellcolor{male}\rotatebox{90}{Plan/Dev} & \cellcolor{male}\rotatebox{90}{Util/Waste} & \rotatebox{90}{Tax} & \rotatebox{90}{Parks/Rec} & \rotatebox{90}{Soc\_Serv} & \cellcolor{male}\rotatebox{90}{Transport} & \cellcolor{female}\rotatebox{90}{Info} & \cellcolor{male}\rotatebox{90}{Misc} & \cellcolor{male}\rotatebox{90}{Inspections} \\ % & \rotatebox{90}{Maintenance} & \rotatebox{90}{Library} & \rotatebox{90}{Veterans} & \rotatebox{90}{Seniors} & \rotatebox{90}{Animal}  \\ 
 		     \midrule
-		   Male & \cellcolor{lred}29 & \cellcolor{lred}15 & \cellcolor{lblue}3 & \cellcolor{lblue}5 & 11 & \cellcolor{lblue}6 & 17 & \cellcolor{lred}15 & 11 & 9 & 8 & 8 & 2 & 5 & 13 \\  %& 5 & 3 & 5 & 2 & 9  \\ 
-		     Female & \cellcolor{lred}3 & \cellcolor{lred}2 & \cellcolor{lblue}12 & \cellcolor{lblue}12 & 2 & \cellcolor{lblue}11 & 6 & \cellcolor{lred}2 & 7 & 5 & 10 & 1 & 6 & 2 & 3 \\% & 1 & 8 & 7 & 6 & 3  \\ 
+		   Male & \cellcolor{male}29 & \cellcolor{male}15 & \cellcolor{female}3 & \cellcolor{female}5 & \cellcolor{male}11 & 6 & \cellcolor{male}17 & \cellcolor{male}15 & 11 & 9 & 8 & \cellcolor{male}8 & \cellcolor{female}2 & \cellcolor{male}5 & \cellcolor{male}13 \\  %& 5 & 3 & 5 & 2 & 9  \\ 
+		     Female & \cellcolor{male}3 & \cellcolor{male}2 & \cellcolor{female}12 & \cellcolor{female}12 & \cellcolor{male}2 & 11 & \cellcolor{male}6 & \cellcolor{male}2 & 7 & 5 & 10 & \cellcolor{male}1 & \cellcolor{female}6 & \cellcolor{male}2 & \cellcolor{male}3 \\% & 1 & 8 & 7 & 6 & 3  \\ 
 			 \midrule
-		     Total & \cellcolor{lred}32 & \cellcolor{lred}17 & \cellcolor{lblue}15 & \cellcolor{lblue}17 & 13 & \cellcolor{lblue}17 & 23 & \cellcolor{lred}17 & 18 & 14 & 18 & 9 & 8 & 7 & 16 \\ %& 6 & 11 & 12 & 8 & 12 \\
+		     Total & \cellcolor{male}32 & \cellcolor{male}17 & \cellcolor{female}15 & \cellcolor{female}17 & \cellcolor{male}13 & 17 & \cellcolor{male}23 & \cellcolor{male}17 & 18 & 14 & 18 & \cellcolor{male}9 & \cellcolor{female}8 & \cellcolor{male}7 & \cellcolor{male}16 \\ %& 6 & 11 & 12 & 8 & 12 \\
 	    \bottomrule
 	    \end{tabular}
 	\setlength{\tabcolsep}{6pt}
@@ -244,16 +253,10 @@
 \bigskip
 
 \begin{tabular}{l}
-	\cellcolor{lred} Male dominated positions\\
-	\cellcolor{lblue} Female dominated positions 
+	\cellcolor{male} Male dominated positions\\
+	\cellcolor{female} Female dominated positions 
 \end{tabular}
 \end{changemargin} 
-\end{frame}
-
-\begin{frame}\frametitle{}
-	\begin{center}
-		\Huge\textbf{Department Affiliation as Domain}
-	\end{center}
 \end{frame}
 
 
@@ -264,17 +267,17 @@
 	  \toprule
 	FF $>$ FM $>$ MF $>$ MM  \\
 	\hline
-	  HR \& Health  \\ 
-	  HR \& Information Technology  \\ 
-	  HR \& County Manager  \\ 
-	  Planning \& HR \\ 
-	  Register of Deeds \& HR  \\ 
-	  Parks and Recreation \& HR  \\ 
-	  Finance \& HR  \\ 
-	  Finance \& Parks and Recreation  \\ 
-	  Social Services \& HR  \\ 
-	  Solid Waste and Recycling \& HR  \\ 
-	  Tax Administrator \& HR  \\ 
+	  \female{HR} \& Health  \\ 
+	  \female{HR} \& \male{Information Technology}  \\ 
+	  \female{HR} \& \male{County Manager}  \\ 
+	  \male{Planning} \& \female{HR} \\ 
+	  Register of Deeds \& \female{HR}  \\ 
+	  Parks and Recreation \& \female{HR}  \\ 
+	  \female{Finance} \& \female{HR}  \\ 
+	  \female{Finance} \& Parks and Recreation  \\ 
+	  Social Services \& \female{HR}  \\ 
+	  \male{Solid Waste and Recycling} \& \female{HR}  \\ 
+	  Tax Administrator \& \female{HR}  \\ 
 	   \bottomrule
 	\end{tabular}
 	
@@ -291,15 +294,15 @@
 	  \toprule
 	  MM $>$ FM $>$ MF $>$ FF \\ 
 	  \midrule
-	  Planning \& Information Technology \\ 
-	  Solid Waste and Recycling \& Health \\ 
-	  Sheriff \& Health  \\ 
-	  Tax Administrator \& Planning  \\ 
+	  \male{Planning} \& \male{Information Technology} \\ 
+	  \male{Solid Waste and Recycling} \& Health \\ 
+	  \male{Sheriff} \& Health  \\ 
+	  Tax Administrator \& \male{Planning}  \\ 
 	  Tax Administrator \& Social Services  \\ 
-	  Inspections \& Tax Administrator  \\ 
-	  Animal Control \& Finance   \\ 
-	  Environment \& Health  \\ 
-	  Environment \& Solid Waste and Recycling  \\  
+	  \male{Inspections} \& Tax Administrator  \\ 
+	  \male{Animal Control} \& \female{Finance}   \\ 
+	  \male{Environment} \& Health  \\ 
+	  \male{Environment} \& \male{Solid Waste and Recycling}  \\  
 	   \bottomrule
 	\end{tabular}
 	
@@ -322,18 +325,36 @@
 	\end{changemargin} 
 \end{frame}
 
-\begin{frame}\frametitle{Inference}
+\begin{frame}\frametitle{Specification and Methods}
 	\LARGE
 	\begin{itemize}
-		\item Metropolis within Gibbs sampling.
-		\vspace*{.3in}
+		\item Bayesian inference via MCMC.
+		\vspace*{.4in}
 		\item Separate model for each county.
-		\vspace*{.3in}
+		\vspace*{.4in}
 		\item Include gender mixing covariates.
-		\vspace*{.3in}
+		\vspace*{.4in}
 		\item 40 topics, 4 interaction patterns.
-		\vspace*{.3in}
-		\item Human code topics used in analysis.
+		% \vspace*{.3in}
+% 		\item Human code topics used in analysis.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}\frametitle{Human Coding Topics Used in Analysis}
+	\LARGE
+	\begin{itemize}
+		\item Validate interpretation of top words
+		\vspace*{.4in}
+		\item Top ten emails.
+		\vspace*{.2in}
+		\begin{itemize}
+			\LARGE
+			\item Rank: $\frac{(\text{tokens assigned to topic})^2}{\text{tokens in email}}$
+		\end{itemize}
+		\vspace*{.2in}
+		\item Label: common thread among emails.
+		% \vspace*{.3in}
+% 		\item Human code topics used in analysis.
 	\end{itemize}
 \end{frame}
 
@@ -345,11 +366,11 @@
 	\toprule
 	Coding & Topic top words\\
 	\midrule
-	\textbf{Sandy} & will, track, winds, system, forecast\\ 
-	\textbf{Sandy} & storm, sandy, high, coastal, tides, night\\ 
-	\textbf{Harbor} & status, update, boat, today, weather\\ 
-	\textbf{Planning} & board, meeting, planning, seafood, hearing\\ 
-	\textbf{Storm} & box, planning, director,  permit, building \\ 
+	\male{\textbf{Sandy}} & will, track, winds, system, forecast\\ 
+	\male{\textbf{Sandy}} & storm, sandy, high, coastal, tides, night\\ 
+	\male{\textbf{Harbor}} & status, update, boat, today, weather\\ 
+	\male{\textbf{Planning}} & board, meeting, planning, seafood, hearing\\ 
+	\male{\textbf{Storm}} & box, planning, director,  permit, building \\ 
 	\bottomrule
 
 	\end{tabular}
@@ -367,31 +388,31 @@
 	Coding & FF $>$ FM $>$ MF $>$ MM\\
 	\midrule
 
-	\textbf{Finance} & order, time, good, april, attached, requests \\ 
-	\textbf{Finance} & budget, phone, finance, media, ext, department
+	\female{\textbf{Finance}} & order, time, good, april, attached, requests \\ 
+	\female{\textbf{Finance}} & budget, phone, finance, media, ext, department
 	\\ 
 	\textbf{Health} & meeting, going, fyi, tricaster, health, project
 	 \\ 
-	\textbf{Finance} & meeting, box, fax, finance, attached, resolution
+	\female{\textbf{Finance}} & meeting, box, fax, finance, attached, resolution
 	\\ 
-	\textbf{Finance} & equity, fax, debt, refunding, time, finance, call
+	\female{\textbf{Finance}} & equity, fax, debt, refunding, time, finance, call
 	 \\ 
-	\textbf{Finance} & debt, box, fax, finance, policies, contract, audit
+	\female{\textbf{Finance}} & debt, box, fax, finance, policies, contract, audit
 	\\ 
-	\textbf{Finance} & learn, leader, director, washington, dream
+	\female{\textbf{Finance}} & learn, leader, director, washington, dream
 	\\ 
-	\textbf{Finance} & fax, ext, phone, finance, director, street
+	\female{\textbf{Finance}} & fax, ext, phone, finance, director, street
 	\\ 
 	\textbf{Health} & public, health, email, contact, disclosure
 
 	\\ 
-	\textbf{Finance} & good, time, increase, call, pay, office, today
+	\female{\textbf{Finance}} & good, time, increase, call, pay, office, today
 	
 	\\ 
-	\textbf{Budget} & manager, street, main, fax, office, east, budget
+	\female{\textbf{Budget}} & manager, street, main, fax, office, east, budget
 	
 	\\ 
-	\textbf{Budget} & fund, budget, balance, year, funds, pay, original
+	\female{\textbf{Budget}} & fund, budget, balance, year, funds, pay, original
 	
 	\\
 
@@ -412,34 +433,34 @@
 			  % & \\
 			\midrule
 
-	\textbf{Manager} & office, email, time, staff, meeting, work, good\\ 
+	\male{\textbf{Manager}} & office, email, time, staff, meeting, work, good\\ 
 
-	\textbf{IT} & electronic, mail, intended, email, message\\ 
+	\male{\textbf{IT}} & electronic, mail, intended, email, message\\ 
 
 	\textbf{Health} & health, department, project, email, code, garden\\ 
 
 
 	\textbf{Comments} & jail, mobile, inmates, ago, money, jails\\ 
 
-	\textbf{Planning} & east, planning, street, court, administrator\\ 
+	\male{\textbf{Planning}} & east, planning, street, court, administrator\\ 
 
 
-	\textbf{Public Works} & public, nashville, suite, washington\\ 
+	\male{\textbf{Public Works}} & public, nashville, suite, washington\\ 
 
 
-	\textbf{Public Works} & email, energy, carolina, north, address\\ 
+	\male{\textbf{Public Works}} & email, energy, carolina, north, address\\ 
 
 
-	\textbf{Planning} & description, director, street, church, suite\\ 
+	\male{\textbf{Planning}} & description, director, street, church, suite\\ 
 
 
-	\textbf{Planning} & description, fax, phone, director, street, church\\ 
+	\male{\textbf{Planning}} & description, fax, phone, director, street, church\\ 
 
 
-	\textbf{Zoning} & board, meeting, planning, amendment\\ 
+	\male{\textbf{Zoning}} & board, meeting, planning, amendment\\ 
 
 
-	\textbf{Emergency} & operations, emergency, director, lines, street\\ 
+	\male{\textbf{Emergency}} & operations, emergency, director, lines, street\\ 
 
 
 	\textbf{Development} & description, director, development, projects\\ 
