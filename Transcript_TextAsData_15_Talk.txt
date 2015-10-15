@@ -69,24 +69,43 @@ Notably, the gender composition of managers varies significantly across counties
 *** Department Affiliation as Domain ***
 ****************************************
 
+One potential proxy for the domain of communication among county managers is their department affiliation. For example, we might expect department communication dyads involving the finance manager to fall under the domain of the budget or requisitions.
 
+However, because we often only observe one or two managers with a particular department affiliation within each county, we cannot make inferences about the relationship between gender and department within individual counties. Fortunately, we observe different gender-department combinations across our sample, so we leverage this cross-county variation in our study.
 
 **********************************************
 *** Individual Department Gender Breakdown ***
 **********************************************
 
+To do this, we first hand code department titles given in the county directories into one of 25 different groups. 
 
+If we look at the gender break down of managers in our sample across all counties, we can see that some department manager positions (columns highlighted in purple) are heavily dominated by male managers, while other positions are female dominated. 
+
+It is also important to note that not every department is represented in every county. 
 
 ******************
 *** Hypothesis ***
 ******************
 
+This leads us to consider a hypothesis about these communication patterns that derives from a recently published article which found experimentally that women communicate at a rate even higher than their representation, in groups where they are in the majority, and that being the majority represented a critical tipping point.
 
+Our hypothesis is that women will communicate at an increased rate (above and beyond their representation) in female dominated organizational domains. 
 
 *******************************************
 *** Department-Dyad Regression Analysis ***
 *******************************************
 
+To test this hypothesis using department affiliation as a proxy for domain, we specify a series of Poisson regressions predicting the number of emails sent between managers of each gender within a particular department-dyad, across counties. 
+
+For example, there might be some counties where we have a male finance manager and female health manager, and vice versa. 
+
+To perform our test we specify two models for each department-dyad. The first of these is a model with a single intercept capturing the propensity of managers in a particular department to include managers of the other department on their emails, regardless of gender.
+
+The second model is a gender model with a separate intercept for each gender pairing.
+
+For our analysis, we only consider those department dyads for which at least one observation of each gender combination is present, and we perform a LR test to determine whether the gender model fits better. 
+
+In 70% of cases, the gender model does provide a significantly better fit and we now look at rank orderings of these gender mixing coefficients to see if we find a pattern of departments represented in the female-centric rank orderings of these parameters (indicating women send more emails than men, and both men and women are more likely to include women as recipients of their emails).
 
 
 ****************************
