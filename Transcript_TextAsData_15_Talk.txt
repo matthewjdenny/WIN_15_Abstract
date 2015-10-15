@@ -52,15 +52,54 @@ comprises all emails sent and received by department managers
 (eg. health, finance, HR and Emergency) in 17 North Carolina 
 county governments durring overlapping 3 month periods in 2013.
 
+This dataset comprises about 500,000 emails, of which 17,000 were sent by a department manager and include at least one other department manager in their county.
+
+For the rest of the paper we limit our analysis to these emails, and only to emails sent between department managers in the same county. 
+
+********************************************
+*** County Government Email Data (Table) ***
+********************************************
+
+One reason we do this, is because we are able to collect metadata for all of the department managers in our sample, including gender and department affiliation. 
+
+Notably, the gender composition of managers varies significantly across counties, as does the email volume.
+
+
+****************************************
+*** Department Affiliation as Domain ***
+****************************************
 
 
 
+**********************************************
+*** Individual Department Gender Breakdown ***
+**********************************************
 
 
 
+******************
+*** Hypothesis ***
+******************
 
 
 
+*******************************************
+*** Department-Dyad Regression Analysis ***
+*******************************************
+
+
+
+****************************
+*** Female-Centric Dyads ***
+****************************
+
+So again in this table, departments highlighted in green are female dominated and and those highlighted in purple are male dominated. Each row represents a department-to-department dyad. 
+
+This table displays the female centric rank orderings of gender mixing intercepts, and we do find support for our hypothesis that women will communicate more actively in domains that are female dominated. 
+
+What this means is that the participation of female managers is amplified above and beyond their proportional representation. 
+
+While this approach yields important insights, it does have one major limitation, in that it does not account for the content of the emails at all.
  
 *******************************
 *** Email Content as Domain ***
@@ -129,12 +168,30 @@ Then, we draw the actual recipients for the email parameterized by a mixture of 
 
 In this way, our model links latent Dirichlet allocation and the latent space network model.
 
+*********************************
+*** Specification and Methods ***
+*********************************
+
+We perform Bayesian inference in this model using Markov chain Monte-Carlo methods. I can discuss our inference procedure further in Q and A, or please see our paper if you are interested.
 
 
+****************************
+*** Example Model Output ***
+****************************
 
+Lets begin by looking at some example model output. 
 
+So again in this table, topic labels highlighted in purple are male dominated and each row represents a topic.
 
+**********************************************
+*** Female-Centric Topics of Communication ***
+**********************************************
 
+So again in this table, topic labels highlighted in green are female dominated and each row represents a topic.
+
+***************
+*** Summary ***
+***************
 
 
 
