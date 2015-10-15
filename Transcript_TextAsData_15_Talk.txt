@@ -1,0 +1,144 @@
+*******************
+*** Title Slide ***
+*******************
+
+Hi, my name is Matt Denny, I am a graduate student at Penn State
+University, and today I am going to present some recent work
+(with collaborators) on the relationship between gender and
+patterns of communication among local government officials.
+
+*************************
+*** Research Question ***
+************************* 
+
+Our central research question centers on how the relationship
+between gender and the pattern of communication varies across
+the organizational domain, in local government.
+
+By domain, I mean organizational function with which a
+communication instance is concerned (e.g., long-range strategic
+planning, human resource management, public relations, or simply 
+whose team won the game last night.
+
+*************************
+*** Previous Research ***
+*************************  
+
+Previous research on gender in organizations has primarily
+relied on administrative data, such as how much men and women
+get paid, and the positions they hold in an organization, or
+self reports of how employees experience the work place.
+
+In addition to issues of limited scope, and the potential for
+bias in these data, they also tell us very little about micro
+level interactions between men and women in organizations.
+
+********************************
+*** Public Domain Email Data ***
+********************************
+
+We overcome the limitations of existing data sources for 
+studying micro level interactions between men and women by
+making use of a recently collected corpus of local government
+email data.
+
+************************************
+*** County Government Email Data ***
+************************************
+
+Specifically, we make use of a cross-organizational county
+government email data set collected by our lab, that
+comprises all emails sent and received by department managers 
+(eg. health, finance, HR and Emergency) in 17 North Carolina 
+county governments durring overlapping 3 month periods in 2013.
+
+
+
+
+
+
+
+
+
+
+ 
+*******************************
+*** Email Content as Domain ***
+*******************************
+
+To complement our analysis of department as domain, and to 
+buttress some of its short-comings, we also make use of the 
+email content (the words) as a proxy for the domain of 
+communication. 
+
+To do this, we make use of a statistical model recently 
+developed (by our lab) for email data which allows us to 
+jointly infer the topics discussed in an email and the 
+interaction patterns associated with those topics of 
+communication.
+
+In this way, we are able to associate email content with 
+gender mixing parameter estimates, to look for similar 
+female-centric patterns of interaction based on content as 
+opposed to department.
+
+*****************************************
+*** A Generative Model for Email Data ***
+*****************************************
+
+The model we use is a generative model. This means that we 
+posit a statistical process by which the emails we observe 
+were generated, and then invert this generative process to 
+infer the parameters of interest from this process. 
+
+For our model, we begin by generating two sets of global 
+variables. 
+
+The first of these are "topics" (which have the meaning you 
+might expect),  and which are operationalized as distributions 
+over words that relate to some concept.
+
+These topics are then associated to some smaller number of 
+interaction patterns. 
+
+These interaction patterns specify the probability that for a 
+given email sender, each potential alter is selected as a 
+recipient, following a logistic regression form. This probability is controlled by three parameters:
+
+1. An intercept parameter that controls the general propensity 
+for people to send emails to each other in this interaction 
+pattern.
+2. A set of covariate parameters which (in our case) control the propensity for authors of each gender to include recipients of each gender. 
+3. A distance between actors in a space of latent variables, where authors are more likely to include recipients who are closer  to them in this space, and less likely to include those who are more distant.
+
+In this way our model could generate emails where some topics 
+are discuss more frequently and some and following different 
+gendered patterns of interaction than others.
+
+********************************************
+*** A Generative Model for Email Data: 2 ***
+********************************************
+
+After generating the global parameters, our model then 
+generates the individual emails. 
+
+First we draw the content of the email following the 
+generative process for latent Dirichlet allocation, where each email is its own distribution over topics, from which we draw the actual words.
+
+Then, we draw the actual recipients for the email parameterized by a mixture of interaction patterns, conditional on the degree to which topics associated with them are represented in the email.
+
+In this way, our model links latent Dirichlet allocation and the latent space network model.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
