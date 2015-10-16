@@ -1,0 +1,36 @@
+1. Introduce myself shout out to Hanna
+2. Research question, define domain.
+3. Short comings of existing data.
+4. micro-level behavioral data from public records, electronic communication.
+5. Public records requests, manager to manager emails -- define departments, also ONLY INTERNAL EMAILS.
+6. We have metadata, department and gender, lots of variation across counties.
+7. Department affiliation as domain- for example finance talks about finance.
+8. Hand coded departments, some are mostly managed by women, others by men. Important to note not every department in every county.
+9. Some recent experimental work has found that increasing the composition of women in work groups of engineering students has its most pronounced effect when going from minority to majority, so the effect is non-linear and women go from not participating very much to participating at a higher rate than men.
+
+So our question is do we see a similar effect in domains where managers of departments that deal with them tend to be female?
+
+So for example, even though there is only one finance manager in each county, since this position tends to be held by a woman, do both men and women take gender into account when sending an email about this domain and do they have a preference for emailing a female colleague? 
+10. We specify two poisson models, LR test say gender matters in 70% of cases.
+11. Here are dyads that are female-centric --- men and women act as if they are taking gender into account in sending emails, and select female recipients  
+
+One downside, no content. 
+
+12. What is a Generative Model, two sets of global variables.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
