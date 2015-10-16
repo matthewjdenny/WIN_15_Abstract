@@ -17,8 +17,8 @@ the organizational domain, in local government.
 
 By domain, I mean organizational function with which a
 communication instance is concerned (e.g., long-range strategic
-planning, human resource management, public relations, or simply 
-whose team won the game last night.
+planning, human resource management, public relations, or 
+simply whose team won the game last night.
 
 *************************
 *** Previous Research ***
@@ -52,73 +52,131 @@ comprises all emails sent and received by department managers
 (eg. health, finance, HR and Emergency) in 17 North Carolina 
 county governments durring overlapping 3 month periods in 2013.
 
-This dataset comprises about 500,000 emails, of which 17,000 were sent by a department manager and include at least one other department manager in their county.
+This dataset comprises about 500,000 emails, of which 17,000 
+were sent by a department manager and include at least one 
+other department manager in their county.
 
-For the rest of the paper we limit our analysis to these emails, and only to emails sent between department managers in the same county. 
+For the rest of the paper we limit our analysis to these 
+emails, and only to emails sent between department managers in 
+the same county. 
 
 ********************************************
 *** County Government Email Data (Table) ***
 ********************************************
 
-One reason we do this, is because we are able to collect metadata for all of the department managers in our sample, including gender and department affiliation. 
+One reason we do this, is because we are able to collect 
+metadata for all of the department managers in our sample, 
+including gender and department affiliation. 
 
-Notably, the gender composition of managers varies significantly across counties, as does the email volume.
+Notably, the gender composition of managers varies 
+significantly across counties, as does the email volume.
 
 
 ****************************************
 *** Department Affiliation as Domain ***
 ****************************************
 
-One potential proxy for the domain of communication among county managers is their department affiliation. For example, we might expect department communication dyads involving the finance manager to fall under the domain of the budget or requisitions.
+One potential proxy for the domain of communication among 
+county managers is their department affiliation. For example, 
+we might expect department communication dyads involving the 
+finance manager to fall under the domain of the budget or 
+requisitions.
 
-However, because we often only observe one or two managers with a particular department affiliation within each county, we cannot make inferences about the relationship between gender and department within individual counties. Fortunately, we observe different gender-department combinations across our sample, so we leverage this cross-county variation in our study.
+However, because we often only observe one or two managers 
+with a particular department affiliation within each county, 
+we cannot make inferences about the relationship between 
+gender and department within individual counties. Fortunately, 
+we observe different gender-department combinations across our 
+sample, so we leverage this cross-county variation in our 
+study.
 
 **********************************************
 *** Individual Department Gender Breakdown ***
 **********************************************
 
-To do this, we first hand code department titles given in the county directories into one of 25 different groups. 
+To do this, we first hand code department titles given in the 
+county directories into one of 25 different groups. 
 
-If we look at the gender break down of managers in our sample across all counties, we can see that some department manager positions (columns highlighted in purple) are heavily dominated by male managers, while other positions are female dominated. 
+If we look at the gender break down of managers in our sample 
+across all counties, we can see that some department manager 
+positions (columns highlighted in purple) are heavily 
+dominated by male managers, while other positions are female 
+dominated. 
 
-It is also important to note that not every department is represented in every county. 
+It is also important to note that not every department is 
+represented in every county. 
 
 ******************
 *** Hypothesis ***
 ******************
 
-This leads us to consider a hypothesis about these communication patterns that derives from a recently published article which found experimentally that women communicate at a rate even higher than their representation, in groups where they are in the majority, and that being the majority represented a critical tipping point.
+This leads us to consider a hypothesis about these 
+communication patterns that derives from a recently published 
+article which found experimentally that women communicate at a 
+rate even higher than their representation, in groups where 
+they are in the majority, and that being the majority 
+represented a critical tipping point.
 
-Our hypothesis is that women will communicate at an increased rate (above and beyond their representation) in female dominated organizational domains. 
+Our hypothesis is that women will communicate at an increased 
+rate (above and beyond their representation) in female 
+dominated organizational domains. 
 
 *******************************************
 *** Department-Dyad Regression Analysis ***
 *******************************************
 
-To test this hypothesis using department affiliation as a proxy for domain, we specify a series of Poisson regressions predicting the number of emails sent between managers of each gender within a particular department-dyad, across counties. 
+To test this hypothesis using department affiliation as a 
+proxy for domain, we specify a series of Poisson regressions 
+predicting the number of emails sent between managers of each 
+gender within a particular department-dyad, across counties. 
 
-For example, there might be some counties where we have a male finance manager and female health manager, and vice versa. 
+For example, there might be some counties where we have a male 
+finance manager and female health manager, and vice versa. 
 
-To perform our test we specify two models for each department-dyad. The first of these is a model with a single intercept capturing the propensity of managers in a particular department to include managers of the other department on their emails, regardless of gender.
+To perform our test we specify two models for each 
+department-dyad. The first of these is a model with a single 
+intercept capturing the propensity of managers in a particular 
+department to include managers of the other department on 
+their emails, regardless of gender.
 
-The second model is a gender model with a separate intercept for each gender pairing.
+The second model is a gender model with a separate intercept 
+for each gender pairing.
 
-For our analysis, we only consider those department dyads for which at least one observation of each gender combination is present, and we perform a LR test to determine whether the gender model fits better. 
+For our analysis, we only consider those department dyads for 
+which at least one observation of each gender combination is 
+present, and we perform a LR test to determine whether the 
+gender model fits better. 
 
-In 70% of cases, the gender model does provide a significantly better fit and we now look at rank orderings of these gender mixing coefficients to see if we find a pattern of departments represented in the female-centric rank orderings of these parameters (indicating women send more emails than men, and both men and women are more likely to include women as recipients of their emails).
+In 70% of cases, the gender model does provide a significantly 
+better fit and we now look at rank orderings of these gender 
+mixing coefficients to see if we find a pattern of departments 
+represented in the female-centric rank orderings of these 
+parameters (indicating women send more emails than men, and 
+both men and women are more likely to include women as 
+recipients of their emails).
 
 
 ****************************
 *** Female-Centric Dyads ***
 ****************************
 
-So again in this table, departments highlighted in green are female dominated and and those highlighted in purple are male dominated. Each row represents a department-to-department dyad. 
+So again in this table, departments highlighted in green are 
+female dominated and and those highlighted in purple are male 
+dominated. Each row represents a department-to-department 
+dyad. 
 
-This table displays the female centric rank orderings of gender mixing intercepts, and we do find support for our hypothesis that women will communicate more actively in domains that are female dominated. 
+This table displays the female centric rank orderings of 
+gender mixing intercepts, and we do find support for our 
+hypothesis that women will communicate more actively in 
+domains that are female dominated. 
 
-What this means is that the participation of female managers is amplified above and beyond their proportional representation. 
+What this means is that the participation of female managers 
+is amplified above and beyond their proportional 
+representation. 
 
-While this approach yields important insights, it does have one major limitation, in that it does not account for the content of the emails at all.
+While this approach yields important insights, it does have 
+one major limitation, in that it does not account for the 
+content of the emails at all.
  
 *******************************
 *** Email Content as Domain ***
@@ -161,13 +219,19 @@ interaction patterns.
 
 These interaction patterns specify the probability that for a 
 given email sender, each potential alter is selected as a 
-recipient, following a logistic regression form. This probability is controlled by three parameters:
+recipient, following a logistic regression form. This 
+probability is controlled by three parameters:
 
 1. An intercept parameter that controls the general propensity 
 for people to send emails to each other in this interaction 
 pattern.
-2. A set of covariate parameters which (in our case) control the propensity for authors of each gender to include recipients of each gender. 
-3. A distance between actors in a space of latent variables, where authors are more likely to include recipients who are closer  to them in this space, and less likely to include those who are more distant.
+2. A set of covariate parameters which (in our case) control 
+the propensity for authors of each gender to include 
+recipients of each gender. 
+3. A distance between actors in a space of latent variables, 
+where authors are more likely to include recipients who are 
+closer  to them in this space, and less likely to include 
+those who are more distant.
 
 In this way our model could generate emails where some topics 
 are discuss more frequently and some and following different 
@@ -181,17 +245,26 @@ After generating the global parameters, our model then
 generates the individual emails. 
 
 First we draw the content of the email following the 
-generative process for latent Dirichlet allocation, where each email is its own distribution over topics, from which we draw the actual words.
+generative process for latent Dirichlet allocation, where each 
+email is its own distribution over topics, from which we draw 
+the actual words.
 
-Then, we draw the actual recipients for the email parameterized by a mixture of interaction patterns, conditional on the degree to which topics associated with them are represented in the email.
+Then, we draw the actual recipients for the email 
+parameterized by a mixture of interaction patterns, 
+conditional on the degree to which topics associated with them 
+are represented in the email.
 
-In this way, our model links latent Dirichlet allocation and the latent space network model.
+In this way, our model links latent Dirichlet allocation and 
+the latent space network model.
 
 *********************************
 *** Specification and Methods ***
 *********************************
 
-We perform Bayesian inference in this model using Markov chain Monte-Carlo methods. I can discuss our inference procedure further in Q and A, or please see our paper if you are interested.
+We perform Bayesian inference in this model using Markov chain 
+Monte-Carlo methods. I can discuss our inference procedure 
+further in Q and A, or please see our paper if you are 
+interested.
 
 
 ****************************
@@ -200,13 +273,15 @@ We perform Bayesian inference in this model using Markov chain Monte-Carlo metho
 
 Lets begin by looking at some example model output. 
 
-So again in this table, topic labels highlighted in purple are male dominated and each row represents a topic.
+So again in this table, topic labels highlighted in purple are 
+male dominated and each row represents a topic.
 
 **********************************************
 *** Female-Centric Topics of Communication ***
 **********************************************
 
-So again in this table, topic labels highlighted in green are female dominated and each row represents a topic.
+So again in this table, topic labels highlighted in green are 
+female dominated and each row represents a topic.
 
 ***************
 *** Summary ***
