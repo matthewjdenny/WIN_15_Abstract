@@ -11,7 +11,7 @@ patterns of communication among local government officials.
 *** Research Question ***
 ************************* 
 
-Our central research question centers on how the relationship
+Our research question centers on how the relationship
 between gender and the pattern of communication varies across
 the organizational domain, in local government.
 
@@ -110,22 +110,17 @@ represented in every county.
 *** Hypothesis ***
 ******************
 
-This leads us to consider a hypothesis about these 
-communication patterns that derives from a recently published 
-article which found experimentally that women communicate at a 
-rate even higher than their representation, in groups where 
-they are in the majority, and that being the majority 
-represented a critical tipping point.
+Some recent experimental work has found that increasing the composition of women in work groups of engineering students only has effect when going from minority to majority, so the effect is non-linear and women go from not participating very much to participating at a higher rate than men.
 
-Our hypothesis is that women will communicate at an increased 
-rate (above and beyond their representation) in female 
-dominated organizational domains. 
+So our question is do we see a similar effect in domains where managers of departments that deal with them tend to be female?
+
+So for example, even though there is only one finance manager in each county, since this position tends to be held by a woman, do both men and women take gender into account when sending an email about this domain and do they have a preference for emailing a female colleague? 
 
 *******************************************
 *** Department-Dyad Regression Analysis ***
 *******************************************
 
-To test this hypothesis using department affiliation as a 
+To explore this question using department affiliation as a 
 proxy for domain, we specify a series of Poisson regressions 
 predicting the number of emails sent between managers of each 
 gender within a particular department-dyad, across counties. 
@@ -166,13 +161,7 @@ dominated. Each row represents a department-to-department
 dyad. 
 
 This table displays the female centric rank orderings of 
-gender mixing intercepts, and we do find support for our 
-hypothesis that women will communicate more actively in 
-domains that are female dominated. 
-
-What this means is that the participation of female managers 
-is amplified above and beyond their proportional 
-representation. 
+gender mixing intercepts, and we can see that the HR department in particular (of which most managers are female) is heavily represented, which is consistent with our hunch that women will be more active in domains that related to departments which tend to be managed by women. 
 
 While this approach yields important insights, it does have 
 one major limitation, in that it does not account for the 
@@ -193,8 +182,7 @@ jointly infer the topics discussed in an email and the
 interaction patterns associated with those topics of 
 communication.
 
-In this way, we are able to associate email content with 
-gender mixing parameter estimates, to look for similar 
+In this way, we are able to look for similar 
 female-centric patterns of interaction based on content as 
 opposed to department.
 
@@ -203,15 +191,14 @@ opposed to department.
 *****************************************
 
 The model we use is a generative model. This means that we 
-posit a statistical process by which the emails we observe 
+posit a probabilistic process by which the emails we observe 
 were generated, and then invert this generative process to 
-infer the parameters of interest from this process. 
+infer the parameters of interest. 
 
 For our model, we begin by generating two sets of global 
 variables. 
 
-The first of these are "topics" (which have the meaning you 
-might expect),  and which are operationalized as distributions 
+The first of these are "topics", or distributions 
 over words that relate to some concept.
 
 These topics are then associated to some smaller number of 
@@ -234,7 +221,7 @@ closer  to them in this space, and less likely to include
 those who are more distant.
 
 In this way our model could generate emails where some topics 
-are discuss more frequently and some and following different 
+are discuss more frequently and some follow different 
 gendered patterns of interaction than others.
 
 ********************************************
