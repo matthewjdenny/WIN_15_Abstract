@@ -1,5 +1,7 @@
 We need more theory building work.
 
+— more theory from existing work, generate new theory 
+
 borrow a lot of the judicial paper's methods.
 
 gendered communication makes us think about the different ways that people talk as opposed to whether they talk
@@ -17,7 +19,29 @@ men tend to use more procedural language.
 Research shows women produce and consume text faster than men, should look at timing.
 
 
+***** Comments Hanna Wrote Down *****
 
+Need more theory and need to tie the theory into the data better.
+
+They thought that gendered communication was going to be about diffs. in the way men and women speak.
+
+If we were to study the WAY men/women speak, we could use sentiment analysis -- might be gender differences.
+
+Are our results driven by the fact that these departments are male/female driven. Is it that the only person people have to talk about finance with are women so that's just driving the results? This is different than people *choosing* to email a man/woman.
+
+Need to do more stopword removal (e.g., months, days of the week).
+
+Can we study power dynamics?
+
+Do women write emails to me differently to men write emails to women.
+
+Maybe women are more likely to take communicative jobs. Finance and HR -- these departments send and receive a lot of email. So maybe what we're seeing is just a reflection of that.
+
+Can we dig into causal reasons for why men/women are in diff. positions. 
+
+Could use personnel changes to dig into whether there are changes to communication (i.e., more/less communication with men/women) when there are personnel changes.
+
+Who initiates email threads? Men? Women?
 
 
 
